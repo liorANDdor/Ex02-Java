@@ -10,7 +10,9 @@ public class OrderController {
 
     @FXML
     private TextField sometext;
-
+public String getText(){
+    return sometext.getText();
+}
     @FXML
     void commit(ActionEvent event) {
 
