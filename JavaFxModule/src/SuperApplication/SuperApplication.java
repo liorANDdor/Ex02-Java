@@ -9,31 +9,33 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 public class SuperApplication extends Application {
+    private static final String PATH = "./SuperApplication.fxml";
+
     public static void main(String[]args){
         launch(args);
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = getPlayersFXMLLoader();
-        Parent playersRoot = getPlayersRoot(fxmlLoader);
+        FXMLLoader fxmlLoader = getFXML();
+        Parent root = getROOT(fxmlLoader);
 
-        Scene scene = new Scene(playersRoot, 500, 400);
+        Scene scene = new Scene(root, 1000, 600);
 
-        primaryStage.setTitle("Players Manager");
+        primaryStage.setTitle("Super Market");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    private FXMLLoader getPlayersFXMLLoader() {
+    private FXMLLoader getFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource(PLAYERS_SCENE_FXML_PATH);
+        URL url = getClass().getResource(PATH);
         fxmlLoader.setLocation(url);
         return fxmlLoader;
     }
 
 
 
-    private Parent getPlayersRoot(FXMLLoader fxmlLoader) throws Exception {
-        return (Parent) fxmlLoader.load(fxmlLoader.getLocation().openStream());
+    private Parent getROOT(FXMLLoader fxmlLoader) throws Exception {
+        return fxmlLoader.load(fxmlLoader.getLocation().openStream());
     }
 }

@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
 
@@ -10,13 +11,20 @@
    <children>
       <VBox layoutX="14.0" layoutY="14.0" prefHeight="552.0" prefWidth="120.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#showItems" prefHeight="53.0" prefWidth="123.0" text="Show items" />
+            <Button mnemonicParsing="false" onAction="#loadXMLHandler" prefHeight="53.0" prefWidth="123.0" text="Load XML" />
+            <Button mnemonicParsing="false" onAction="#showStoresHandler" prefHeight="53.0" prefWidth="123.0" text="Show stores" />
+            <Button mnemonicParsing="false" onAction="#showItemsHandler" prefHeight="53.0" prefWidth="123.0" text="Show items" />
+            <Button mnemonicParsing="false" onAction="#showOrdersHandler" prefHeight="53.0" prefWidth="123.0" text="Show orders" />
+            <Button mnemonicParsing="false" onAction="#showCustomersHandler" prefHeight="53.0" prefWidth="123.0" text="Show customers" />
+            <Button mnemonicParsing="false" onAction="#showMapHandler" prefHeight="53.0" prefWidth="123.0" text="Show map" />
+            <Button mnemonicParsing="false" onAction="#addSaleHandler" prefHeight="53.0" prefWidth="123.0" text="Add sale" />
+            <Button mnemonicParsing="false" onAction="#deleteItemFromStoreHandler" prefHeight="53.0" prefWidth="123.0" text="Add sale" />
          </children>
       </VBox>
       <ScrollPane layoutX="237.0" layoutY="86.0" prefHeight="465.0" prefWidth="649.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="458.0" prefWidth="646.0" />
-        </content>
+         <content>
+            <FlowPane fx:id="myPane" />
+         </content>
       </ScrollPane>
    </children>
 </AnchorPane>

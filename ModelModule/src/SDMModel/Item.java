@@ -2,7 +2,6 @@ package SDMModel;
 
 
 import SDMGenerated.SDMItem;
-import com.sun.xml.internal.bind.v2.TODO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
