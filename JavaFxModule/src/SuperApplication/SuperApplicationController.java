@@ -20,16 +20,13 @@ import tile.tileController;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SuperApplicationController {
 
     SystemManager systemManager = new SystemManager();
-    private Map<Integer, Node> itemsTilesController;
-
+    private Map<Integer, Node> itemsTilesController = new HashMap<>();
+    private Map<Integer, Node> storesTilesController = new HashMap<>();
     @FXML
     private FlowPane myPane;
 
@@ -83,6 +80,7 @@ public class SuperApplicationController {
 
     @FXML
     void showItemsHandler(ActionEvent event) {
+        myPane.getChildren().clear();
         HashMap<Integer, Item> items = systemManager.getSuperMarket().getItems();
         for(Item item: items.values()){
             createItemTile(item);
@@ -92,22 +90,56 @@ public class SuperApplicationController {
     private void createItemTile(Item item) {
 
         try {
-            Stage stg = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader();
             URL url = getClass().getResource("../tile/tile.fxml");
             fxmlLoader.setLocation(url);
             Node singleWordTile = fxmlLoader.load();
+            List<Item.InfoOptions> list = new ArrayList<Item.InfoOptions>();
+            //printItemIDNamePPK(item);
+
+            list.add(Item.InfoOptions.ItemId);
+            list.add(Item.InfoOptions.Name);
+            list.add(Item.InfoOptions.Category);
+            list.add(Item.InfoOptions.NumberOfStoresSellTheItem);
+            list.add(Item.InfoOptions.ItemAveragePrice);
+            list.add(Item.InfoOptions.NumberOfTimesItemWasSold);
             tileController tileController = fxmlLoader.getController();
-            tileController.initialize(item,systemManager);
+
+            tileController.initialize(systemManager.getinfoItem(item,list));
             Platform.runLater(
                     () -> tileController.setName(item.getName())
             );
 
+            myPane.getChildren().add(singleWordTile);
+            itemsTilesController.put(item.getId(), singleWordTile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void createStoreTile(Store store) {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            URL url = getClass().getResource("../tile/tile.fxml");
+            fxmlLoader.setLocation(url);
+            Node singleWordTile = fxmlLoader.load();
+            List<Store.InfoOptions> list = new ArrayList<Store.InfoOptions>();
+            //printItemIDNamePPK(item);
+
+            list.add(Store.InfoOptions.Id);
+            list.add(Store.InfoOptions.Name);
+            list.add(Store.InfoOptions.DeliveryPpk);
+            tileController tileController = fxmlLoader.getController();
+            tileController.initialize(systemManager.getStoreInfo(store,list));
+            Platform.runLater(
+                    () -> tileController.setName(store.getName())
+            );
 
             myPane.getChildren().add(singleWordTile);
-            //itemsTilesController.put(item.getId(), singleWordTile);
-
-
+            storesTilesController.put(store.getId(), singleWordTile);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -127,7 +159,11 @@ public class SuperApplicationController {
 
     @FXML
     void showStoresHandler(ActionEvent event) {
-
+        myPane.getChildren().clear();
+        HashMap<Integer, Store> items = systemManager.getSuperMarket().getStores();
+        for(Store store: items.values()){
+            createStoreTile(store);
+        }
     }
 
 }

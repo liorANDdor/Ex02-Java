@@ -36,18 +36,9 @@ public class tileController {
 
 
     @FXML
-    public void initialize(Item item, SystemManager sys) {
+    public void initialize(StringBuilder string) {
 
-        List<Item.InfoOptions> list = new ArrayList<Item.InfoOptions>();
-        //printItemIDNamePPK(item);
-
-        list.add(Item.InfoOptions.ItemId);
-        list.add(Item.InfoOptions.Name);
-        list.add(Item.InfoOptions.Category);
-        list.add(Item.InfoOptions.NumberOfStoresSellTheItem);
-        list.add(Item.InfoOptions.ItemAveragePrice);
-        list.add(Item.InfoOptions.NumberOfTimesItemWasSold);
-        this.nameOfItem = new SimpleStringProperty(sys.getinfoItem(item,list).toString());
+        this.nameOfItem = new SimpleStringProperty(string.toString());
         name.textProperty().bind(Bindings.format(nameOfItem.getValue()));
     }
 
