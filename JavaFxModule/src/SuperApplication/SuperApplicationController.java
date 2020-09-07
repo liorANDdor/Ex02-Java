@@ -1,27 +1,34 @@
 package SuperApplication;
 
 import OrderWindow.OrderController;
+import SDMModel.Item;
 import SDMModel.Store;
 import SDMModel.SystemManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import tile.tileController;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class SuperApplicationController {
 
     SystemManager systemManager = new SystemManager();
+    private Map<Integer, Node> itemsTilesController;
 
     @FXML
     private FlowPane myPane;
@@ -76,8 +83,37 @@ public class SuperApplicationController {
 
     @FXML
     void showItemsHandler(ActionEvent event) {
-
+        HashMap<Integer, Item> items = systemManager.getSuperMarket().getItems();
+        for(Item item: items.values()){
+            createItemTile(item);
+        }
     }
+
+    private void createItemTile(Item item) {
+
+        try {
+            Stage stg = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            URL url = getClass().getResource("../tile/tile.fxml");
+            fxmlLoader.setLocation(url);
+            Node singleWordTile = fxmlLoader.load();
+            tileController tileController = fxmlLoader.getController();
+            tileController.initialize(item,systemManager);
+            Platform.runLater(
+                    () -> tileController.setName(item.getName())
+            );
+
+
+            myPane.getChildren().add(singleWordTile);
+            //itemsTilesController.put(item.getId(), singleWordTile);
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     void showMapHandler(ActionEvent event) {
