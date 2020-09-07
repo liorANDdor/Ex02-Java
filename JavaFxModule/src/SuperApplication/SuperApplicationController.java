@@ -1,16 +1,19 @@
 package SuperApplication;
-
+import javafx.beans.binding.Bindings;
 import OrderWindow.OrderController;
 import SDMModel.Item;
 import SDMModel.Store;
 import SDMModel.SystemManager;
+import StoreView.StoreTileController;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -27,13 +30,33 @@ public class SuperApplicationController {
     SystemManager systemManager = new SystemManager();
     private Map<Integer, Node> itemsTilesController = new HashMap<>();
     private Map<Integer, Node> storesTilesController = new HashMap<>();
-    @FXML
-    private FlowPane myPane;
+
+    @FXML private Button xmlBtn;
+    @FXML private Button storesBtn;
+    @FXML private Button itemBtn;
+    @FXML private Button ordersBtn;
+    @FXML private Button customersBtn;
+    @FXML private Button mapBtn;
+    @FXML private FlowPane myPane;
+
+
+    private SimpleBooleanProperty isXmlLoaded = new SimpleBooleanProperty(false);
+
+
+
+    @FXML private void initialize(){
+        storesBtn.disableProperty().bind(isXmlLoaded.not());
+        itemBtn.disableProperty().bind(isXmlLoaded.not());
+        ordersBtn.disableProperty().bind(isXmlLoaded.not());
+        customersBtn.disableProperty().bind(isXmlLoaded.not());
+        mapBtn.disableProperty().bind(isXmlLoaded.not());
+    }
 
     @FXML
     void addSaleHandler(ActionEvent event) {
 
     }
+
 
     @FXML
     void deleteItemFromStoreHandler(ActionEvent event) throws IOException {
@@ -54,6 +77,7 @@ public class SuperApplicationController {
 
     @FXML
     void loadXMLHandler(ActionEvent event)   {
+
         FileChooser fc = new FileChooser();
         File selectedFile = fc.showOpenDialog(null);
         System.out.println(selectedFile.getAbsolutePath());
@@ -61,6 +85,7 @@ public class SuperApplicationController {
         systemManager.getSuperMarket().getStores().values().stream().forEach(store -> {
             printStore(store);
         });
+        isXmlLoaded.set(true);
 
     }
 
@@ -160,9 +185,23 @@ public class SuperApplicationController {
     @FXML
     void showStoresHandler(ActionEvent event) {
         myPane.getChildren().clear();
-        HashMap<Integer, Store> items = systemManager.getSuperMarket().getStores();
-        for(Store store: items.values()){
-            createStoreTile(store);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            URL url = getClass().getResource("../StoreView/Store.fxml");
+            fxmlLoader.setLocation(url);
+            Node storeView = fxmlLoader.load();
+            StoreTileController storeViewController = fxmlLoader.getController();
+            storeViewController.initialize(systemManager.getSuperMarket().getStores());
+
+
+            Platform.runLater(
+                    () -> storeViewController.setId("1111")
+            );
+
+            myPane.getChildren().add(storeView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

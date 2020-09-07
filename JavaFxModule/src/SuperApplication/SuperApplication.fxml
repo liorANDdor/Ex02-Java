@@ -13,14 +13,14 @@
          <children>
             <VBox layoutX="14.0" layoutY="14.0" prefHeight="552.0" prefWidth="120.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#loadXMLHandler" prefHeight="53.0" prefWidth="123.0" text="Load XML" />
-                  <Button mnemonicParsing="false" onAction="#showStoresHandler" prefHeight="53.0" prefWidth="123.0" text="Show stores" />
-                  <Button mnemonicParsing="false" onAction="#showItemsHandler" prefHeight="53.0" prefWidth="123.0" text="Show items" />
-                  <Button mnemonicParsing="false" onAction="#showOrdersHandler" prefHeight="53.0" prefWidth="123.0" text="Show orders" />
-                  <Button mnemonicParsing="false" onAction="#showCustomersHandler" prefHeight="53.0" prefWidth="123.0" text="Show customers" />
-                  <Button mnemonicParsing="false" onAction="#showMapHandler" prefHeight="53.0" prefWidth="123.0" text="Show map" />
-                  <Button mnemonicParsing="false" onAction="#addSaleHandler" prefHeight="53.0" prefWidth="123.0" text="Add sale" />
-                  <Button mnemonicParsing="false" onAction="#deleteItemFromStoreHandler" prefHeight="53.0" prefWidth="123.0" text="Add sale" />
+                  <Button mnemonicParsing="false" onAction="#loadXMLHandler" prefHeight="53.0" prefWidth="123.0" text="Load XML" fx:id="xmlBtn" />
+                  <Button fx:id="storesBtn" disable="true" mnemonicParsing="false" onAction="#showStoresHandler" prefHeight="53.0" prefWidth="123.0" text="Show stores" />
+                  <Button fx:id="itemBtn" disable="true" mnemonicParsing="false" onAction="#showItemsHandler" prefHeight="53.0" prefWidth="123.0" text="Show items" />
+                  <Button fx:id="ordersBtn" disable="true" mnemonicParsing="false" onAction="#showOrdersHandler" prefHeight="53.0" prefWidth="123.0" text="Show orders" />
+                  <Button fx:id="customersBtn" disable="true" mnemonicParsing="false" onAction="#showCustomersHandler" prefHeight="53.0" prefWidth="123.0" text="Show customers" />
+                  <Button fx:id="mapBtn" disable="true" mnemonicParsing="false" onAction="#showMapHandler" prefHeight="53.0" prefWidth="123.0" text="Show map" />
+                  <Button disable="true" mnemonicParsing="false" onAction="#addSaleHandler" prefHeight="53.0" prefWidth="123.0" text="Add sale" />
+                  <Button disable="true" mnemonicParsing="false" onAction="#deleteItemFromStoreHandler" prefHeight="53.0" prefWidth="123.0" text="Add sale" />
                </children>
             </VBox>
             <ScrollPane layoutX="176.0" layoutY="86.0" prefHeight="465.0" prefWidth="724.0">
