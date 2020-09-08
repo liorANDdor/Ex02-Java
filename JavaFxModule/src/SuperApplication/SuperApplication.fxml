@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SuperApplication.SuperApplicationController">
    <content>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="904.0">
@@ -23,7 +22,7 @@
                   <Button disable="true" mnemonicParsing="false" onAction="#deleteItemFromStoreHandler" prefHeight="53.0" prefWidth="123.0" text="Add sale" />
                </children>
             </VBox>
-            <ScrollPane layoutX="176.0" layoutY="86.0" prefHeight="465.0" prefWidth="724.0">
+            <ScrollPane layoutX="145.0" layoutY="53.0" prefHeight="513.0" prefWidth="758.0">
                <content>
                   <FlowPane fx:id="myPane" alignment="TOP_CENTER" prefWrapLength="600.0" />
                </content>

@@ -1,6 +1,7 @@
 package SDMModel;
 
 import SDMGenerated.SDMDiscount;
+import SDMGenerated.SDMDiscounts;
 import SDMGenerated.SDMSell;
 import SDMGenerated.SDMStore;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public class Store implements Serializable {
 
     public enum InfoOptions {
-        Name, Id, Location, DeliveryPpk, TotalEarning;
+        Name, Id, Location, DeliveryPpk, TotalEarning, TotalShipmentEarning;
 
         public String getInfo(Store store) {
             switch (this) {
@@ -28,13 +29,18 @@ public class Store implements Serializable {
                     return String.valueOf(store.getDeliveryPpk());
                 case TotalEarning:
                     return String.valueOf(store.getTotalEarning());
+                case TotalShipmentEarning:
+                    return String.valueOf(store.getTotalShipmentEarning());
                 default:
                     return "Unknown";
             }
         }
     }
 
+
+
     private Double totalEarning = 0.0;
+    private Double totalShipmentEarning = 0.0;
     private HashMap<Integer, Order> orders = new HashMap<>();
     private String name;
     private int deliveryPpk;
@@ -69,15 +75,19 @@ public class Store implements Serializable {
         newStore.setName(sdmStore.getName());
         newStore.setLocation(new Point(sdmStore.getLocation().getX(),sdmStore.getLocation().getY()));
         List<SDMSell>itemsToSellSDM = sdmStore.getSDMPrices().getSDMSell();
-        List<SDMDiscount> discounts = sdmStore.getSDMDiscounts().getSDMDiscount();
+        SDMDiscounts sdmDiscounts = sdmStore.getSDMDiscounts();
+        if(sdmDiscounts!= null) {
+            List<SDMDiscount> discounts = sdmStore.getSDMDiscounts().getSDMDiscount();
+            for(SDMDiscount discount : discounts){
+                Sale newSale = Sale.createInstanceBySDM(discount);
+                newStore.getSales().add(newSale);
+            }
+        }
         for(SDMSell sell : itemsToSellSDM){
             Sell newSell= Sell.createInstanceBySDM(sell);
             newStore.getItemsToSell().add(newSell);
         }
-        for(SDMDiscount discount : discounts){
-            Sale newSale = Sale.createInstanceBySDM(discount);
-            newStore.getSales().add(newSale);
-        }
+
         return newStore;
     }
 
@@ -164,4 +174,10 @@ public class Store implements Serializable {
         return o.hashCode()==this.hashCode() ;
     }
 
+    public double getTotalShipmentEarning() {
+        return this.totalShipmentEarning;
+    }
+    public void addToTotalShipmentEarning(double newShipmentPrice) {
+        totalShipmentEarning = totalEarning + newShipmentPrice;
+    }
 }

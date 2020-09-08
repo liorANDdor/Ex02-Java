@@ -9,8 +9,11 @@ import java.util.HashMap;
 
 public class Customer {
 
+    public Customer() {
+    }
+
     public enum InfoOptions {
-        Name, CustomerId, Location;
+        Name, CustomerId, Location,TotalShipmentPrice, TotalItemPrice;
 
         public String getInfo(Customer customer) {
             switch (this) {
@@ -20,6 +23,10 @@ public class Customer {
                     return customer.getName();
                 case Location:
                     return String.valueOf(customer.getLocation());
+                case TotalShipmentPrice:
+                    return String.valueOf(customer.getTotalShipmentPrice());
+                case TotalItemPrice:
+                    return String.valueOf(customer.getTotalItemPrice());
                 default:
                     return "Unknown";
             }
@@ -29,6 +36,26 @@ public class Customer {
     private String name;
     private Point location;
     private int id;
+    private double totalShipmentPrice = 0.0;
+    private double totalItemPrice = 0.0;
+
+    public double getTotalShipmentPrice() {
+        return totalShipmentPrice;
+    }
+
+    public double getTotalItemPrice() {
+        return totalItemPrice;
+    }
+
+    public void addTotalShipmentPrice(double shipmentPrice) {
+        this.totalShipmentPrice =  this.totalShipmentPrice + shipmentPrice;
+    }
+
+    public void addTotalItemPrice(double itemsPrice) {
+        this.totalItemPrice = this.totalItemPrice + itemsPrice;
+    }
+
+
     private HashMap<Integer, Order> orders = new HashMap<>();
     private Integer numberOfOrders = 0;
 

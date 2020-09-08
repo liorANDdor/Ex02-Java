@@ -1,4 +1,5 @@
 package SuperApplication;
+import SDMModel.Customer;
 import javafx.beans.binding.Bindings;
 import OrderWindow.OrderController;
 import SDMModel.Item;
@@ -100,7 +101,35 @@ public class SuperApplicationController {
 
     @FXML
     void showCustomersHandler(ActionEvent event) {
+        HashMap<Integer, Customer> customers =  systemManager.getSuperMarket().getCostumers();
+        myPane.getChildren().clear();
+        for(Customer customer: customers.values()){
+            createCustomerTile(customer);
+        }
+    }
 
+    private void createCustomerTile(Customer customer) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            URL url = getClass().getResource("../tile/tile.fxml");
+            fxmlLoader.setLocation(url);
+            Node singleCustomerTile = fxmlLoader.load();
+            List<Customer.InfoOptions> list = new ArrayList<Customer.InfoOptions>();
+            //printItemIDNamePPK(item);
+
+            list.add(Customer.InfoOptions.Name);
+            list.add(Customer.InfoOptions.CustomerId);
+            list.add(Customer.InfoOptions.Location);
+            list.add(Customer.InfoOptions.TotalItemPrice);
+            list.add(Customer.InfoOptions.TotalShipmentPrice);
+            tileController tileController = fxmlLoader.getController();
+
+            tileController.initialize(systemManager.getCustomerInfo(customer,list));
+            myPane.getChildren().add(singleCustomerTile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -191,12 +220,12 @@ public class SuperApplicationController {
             fxmlLoader.setLocation(url);
             Node storeView = fxmlLoader.load();
             StoreTileController storeViewController = fxmlLoader.getController();
-            storeViewController.initialize(systemManager.getSuperMarket().getStores());
+            storeViewController.initialize(systemManager.getSuperMarket().getStores(), systemManager);
 
 
-            Platform.runLater(
-                    () -> storeViewController.setId("1111")
-            );
+//            Platform.runLater(
+//                    () -> storeViewController.setId("1111")
+//            );
 
             myPane.getChildren().add(storeView);
 

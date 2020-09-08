@@ -96,9 +96,11 @@ public class Order implements Serializable {
             Point storeLocation = store.getLocation();
             double deliveryDistance = Math.sqrt((clientLocation.x - storeLocation.x) * (clientLocation.x - storeLocation.x)
                     + (clientLocation.y - storeLocation.y) * (clientLocation.y - storeLocation.y));
+            store.addToTotalShipmentEarning(deliveryDistance * store.getDeliveryPpk());
             totalShipmentPrice = totalShipmentPrice + deliveryDistance * store.getDeliveryPpk();
         }
         shipmentPrice = totalShipmentPrice;
+
     }
 
     private int getAmountOfAllItems() {

@@ -3,6 +3,7 @@ package SDMModel;
 import SDMGenerated.SDMOffer;
 import SDMGenerated.ThenYouGet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NeedToGet {
@@ -14,7 +15,7 @@ public class NeedToGet {
         this.sdmOffer = sdmOffer;
     }
 
-    private List<Offer> sdmOffer;
+    private List<Offer> sdmOffer = new ArrayList<>();
 
     public String getOperator() {
         return operator;
