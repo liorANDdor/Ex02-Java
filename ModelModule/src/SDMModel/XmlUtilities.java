@@ -7,6 +7,7 @@ import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import java.awt.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +84,7 @@ public class XmlUtilities {
         if (isXmlOk) {
             List<SDMStore> stores = superMarketSDM.getSDMStores().getSDMStore();
             List<SDMItem> items = superMarketSDM.getSDMItems().getSDMItem();
+            List<SDMCustomer> customers = superMarketSDM.getSDMCustomers().getSDMCustomer();
 
             for (int i = 0; i < stores.size(); i++)
                 for (int j = i + 1; j < stores.size(); j++)
@@ -100,6 +102,34 @@ public class XmlUtilities {
                 }
             }
 
+            for (int i = 0; i < customers.size(); i++) {
+                for (int j = i + 1; j < customers.size(); j++) {
+                    if (customers.get(i).getId() == customers.get(j).getId()) {
+                        isContentAsNeeded = false;
+                        whatWrongMessage += String.format("There is two customers with the same ID : %d \n", customers.get(i).getId());
+                    }
+                }
+            }
+
+            for (int i = 1; i <= 50; i++) {
+                for (int j = 1; j <= 50; j++) {
+                    Point pointToCheck = new Point(i, j);
+                    int count = 0;
+                    count += stores
+                            .stream()
+                            .filter(store -> store.getLocation().getX() == pointToCheck.x && store.getLocation().getY() == pointToCheck.getY())
+                            .count();
+                    count += customers
+                            .stream()
+                            .filter(customer -> customer.getLocation().getX() == pointToCheck.x && customer.getLocation().getY() == pointToCheck.getY())
+                            .count();
+                    if (count > 1) {
+                        isContentAsNeeded = false;
+                        whatWrongMessage += String.format("there is two object on same location: %s", pointToCheck.toString());
+                    }
+                }
+            }
+
             for (SDMStore store : stores) {
                 for (SDMSell itemOfStore : store.getSDMPrices().getSDMSell()) {
                     boolean theItemExists = items.stream()
@@ -113,6 +143,7 @@ public class XmlUtilities {
                     }
                 }
             }
+
             for (SDMItem item : items) {
                 boolean itemIsAvailable = stores.stream().filter(sdmStore ->
                         sdmStore.getSDMPrices().getSDMSell().stream().anyMatch(price -> price.getItemId() == item.getId())
