@@ -1,5 +1,6 @@
 package SDMModel;
 
+import SDMGenerated.SDMDiscount;
 import SDMGenerated.SDMSell;
 import SDMGenerated.SDMStore;
 
@@ -34,12 +35,22 @@ public class Store implements Serializable {
     }
 
     private Double totalEarning = 0.0;
-    HashMap<Integer, Order> orders = new HashMap<>();
+    private HashMap<Integer, Order> orders = new HashMap<>();
     private String name;
     private int deliveryPpk;
     private Point location;
     private List<Sell> itemsToSell = new ArrayList<>();
+    private List<Sale> sales = new ArrayList<>();
     private int id;
+
+    public List<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(List<Sale> sales) {
+        this.sales = sales;
+    }
+
 
     public Double getTotalEarning() {
 
@@ -58,10 +69,14 @@ public class Store implements Serializable {
         newStore.setName(sdmStore.getName());
         newStore.setLocation(new Point(sdmStore.getLocation().getX(),sdmStore.getLocation().getY()));
         List<SDMSell>itemsToSellSDM = sdmStore.getSDMPrices().getSDMSell();
+        List<SDMDiscount> discounts = sdmStore.getSDMDiscounts().getSDMDiscount();
         for(SDMSell sell : itemsToSellSDM){
-
             Sell newSell= Sell.createInstanceBySDM(sell);
             newStore.getItemsToSell().add(newSell);
+        }
+        for(SDMDiscount discount : discounts){
+            Sale newSale = Sale.createInstanceBySDM(discount);
+            newStore.getSales().add(newSale);
         }
         return newStore;
     }

@@ -37,7 +37,7 @@ public class Order implements Serializable {
         }
     }
 
-
+    private Integer idOfCustomer;
     private Integer orderNumber;
     private HashMap<Store, List<Sell>> storesToOrderFrom = new HashMap<Store, List<Sell>>();
     private Point locationOfClient;

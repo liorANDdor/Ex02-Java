@@ -82,6 +82,17 @@ public class SystemManager {
         return storeInfo;
     }
 
+    public StringBuilder getCustomerInfo(Customer customer , List<Customer.InfoOptions>list){
+        StringBuilder customerInfo = new StringBuilder();
+        for (Customer.InfoOptions option : list) {
+            customerInfo
+                    .append(String.join(" ", option.toString().split("(?=[A-Z])")))
+                    .append(": ").append(option.getInfo(customer))
+                    .append("\n");
+        }
+        return customerInfo;
+    }
+
     public Order getEmptyOrder() {
         Order order = new Order();
         return order;
