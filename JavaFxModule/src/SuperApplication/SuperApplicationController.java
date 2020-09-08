@@ -86,7 +86,7 @@ public class SuperApplicationController {
         systemManager.getSuperMarket().getStores().values().stream().forEach(store -> {
             printStore(store);
         });
-        isXmlLoaded.set(true);
+        //isXmlLoaded.set(true);
 
     }
 
