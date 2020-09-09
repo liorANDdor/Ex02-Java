@@ -28,7 +28,7 @@ import java.util.*;
 
 public class SuperApplicationController {
 
-    SystemManager systemManager = new SystemManager();
+    SystemManager systemManager = SystemManager.getInstance();
     private Map<Integer, Node> itemsTilesController = new HashMap<>();
     private Map<Integer, Node> storesTilesController = new HashMap<>();
 
@@ -38,6 +38,7 @@ public class SuperApplicationController {
     @FXML private Button ordersBtn;
     @FXML private Button customersBtn;
     @FXML private Button mapBtn;
+    @FXML private Button addOrderBtn;
     @FXML private FlowPane myPane;
 
 
@@ -51,6 +52,7 @@ public class SuperApplicationController {
         ordersBtn.disableProperty().bind(isXmlLoaded.not());
         customersBtn.disableProperty().bind(isXmlLoaded.not());
         mapBtn.disableProperty().bind(isXmlLoaded.not());
+        addOrderBtn.disableProperty().bind(isXmlLoaded.not());
     }
 
     @FXML
@@ -60,18 +62,19 @@ public class SuperApplicationController {
 
 
     @FXML
-    void deleteItemFromStoreHandler(ActionEvent event) throws IOException {
+    void createOrder(ActionEvent event) throws IOException {
         Stage stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL url = getClass().getResource("../OrderWindow/Order.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         OrderController o = fxmlLoader.getController();
-        stg.initModality(Modality.WINDOW_MODAL);
+        o.initialize(systemManager);
+        stg.initModality(Modality.APPLICATION_MODAL);
         // newWindow.initOwner(primaryStage);
-        Scene scene = new Scene(root, 200, 200);
+        Scene scene = new Scene(root, 900, 700);
 
-        stg.setTitle("asd");
+        stg.setTitle("New Order");
         stg.setScene(scene);
         stg.show();
     }
@@ -83,20 +86,8 @@ public class SuperApplicationController {
         File selectedFile = fc.showOpenDialog(null);
         System.out.println(selectedFile.getAbsolutePath());
         systemManager.LoadXMLFileAndCheckIt(selectedFile.getAbsolutePath());
-        systemManager.getSuperMarket().getStores().values().stream().forEach(store -> {
-            printStore(store);
-        });
-        //isXmlLoaded.set(true);
+        isXmlLoaded.set(true);
 
-    }
-
-    private void printStore(Store store) {
-        List<Store.InfoOptions> list=new LinkedList<>();
-        list.add(Store.InfoOptions.Id);
-        list.add(Store.InfoOptions.Name);
-        list.add(Store.InfoOptions.DeliveryPpk);
-        list.add(Store.InfoOptions.TotalEarning);
-        System.out.println(systemManager.getStoreInfo(store,list));
     }
 
     @FXML
@@ -172,33 +163,6 @@ public class SuperApplicationController {
         }
     }
 
-
-    private void createStoreTile(Store store) {
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../tile/tile.fxml");
-            fxmlLoader.setLocation(url);
-            Node singleWordTile = fxmlLoader.load();
-            List<Store.InfoOptions> list = new ArrayList<Store.InfoOptions>();
-            //printItemIDNamePPK(item);
-
-            list.add(Store.InfoOptions.Id);
-            list.add(Store.InfoOptions.Name);
-            list.add(Store.InfoOptions.DeliveryPpk);
-            tileController tileController = fxmlLoader.getController();
-            tileController.initialize(systemManager.getStoreInfo(store,list));
-            Platform.runLater(
-                    () -> tileController.setName(store.getName())
-            );
-
-            myPane.getChildren().add(singleWordTile);
-            storesTilesController.put(store.getId(), singleWordTile);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     @FXML

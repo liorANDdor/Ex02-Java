@@ -6,9 +6,10 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class SystemManager {
+ public class SystemManager {
 
-    private SuperMarket superMarket;
+     private static SystemManager manager = null;
+     private SuperMarket superMarket;
     private XmlUtilities xmlUtilities;
     private boolean thereIsXmlLoaded = false;
 
@@ -31,8 +32,17 @@ public class SystemManager {
         }
     }
 
+    private SystemManager(){
 
-    public boolean isXmlLoaded() {
+    }
+     public static SystemManager getInstance()
+     {
+         if (manager == null)
+             manager = new SystemManager();
+
+         return manager;
+     }
+     public boolean isXmlLoaded() {
         return thereIsXmlLoaded;
     }
 
