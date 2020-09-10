@@ -42,17 +42,13 @@ public class SuperApplicationController {
     @FXML private FlowPane myPane;
 
 
-    private SimpleBooleanProperty isXmlLoaded = new SimpleBooleanProperty(false);
-
-
-
     @FXML private void initialize(){
-        storesBtn.disableProperty().bind(isXmlLoaded.not());
-        itemBtn.disableProperty().bind(isXmlLoaded.not());
-        ordersBtn.disableProperty().bind(isXmlLoaded.not());
-        customersBtn.disableProperty().bind(isXmlLoaded.not());
-        mapBtn.disableProperty().bind(isXmlLoaded.not());
-        addOrderBtn.disableProperty().bind(isXmlLoaded.not());
+        storesBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        itemBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        ordersBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        customersBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        mapBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        addOrderBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
     }
 
     @FXML
@@ -80,13 +76,19 @@ public class SuperApplicationController {
     }
 
     @FXML
-    void loadXMLHandler(ActionEvent event)   {
+    void loadXMLHandler(ActionEvent event) throws IOException {
 
-        FileChooser fc = new FileChooser();
-        File selectedFile = fc.showOpenDialog(null);
-        System.out.println(selectedFile.getAbsolutePath());
-        systemManager.LoadXMLFileAndCheckIt(selectedFile.getAbsolutePath());
-        isXmlLoaded.set(true);
+        Stage stg = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL url = getClass().getResource("../XmlLoderView/XmlLoader.fxml");
+        fxmlLoader.setLocation(url);
+        Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
+        Scene scene = new Scene(root, 400, 200);
+
+        stg.setTitle("Load XML");
+        stg.setScene(scene);
+        stg.show();
+
 
     }
 
@@ -102,7 +104,7 @@ public class SuperApplicationController {
     private void createCustomerTile(Customer customer) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../tile/tile.fxml");
+            URL url = getClass().getResource("../XmlLoderView/tile.fxml");
             fxmlLoader.setLocation(url);
             Node singleCustomerTile = fxmlLoader.load();
             List<Customer.InfoOptions> list = new ArrayList<Customer.InfoOptions>();
