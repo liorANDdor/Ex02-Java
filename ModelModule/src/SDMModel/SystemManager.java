@@ -30,7 +30,7 @@ public class SystemManager {
         Consumer<Boolean> xmlLoadedConsumer = value -> {
             this.thereIsXmlLoaded.set(value);
         };
-        XmlLoaderTask task = new XmlLoaderTask(fullPath,superMarketConsumer, xmlLoadedConsumer);
+        XmlLoaderTask task = new XmlLoaderTask(fullPath, superMarketConsumer, xmlLoadedConsumer);
         controller.bindUIToTask(task);
         new Thread(task).start();
 

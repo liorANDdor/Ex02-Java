@@ -3,7 +3,7 @@ package SDMModel;
 import SDMGenerated.IfYouBuy;
 
 
-public class NeedToBuy {
+public class IfBuy {
 
     private double quantity;
     private int itemId;
@@ -25,8 +25,8 @@ public class NeedToBuy {
     }
 
 
-    public static NeedToBuy createInstanceBySDM(IfYouBuy ifYouBuy) {
-        NeedToBuy needToBuy = new NeedToBuy();
+    public static IfBuy createInstanceBySDM(IfYouBuy ifYouBuy) {
+        IfBuy needToBuy = new IfBuy();
         needToBuy.setItemId(ifYouBuy.getItemId());
         needToBuy.setQuantity(ifYouBuy.getQuantity());
         return  needToBuy;

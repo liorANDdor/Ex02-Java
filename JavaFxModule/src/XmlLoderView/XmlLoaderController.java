@@ -3,9 +3,11 @@ package XmlLoderView;
 import SDMModel.SystemManager;
 import SDMModel.XmlLoaderTask;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.FileChooser;
@@ -15,6 +17,10 @@ import java.io.File;
 public class XmlLoaderController {
 
     SystemManager insatnce = SystemManager.getInstance();
+
+    @FXML
+    private Button LoadContentBtn;
+
     @FXML
     private Label ProgressPrecent;
 
@@ -24,6 +30,11 @@ public class XmlLoaderController {
     @FXML
     private Label MessageLabel;
 
+    SimpleBooleanProperty isDisabledBtn = new SimpleBooleanProperty(true);
+
+    @FXML private void initialize() {
+        LoadContentBtn.disableProperty().bind(isDisabledBtn);
+    }
     @FXML
     void LoadContentHandler(ActionEvent event) {
             insatnce.LoadXMLFileAndCheckIt(MessageLabel.getText(),this);
@@ -34,18 +45,14 @@ public class XmlLoaderController {
         FileChooser fc = new FileChooser();
         File selectedFile = fc.showOpenDialog(null);
         MessageLabel.setText(selectedFile.getAbsolutePath());
+        isDisabledBtn.set(false);
 
 
     }
 
     public void bindUIToTask(Task<Boolean> task) {
-        // task message
         MessageLabel.textProperty().bind(task.messageProperty());
-
-        // task progress bar
         ProgressBar.progressProperty().bind(task.progressProperty());
-
-        // task percent label
         ProgressPrecent.textProperty().bind(
                 Bindings.concat(
                         Bindings.format(

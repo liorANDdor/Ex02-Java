@@ -5,7 +5,7 @@ import SDMGenerated.SDMDiscount;
 public class Sale {
 
     protected String name;
-    protected NeedToBuy needToBuy;
+    protected IfBuy ifBuy;
     protected NeedToGet needToGet;
 
     public String getName() {
@@ -16,12 +16,12 @@ public class Sale {
         this.name = name;
     }
 
-    public NeedToBuy getNeedToBuy() {
-        return needToBuy;
+    public IfBuy getIfBuy() {
+        return ifBuy;
     }
 
-    public void setNeedToBuy(NeedToBuy needToBuy) {
-        this.needToBuy = needToBuy;
+    public void setIfBuy(IfBuy ifBuy) {
+        this.ifBuy = ifBuy;
     }
 
 
@@ -37,7 +37,7 @@ public class Sale {
         Sale newSale = new Sale();
         newSale.setName(discount.getName());
         newSale.setNeedToGet(NeedToGet.createInstanceBySDM(discount.getThenYouGet()));
-        newSale.setNeedToBuy(NeedToBuy.createInstanceBySDM(discount.getIfYouBuy()));
+        newSale.setIfBuy(IfBuy.createInstanceBySDM(discount.getIfYouBuy()));
         return newSale;
     }
 }
