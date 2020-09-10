@@ -35,14 +35,14 @@
                   <Label fx:id="ID" alignment="CENTER_RIGHT" contentDisplay="RIGHT" GridPane.rowIndex="1" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Label fx:id="shipmentLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="26.0" prefWidth="97.0" text="Shipment Price">
+                        <Label fx:id="shipmentLabel" alignment="TOP_LEFT" prefHeight="26.0" prefWidth="262.0" text="Shipment Price">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
                      </children>
                   </HBox>
-                  <ComboBox fx:id="clientCB" prefHeight="31.0" prefWidth="298.0" />
+                  <ComboBox fx:id="customerCB" prefHeight="31.0" prefWidth="298.0" />
                   <DatePicker fx:id="datePicker" prefHeight="27.0" prefWidth="302.0" GridPane.rowIndex="1" />
                   <ComboBox fx:id="storeCB" prefHeight="22.0" prefWidth="298.0" GridPane.rowIndex="2" />
                   <CheckBox fx:id="dynamicBtn" mnemonicParsing="false" text="Dynamic Order" GridPane.columnIndex="1">
@@ -57,10 +57,10 @@
          <children>
             <ScrollPane layoutX="-5.0" layoutY="-1.0" prefHeight="534.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
-                  <FlowPane fx:id="itemsFlowPan" prefHeight="392.0" prefWidth="716.0">
+                  <FlowPane fx:id="itemsFlowPan" prefHeight="532.0" prefWidth="885.0">
                      <children>
                         <ScrollBar orientation="VERTICAL" prefHeight="307.0" prefWidth="17.0" />
-                        <TableView fx:id="itemsTableView" prefHeight="393.0" prefWidth="688.0" />
+                        <TableView fx:id="itemsTableView" prefHeight="226.0" prefWidth="884.0" />
                      </children>
                   </FlowPane>
                </content>

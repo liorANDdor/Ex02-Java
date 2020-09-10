@@ -46,6 +46,16 @@ public class Order implements Serializable {
     private Double itemsPrice = 0.0;
     private double deliveryDistance;
     private Double shipmentPrice;
+    private Customer orderCustomer;
+
+
+    public void setOrderCustomer(Customer orderCustomer) {
+        this.orderCustomer = orderCustomer;
+    }
+
+    public Customer getOrderCustomer() {
+        return orderCustomer;
+    }
 
     public static void crateSubOrder(Store store, Order order, Collection<Item> items){
         Order subOrder = new Order();

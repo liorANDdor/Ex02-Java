@@ -10,12 +10,14 @@ import java.io.Serializable;
 
 public class ItemSetterGetter implements Serializable {
 
-    public ItemSetterGetter( String price, String name, String ID, String purchaseCategory, Order order, SystemManager sys) {
-        Price = new SimpleStringProperty(price);
-        Name = new SimpleStringProperty(name);
+    public ItemSetterGetter( String price, String name, String ID, String purchaseCategory, Order order, Store store,SystemManager sys) {
+        this.Price = new SimpleStringProperty(price);
+        this.Name = new SimpleStringProperty(name);
         this.ID = new SimpleStringProperty(ID);
         this.purchaseCategory = new SimpleStringProperty(purchaseCategory);
-        this.addButton = new Button("Purchase");
+        this.totalPrice = new SimpleStringProperty("0");
+        this.totalQuantity = new SimpleStringProperty("0");
+        this.addButton = new Button("Add");
         if (purchaseCategory.equals("Weight")) {
             SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 500, 0, 0.1);
             quantitySpinner.setValueFactory(valueFactory);
@@ -24,15 +26,48 @@ public class ItemSetterGetter implements Serializable {
             quantitySpinner.setValueFactory(valueFactory);
         }
         addButton.setOnAction(x -> {
-            Store storeLowestItemPrice = sys.getItemLowestPrice(Integer.parseInt(ID));
-            sys.addAnItemToOrder(order, storeLowestItemPrice, Integer.parseInt(ID),quantitySpinner.getValue());
+            if(!quantitySpinner.getValue().equals(0) && !quantitySpinner.getValue().equals(0.0)) {
+                int itemID = Integer.parseInt(ID);
+                sys.addAnItemToOrder(order, store, itemID, quantitySpinner.getValue());
+                double totalDobuleQuantity = order.getItemsQuantity().get(sys.getSuperMarket().getItemByID(itemID));
+                totalQuantity.set(String.valueOf(totalDobuleQuantity)); // can be taken from order..
+                totalPrice.set(String.valueOf(Math.round(totalDobuleQuantity * Double.parseDouble(price) * 100 / 100)));
+            }
         });
     }
     private SimpleStringProperty Price;
     private SimpleStringProperty purchaseCategory;
     private SimpleStringProperty Name;
     private SimpleStringProperty ID;
+    private SimpleStringProperty totalPrice;
+    private SimpleStringProperty totalQuantity;
     private Button addButton;
+
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice.set(totalPrice);
+    }
+
+    public void setTotalQuantity(String totalQuantity) {
+        this.totalQuantity.set(totalQuantity);
+    }
+
+
+    public String getTotalPrice() {
+        return totalPrice.get();
+    }
+
+    public SimpleStringProperty totalPriceProperty() {
+        return totalPrice;
+    }
+
+    public String getTotalQuantity() {
+        return totalQuantity.get();
+    }
+
+    public SimpleStringProperty totalQuantityProperty() {
+        return totalQuantity;
+    }
+
     Spinner<Double> quantitySpinner = new Spinner<Double>();
 
 
