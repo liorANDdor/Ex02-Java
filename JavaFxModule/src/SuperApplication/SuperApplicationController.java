@@ -1,10 +1,7 @@
 package SuperApplication;
-import SDMModel.Customer;
+import SDMModel.*;
 import javafx.beans.binding.Bindings;
 import OrderWindow.OrderController;
-import SDMModel.Item;
-import SDMModel.Store;
-import SDMModel.SystemManager;
 import StoreView.StoreTileController;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -42,13 +39,17 @@ public class SuperApplicationController {
     @FXML private FlowPane myPane;
 
 
+    private SimpleBooleanProperty isXmlLoaded = new SimpleBooleanProperty(false);
+
+
+
     @FXML private void initialize(){
-        storesBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
-        itemBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
-        ordersBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
-        customersBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
-        mapBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
-        addOrderBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        storesBtn.disableProperty().bind(isXmlLoaded.not());
+        itemBtn.disableProperty().bind(isXmlLoaded.not());
+        ordersBtn.disableProperty().bind(isXmlLoaded.not());
+        customersBtn.disableProperty().bind(isXmlLoaded.not());
+        mapBtn.disableProperty().bind(isXmlLoaded.not());
+        addOrderBtn.disableProperty().bind(isXmlLoaded.not());
     }
 
     @FXML
@@ -66,6 +67,7 @@ public class SuperApplicationController {
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         OrderController o = fxmlLoader.getController();
         o.initialize(systemManager);
+        myPane.getChildren().clear();
         stg.initModality(Modality.APPLICATION_MODAL);
         // newWindow.initOwner(primaryStage);
         Scene scene = new Scene(root, 900, 700);
@@ -104,7 +106,7 @@ public class SuperApplicationController {
     private void createCustomerTile(Customer customer) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../XmlLoderView/tile.fxml");
+            URL url = getClass().getResource("../tile/tile.fxml");
             fxmlLoader.setLocation(url);
             Node singleCustomerTile = fxmlLoader.load();
             List<Customer.InfoOptions> list = new ArrayList<Customer.InfoOptions>();
@@ -174,7 +176,43 @@ public class SuperApplicationController {
 
     @FXML
     void showOrdersHandler(ActionEvent event) {
+        HashMap<Integer, Store> stores =  systemManager.getSuperMarket().getStores();
+        myPane.getChildren().clear();
+        for(Store store: stores.values()){
+            for(Order order:store.getOrders().values()){
+                createOrderTile(order);
+            }
+        }
+    }
 
+    private void createOrderTile(Order order) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            URL url = getClass().getResource("../tile/tile.fxml");
+            fxmlLoader.setLocation(url);
+            Node singleWordTile = fxmlLoader.load();
+
+//            printStore(store);
+//            System.out.println("Store Items: \n");
+//            for(Sell sell:store.getItemsToSell()) {
+//                printSellOffer(sell);
+//            }
+            List<Order.InfoOptions> list = new ArrayList<>();
+            list.add(Order.InfoOptions.OrderId);
+            list.add(Order.InfoOptions.Date);
+            list.add(Order.InfoOptions.AmountOfAllItems);
+            list.add(Order.InfoOptions.ItemsPrice);
+            list.add(Order.InfoOptions.ShipmentPrice);
+            list.add(Order.InfoOptions.TotalPrice);
+
+            tileController tileController = fxmlLoader.getController();
+
+            tileController.initialize(systemManager.getinfoOrder(order,list));
+            myPane.getChildren().add(singleWordTile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

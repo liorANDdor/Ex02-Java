@@ -18,6 +18,7 @@ public class ItemSetterGetter implements Serializable {
         this.totalPrice = new SimpleStringProperty("0");
         this.totalQuantity = new SimpleStringProperty("0");
         this.addButton = new Button("Add");
+
         if (purchaseCategory.equals("Weight")) {
             SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 500, 0, 0.1);
             quantitySpinner.setValueFactory(valueFactory);
@@ -32,6 +33,8 @@ public class ItemSetterGetter implements Serializable {
                 double totalDobuleQuantity = order.getItemsQuantity().get(sys.getSuperMarket().getItemByID(itemID));
                 totalQuantity.set(String.valueOf(totalDobuleQuantity)); // can be taken from order..
                 totalPrice.set(String.valueOf(Math.round(totalDobuleQuantity * Double.parseDouble(price) * 100 / 100)));
+
+                totalItemPrice.set(String.valueOf(Double.parseDouble(totalItemPrice.get()) + quantitySpinner.getValue() * store.getItemPrice(Integer.parseInt(ID))));
             }
         });
     }
@@ -43,6 +46,15 @@ public class ItemSetterGetter implements Serializable {
     private SimpleStringProperty totalQuantity;
     private Button addButton;
 
+    public static SimpleStringProperty getTotalItemPrice() {
+        return totalItemPrice;
+    }
+
+    public SimpleStringProperty itemsPriceProperty() {
+        return totalItemPrice;
+    }
+
+    static SimpleStringProperty totalItemPrice = new SimpleStringProperty("0.0");
     public void setTotalPrice(String totalPrice) {
         this.totalPrice.set(totalPrice);
     }

@@ -1,10 +1,7 @@
 package SDMModel;
 
 import SDMGenerated.SuperDuperMarketDescriptor;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
-import sun.java2d.ScreenUpdateManager;
 
 import java.util.function.Consumer;
 
