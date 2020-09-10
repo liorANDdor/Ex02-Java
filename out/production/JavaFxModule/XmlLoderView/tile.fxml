@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane prefHeight="202.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tile.tileController">
+   <content>
+      <Pane>
+         <children>
+            <Label fx:id="name" alignment="CENTER" text="name" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="System Font" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </content>
+</ScrollPane>

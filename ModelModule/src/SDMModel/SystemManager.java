@@ -1,35 +1,39 @@
 package SDMModel;
 
 import SDMGenerated.SuperDuperMarketDescriptor;
+import XmlLoderView.XmlLoaderController;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.function.Consumer;
 
- public class SystemManager {
+public class SystemManager {
 
      private static SystemManager manager = null;
      private SuperMarket superMarket;
-    private XmlUtilities xmlUtilities;
-    private boolean thereIsXmlLoaded = false;
 
-    public XmlUtilities getXmlUtilities() {
-        return xmlUtilities;
-    }
+     private SimpleBooleanProperty thereIsXmlLoaded = new SimpleBooleanProperty(false);
+
 
     public SuperMarket getSuperMarket() {
         return superMarket;
     }
 
-    public void LoadXMLFileAndCheckIt(String fullPath) {
-        xmlUtilities = new XmlUtilities();
-        xmlUtilities.isNameOfFileCorrect(fullPath);
-        SuperDuperMarketDescriptor superMarketSDM = xmlUtilities.loadFile(fullPath);
-        xmlUtilities.checkIfTheXmlThatJustLoadedOk(superMarketSDM);
-        if (xmlUtilities.getIsXmlOk()) {
-            superMarket = SuperMarket.creatInstance(superMarketSDM);
-            thereIsXmlLoaded = true;
-        }
+    public void LoadXMLFileAndCheckIt(String fullPath, XmlLoaderController controller) {
+        Consumer<SuperMarket> superMarketConsumer = value -> {
+            this.superMarket = value;
+        };
+        Consumer<Boolean> xmlLoadedConsumer = value -> {
+            this.thereIsXmlLoaded.set(value);
+        };
+        XmlLoaderTask task = new XmlLoaderTask(fullPath,superMarketConsumer, xmlLoadedConsumer);
+        controller.bindUIToTask(task);
+        new Thread(task).start();
+
     }
 
     private SystemManager(){
@@ -42,7 +46,7 @@ import java.util.List;
 
          return manager;
      }
-     public boolean isXmlLoaded() {
+     public SimpleBooleanProperty isXmlLoaded() {
         return thereIsXmlLoaded;
     }
 
@@ -223,19 +227,6 @@ import java.util.List;
         return storeLowestItemPrice;
     }
 
-    public void loadOrders(String fullPath) {
-        HashMap<Integer, Order > orders = xmlUtilities.ReadDataFromFile(fullPath);
-        if(orders.size() != 0){
-        for(Order order:orders.values()){
-            if(!superMarket.getOrders().containsKey(order.getOrderNumber()))
-            commitOrder(order);
-        }}
-        else
-            System.out.println("No orders found");
-    }
 
-    public void saveOrders(String fullPath) {
 
-        xmlUtilities.WriteDataToFile(fullPath, superMarket.getOrders());
-    }
-}
+ }
