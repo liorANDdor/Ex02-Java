@@ -37,7 +37,7 @@ public class Order implements Serializable {
         }
     }
 
-    private Integer idOfCustomer;
+
     private Integer orderNumber;
     private HashMap<Store, List<Sell>> storesToOrderFrom = new HashMap<Store, List<Sell>>();
     private Point locationOfClient;
@@ -45,12 +45,14 @@ public class Order implements Serializable {
     private Date dateOfOrder;
     private Double itemsPrice = 0.0;
     private double deliveryDistance;
-    private Double shipmentPrice;
+    private Double shipmentPrice = 0.0;
     private Customer orderCustomer;
 
 
     public void setOrderCustomer(Customer orderCustomer) {
+        this.setLocationOfClient(orderCustomer.getLocation());
         this.orderCustomer = orderCustomer;
+
     }
 
     public Customer getOrderCustomer() {
@@ -63,7 +65,7 @@ public class Order implements Serializable {
         subOrder.setOrderNumber(order.getOrderNumber());
         subOrder.getStoresToOrderFrom().put(store, order.getStoresToOrderFrom().get(store));
         subOrder.setLocationOfClient(order.getLocationOfClient());
-        subOrder.calculatAndSetDistance();
+        //subOrder.calculatAndSetDistance();
 
         double itemPrice = 0.0;
         for (Sell sell : subOrder.getStoresToOrderFrom().get(store)) {
@@ -75,7 +77,7 @@ public class Order implements Serializable {
         }
         subOrder.setItemsPrice(itemPrice);
         store.addToTotalEarning(itemPrice + subOrder.getShipmentPrice());
-        store.getOrders().put(order.getOrderNumber(), order);
+        store.getOrders().put(order.getOrderNumber(), subOrder);
     }
 
     private String getStoresAsString() {

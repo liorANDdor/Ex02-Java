@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
@@ -21,10 +23,11 @@
   <items>
     <AnchorPane minHeight="100.0" minWidth="900.0" prefHeight="100.0" prefWidth="900.0">
          <children>
-            <GridPane layoutY="-1.0" prefHeight="90.0" prefWidth="598.0">
+            <GridPane layoutY="1.0" prefHeight="88.0" prefWidth="898.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="444.0" minWidth="10.0" prefWidth="231.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" prefWidth="220.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" prefWidth="455.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -35,7 +38,7 @@
                   <Label fx:id="ID" alignment="CENTER_RIGHT" contentDisplay="RIGHT" GridPane.rowIndex="1" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Label fx:id="shipmentLabel" alignment="TOP_LEFT" prefHeight="26.0" prefWidth="262.0" text="Shipment Price">
+                        <Label fx:id="totalPriceLabel">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -44,23 +47,39 @@
                   </HBox>
                   <ComboBox fx:id="customerCB" prefHeight="31.0" prefWidth="298.0" />
                   <DatePicker fx:id="datePicker" prefHeight="27.0" prefWidth="302.0" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="storeCB" prefHeight="22.0" prefWidth="298.0" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="dynamicBtn" mnemonicParsing="false" text="Dynamic Order" GridPane.columnIndex="1">
+                  <ComboBox fx:id="storeCB" disable="true" prefHeight="22.0" prefWidth="298.0" GridPane.rowIndex="2" />
+                  <CheckBox fx:id="dynamicBtn" disable="true" mnemonicParsing="false" text="Dynamic Order" GridPane.columnIndex="1">
                      <padding>
                         <Insets bottom="10.0" left="10.0" />
                      </padding>
                   </CheckBox>
+                  <Label fx:id="shipmentLabel" alignment="TOP_LEFT" prefHeight="26.0" prefWidth="262.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="97.0" prefWidth="453.0" GridPane.columnIndex="2" GridPane.rowSpan="3">
+                     <children>
+                        <BorderPane layoutX="126.0" layoutY="10.0" prefHeight="95.0" prefWidth="201.0">
+                           <center>
+                              <Button fx:id="commitBtn" mnemonicParsing="false" onAction="#commitOrder" prefHeight="78.0" prefWidth="174.0" text="Finish Order" />
+                           </center>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </BorderPane>
+                     </children>
+                  </Pane>
                </children>
             </GridPane>
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0">
          <children>
-            <ScrollPane layoutX="-5.0" layoutY="-1.0" prefHeight="534.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane layoutX="-5.0" layoutY="-1.0" maxHeight="1000.0" maxWidth="1000.0" prefHeight="534.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
-                  <FlowPane fx:id="itemsFlowPan" prefHeight="532.0" prefWidth="885.0">
+                  <FlowPane fx:id="itemsFlowPan" maxHeight="1000.0" maxWidth="1000.0" minHeight="700.0" minWidth="500.0" prefHeight="700.0" prefWidth="500.0">
                      <children>
-                        <ScrollBar orientation="VERTICAL" prefHeight="307.0" prefWidth="17.0" />
-                        <TableView fx:id="itemsTableView" prefHeight="226.0" prefWidth="884.0" />
+                        <TableView fx:id="itemsTableView" maxHeight="1000.0" maxWidth="1000.0" minHeight="700.0" minWidth="500.0" prefHeight="0.0" prefWidth="884.0" />
                      </children>
                   </FlowPane>
                </content>

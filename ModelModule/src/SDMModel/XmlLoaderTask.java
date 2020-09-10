@@ -1,10 +1,7 @@
 package SDMModel;
 
 import SDMGenerated.SuperDuperMarketDescriptor;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
-import sun.java2d.ScreenUpdateManager;
 
 import java.util.function.Consumer;
 
@@ -40,7 +37,16 @@ public class XmlLoaderTask  extends Task<Boolean> {
             SuperMarket superMarket = SuperMarket.creatInstance(superMarketSDM);
             updateProgress(0.7, 1);
             superMarketDelegates.accept(superMarket);
+            updateProgress(0.8, 1);
+            Thread.sleep(500);
+            updateProgress(0.9, 1);
+            Thread.sleep(500);
+            updateProgress(1, 1);
+            Thread.sleep(500);
+            updateMessage("Loaded Successfuly");
+
             isxmlLoaded.accept(true);
+            return true;
         } else {
             Thread.sleep(150);
             updateProgress(0.85, 1);
@@ -48,13 +54,6 @@ public class XmlLoaderTask  extends Task<Boolean> {
             updateMessage("Not loaded successfuly \n " + xmlUtilities.getWhatWrongMessage());
             return false;
         }
-        updateProgress(0.8, 1);
-        Thread.sleep(500);
-        updateProgress(0.9, 1);
-        Thread.sleep(500);
-        updateProgress(1, 1);
-        Thread.sleep(500);
-        updateMessage("Loaded Successfuly");
-        return true;
+
     }
 }
