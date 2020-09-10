@@ -1,10 +1,8 @@
 package SuperApplication;
-import SDMModel.*;
-import javafx.beans.binding.Bindings;
 import OrderWindow.OrderController;
+import SDMModel.*;
 import StoreView.StoreTileController;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,15 +11,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tile.tileController;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SuperApplicationController {
 
@@ -39,17 +38,18 @@ public class SuperApplicationController {
     @FXML private FlowPane myPane;
 
 
-    private SimpleBooleanProperty isXmlLoaded = new SimpleBooleanProperty(false);
+
 
 
 
     @FXML private void initialize(){
-        storesBtn.disableProperty().bind(isXmlLoaded.not());
-        itemBtn.disableProperty().bind(isXmlLoaded.not());
-        ordersBtn.disableProperty().bind(isXmlLoaded.not());
-        customersBtn.disableProperty().bind(isXmlLoaded.not());
-        mapBtn.disableProperty().bind(isXmlLoaded.not());
-        addOrderBtn.disableProperty().bind(isXmlLoaded.not());
+        storesBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        itemBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        ordersBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        customersBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        mapBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        addOrderBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+
     }
 
     @FXML
@@ -86,7 +86,7 @@ public class SuperApplicationController {
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         Scene scene = new Scene(root, 400, 200);
-
+        stg.initModality(Modality.APPLICATION_MODAL);
         stg.setTitle("Load XML");
         stg.setScene(scene);
         stg.show();

@@ -32,9 +32,10 @@ public class ItemSetterGetter implements Serializable {
                 sys.addAnItemToOrder(order, store, itemID, quantitySpinner.getValue());
                 double totalDobuleQuantity = order.getItemsQuantity().get(sys.getSuperMarket().getItemByID(itemID));
                 totalQuantity.set(String.valueOf(totalDobuleQuantity)); // can be taken from order..
-                totalPrice.set(String.valueOf(Math.round(totalDobuleQuantity * Double.parseDouble(price) * 100 / 100)));
+                totalPrice.set(String.format("%.2f",totalDobuleQuantity * Double.parseDouble(price)));
 
-                totalItemPrice.set(String.valueOf(Double.parseDouble(totalItemPrice.get()) + quantitySpinner.getValue() * store.getItemPrice(Integer.parseInt(ID))));
+                totalItemPrice.set(String.format(
+                        "%.2f",Double.parseDouble(totalItemPrice.get()) + quantitySpinner.getValue() * store.getItemPrice(Integer.parseInt(ID))));
             }
         });
     }

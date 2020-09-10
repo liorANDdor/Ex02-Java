@@ -65,7 +65,7 @@ public class Order implements Serializable {
         subOrder.setOrderNumber(order.getOrderNumber());
         subOrder.getStoresToOrderFrom().put(store, order.getStoresToOrderFrom().get(store));
         subOrder.setLocationOfClient(order.getLocationOfClient());
-        subOrder.calculatAndSetDistance();
+        //subOrder.calculatAndSetDistance();
 
         double itemPrice = 0.0;
         for (Sell sell : subOrder.getStoresToOrderFrom().get(store)) {

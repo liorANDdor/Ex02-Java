@@ -1,7 +1,6 @@
 package OrderWindow;
 
 import SDMModel.*;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -93,6 +92,7 @@ public class OrderController {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 order = new Order();
                 ItemSetterGetter.getTotalItemPrice().set("0");
+                shipmentPrice.set("0");
                 Customer customer = customerBox.get(customerCB.getSelectionModel().getSelectedIndex());
                 order.setOrderCustomer(customer);
                 if(dynamicBtn.isSelected()==false) {
@@ -125,6 +125,7 @@ public class OrderController {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 isCommitReady.set(true);
                 ItemSetterGetter.getTotalItemPrice().set("0");
+                shipmentPrice.set("0");
                 order = new Order();
                 Customer customer = customerBox.get(customerCB.getSelectionModel().getSelectedIndex());
                 order.setOrderCustomer(customer);
@@ -171,6 +172,7 @@ public class OrderController {
                 public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                     isCommitReady.set(true);
                     ItemSetterGetter.getTotalItemPrice().set("0");
+                    shipmentPrice.set("0");
                     if (!newValue.equals( -1)) {
                         Store store = storesBox.get(newValue);
                         Customer customer = customerBox.get(customerCB.getSelectionModel().getSelectedIndex());

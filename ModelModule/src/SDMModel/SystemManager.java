@@ -1,14 +1,12 @@
 package SDMModel;
 
-import SDMGenerated.SuperDuperMarketDescriptor;
 import XmlLoderView.XmlLoaderController;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class SystemManager {
@@ -163,7 +161,7 @@ public class SystemManager {
         Integer orderNumber = superMarket.getNumberOfOrders() + 1;
         superMarket.increaseOrderNumber();
         order.setOrderNumber(orderNumber);
-        order.calculatAndSetDistance();
+        //order.calculatAndSetDistance();
         superMarket.addOrder(order);
         for (Item itemFromXml : order.getItemsQuantity().keySet()) {
             Item item = superMarket.getItemByID(itemFromXml.getId());
