@@ -45,10 +45,10 @@ public class XmlLoaderController {
     void OpenFileHandler(ActionEvent event) {
         FileChooser fc = new FileChooser();
         File selectedFile = fc.showOpenDialog(null);
-        MessageLabel.setText(selectedFile.getAbsolutePath());
-        isDisabledBtn.set(false);
-
-
+        if(selectedFile!=null){
+            MessageLabel.setText(selectedFile.getAbsolutePath());
+            isDisabledBtn.set(false);
+        }
     }
 
     public void bindUIToTask(Task<Boolean> task) {
