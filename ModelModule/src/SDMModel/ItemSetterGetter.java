@@ -7,10 +7,11 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class ItemSetterGetter implements Serializable {
 
-    public ItemSetterGetter( String price, String name, String ID, String purchaseCategory, Order order, Store store,SystemManager sys) {
+    public ItemSetterGetter(String price, String name, String ID, String purchaseCategory, Order order, HashMap<Integer, Order> subOrders , Store store,SystemManager sys) {
         this.Price = new SimpleStringProperty(price);
         this.Name = new SimpleStringProperty(name);
         this.ID = new SimpleStringProperty(ID);
@@ -29,7 +30,7 @@ public class ItemSetterGetter implements Serializable {
         addButton.setOnAction(x -> {
             if(!quantitySpinner.getValue().equals(0) && !quantitySpinner.getValue().equals(0.0)) {
                 int itemID = Integer.parseInt(ID);
-                sys.addAnItemToOrder(order, store, itemID, quantitySpinner.getValue());
+                sys.addAnItemToOrder(order,subOrders, store, itemID, quantitySpinner.getValue());
                 double totalDobuleQuantity = order.getItemsQuantity().get(sys.getSuperMarket().getItemByID(itemID));
                 totalQuantity.set(String.valueOf(totalDobuleQuantity)); // can be taken from order..
                 totalPrice.set(String.format("%.2f",totalDobuleQuantity * Double.parseDouble(price)));

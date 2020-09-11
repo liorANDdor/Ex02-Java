@@ -1,7 +1,6 @@
 package XmlLoderView;
 
 import SDMModel.SystemManager;
-import SDMModel.XmlLoaderTask;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
