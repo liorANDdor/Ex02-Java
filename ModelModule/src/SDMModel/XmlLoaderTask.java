@@ -50,7 +50,6 @@ public class XmlLoaderTask  extends Task<Boolean> {
         } else {
             Thread.sleep(150);
             updateProgress(0.85, 1);
-            updateProgress(1, 1);
             updateMessage("Not loaded successfuly \n " + xmlUtilities.getWhatWrongMessage());
             return false;
         }

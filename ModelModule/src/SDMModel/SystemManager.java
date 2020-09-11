@@ -26,6 +26,7 @@ public class SystemManager {
         Consumer<SuperMarket> superMarketConsumer = value -> {
             this.superMarket = value;
         };
+
         Consumer<Boolean> xmlLoadedConsumer = value -> {
             this.thereIsXmlLoaded.set(value);
         };
