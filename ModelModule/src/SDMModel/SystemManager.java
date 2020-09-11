@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -175,7 +176,7 @@ public class SystemManager {
 
     }
 
-    public void addAnItemToOrder(Order order, Store store, int itemId, double quantity) {
+    public void addAnItemToOrder(Order order, HashMap<Integer, Order> subOrders, Store store, int itemId, double quantity) {
         Item item = superMarket.getItemByID(itemId);
         if  (order.getItemsQuantity().containsKey(item)){
             order.getItemsQuantity().put(item, (order.getItemsQuantity().get(item) + quantity));
@@ -193,6 +194,29 @@ public class SystemManager {
 
         double itemPrice = superMarket.getStores().get(store.getId()).getItemPrice(itemId);
         order.increaseOrderTotalPrice(itemPrice * quantity);
+        subOrders.put(store.getId(), addAnItemToSubOrder(subOrders.getOrDefault(store.getId(), getEmptyOrder()), store, itemId, quantity));
+    }
+
+    public Order addAnItemToSubOrder(Order order, Store store, int itemId, double quantity) {
+        Item item = superMarket.getItemByID(itemId);
+        if  (order.getItemsQuantity().containsKey(item)){
+            order.getItemsQuantity().put(item, (order.getItemsQuantity().get(item) + quantity));
+        }
+        else {
+            if(order.getStoresToOrderFrom().containsKey(store)){
+                order.getStoresToOrderFrom().get(store).add(store.getSellById(itemId));
+            }
+            else {
+                order.getStoresToOrderFrom().put(store, new ArrayList<Sell> ());
+                order.getStoresToOrderFrom().get(store).add(store.getSellById(itemId));
+            }
+            order.getItemsQuantity().put(item, quantity);
+        }
+
+        double itemPrice = superMarket.getStores().get(store.getId()).getItemPrice(itemId);
+        order.increaseOrderTotalPrice(itemPrice * quantity);
+        store.getOrders().put(order.getOrderNumber(), order );
+        return order;
     }
 
     public void isfixedLocationAndSetToOrder(Point point, Order emptyOrder) throws Exception {

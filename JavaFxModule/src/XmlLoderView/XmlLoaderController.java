@@ -1,8 +1,8 @@
 package XmlLoderView;
 
 import SDMModel.SystemManager;
-import SDMModel.XmlLoaderTask;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -51,7 +51,7 @@ public class XmlLoaderController {
     }
 
     public void bindUIToTask(Task<Boolean> task) {
-        MessageLabel.textProperty().bind(task.messageProperty());
+        MessageLabel.textProperty().bindBidirectional((Property<String>) task.messageProperty());
         ProgressBar.progressProperty().bind(task.progressProperty());
         ProgressPrecent.textProperty().bind(
                 Bindings.concat(

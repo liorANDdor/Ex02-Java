@@ -227,10 +227,6 @@ public class SuperApplicationController {
             storeViewController.initialize(systemManager.getSuperMarket().getStores(), systemManager);
 
 
-//            Platform.runLater(
-//                    () -> storeViewController.setId("1111")
-//            );
-
             myPane.getChildren().add(storeView);
 
         } catch (IOException e) {
