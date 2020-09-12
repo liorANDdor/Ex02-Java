@@ -115,8 +115,8 @@ public class SuperApplicationController {
             list.add(Customer.InfoOptions.Name);
             list.add(Customer.InfoOptions.CustomerId);
             list.add(Customer.InfoOptions.Location);
-            list.add(Customer.InfoOptions.TotalItemPrice);
-            list.add(Customer.InfoOptions.TotalShipmentPrice);
+            list.add(Customer.InfoOptions.AverageItemPrice);
+            list.add(Customer.InfoOptions.AverageShipmentPrice);
             tileController tileController = fxmlLoader.getController();
 
             tileController.initialize(systemManager.getCustomerInfo(customer,list));

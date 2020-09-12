@@ -180,6 +180,9 @@ public class SystemManager {
             Store store = superMarket.getStores().get(entry.getKey().getId());
              Order.crateSubOrder(store, order,  superMarket.getItems().values());
         }
+        order.getOrderCustomer().addTotalItemPrice(order.getItemsPrice());
+        order.getOrderCustomer().addTotalShipmentPrice(order.getShipmentPrice());
+        order.getOrderCustomer().increaseNumberOfOrders();
 
     }
 

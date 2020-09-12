@@ -1,6 +1,5 @@
 package SDMModel;
 
-import SDMGenerated.Location;
 import SDMGenerated.SDMCustomer;
 
 import java.awt.*;
@@ -12,8 +11,10 @@ public class Customer {
     public Customer() {
     }
 
+
+
     public enum InfoOptions {
-        Name, CustomerId, Location,TotalShipmentPrice, TotalItemPrice;
+        Name, CustomerId, Location,AverageShipmentPrice, AverageItemPrice;
 
         public String getInfo(Customer customer) {
             switch (this) {
@@ -23,10 +24,10 @@ public class Customer {
                     return customer.getName();
                 case Location:
                     return String.valueOf(customer.getLocation());
-                case TotalShipmentPrice:
-                    return String.valueOf(customer.getTotalShipmentPrice());
-                case TotalItemPrice:
-                    return String.valueOf(customer.getTotalItemPrice());
+                case AverageShipmentPrice:
+                    return String.valueOf(customer.getTotalShipmentPrice() / customer.getNumberOfOrders()==0 ? 1: 0);
+                case AverageItemPrice:
+                    return String.valueOf(customer.getTotalItemPrice() / customer.getNumberOfOrders()==0 ? 1: 0);
                 default:
                     return "Unknown";
             }
@@ -36,8 +37,21 @@ public class Customer {
     private String name;
     private Point location;
     private int id;
+
+
+    public Integer getNumberOfOrders() {
+        return numberOfOrders;
+    }
+
+    private Integer numberOfOrders = 0;
     private double totalShipmentPrice = 0.0;
     private double totalItemPrice = 0.0;
+
+
+    public void increaseNumberOfOrders() {
+        numberOfOrders++;
+    }
+
 
     public double getTotalShipmentPrice() {
         return totalShipmentPrice;
@@ -57,7 +71,7 @@ public class Customer {
 
 
     private HashMap<Integer, Order> orders = new HashMap<>();
-    private Integer numberOfOrders = 0;
+
 
     public String getName() {
         return name;

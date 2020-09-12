@@ -303,6 +303,7 @@ public class OrderController {
             saleController.showSales();
         }
         else {
+            systemManager.commitOrder(order);
             saleController.showFinalOrder();
         }
         stg.initModality(Modality.APPLICATION_MODAL);
