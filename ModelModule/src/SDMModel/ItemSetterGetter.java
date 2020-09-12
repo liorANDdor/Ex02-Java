@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class ItemSetterGetter implements Serializable {
 
 
-    public ItemSetterGetter(String price, String name, String ID, String purchaseCategory, Order order, HashMap<Integer, Order> subOrders , Store store,SystemManager sys) {
+    public ItemSetterGetter(String price, String name, String ID, String purchaseCategory, Order order, HashMap<Integer, Order> subOrders , Store store, SystemManager sys) {
         this.Price = new SimpleStringProperty(price);
         this.Name = new SimpleStringProperty(name);
         this.ID = new SimpleStringProperty(ID);
@@ -70,7 +70,7 @@ public class ItemSetterGetter implements Serializable {
         return totalItemPrice;
     }
 
-    static SimpleStringProperty totalItemPrice = new SimpleStringProperty("0.0");
+    static SimpleStringProperty totalItemPrice = new SimpleStringProperty("");
     public void setTotalPrice(String totalPrice) {
         this.totalPrice.set(totalPrice);
     }

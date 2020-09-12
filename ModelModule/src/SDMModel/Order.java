@@ -74,8 +74,7 @@ public class Order implements Serializable {
         subOrder.setOrderNumber(order.getOrderNumber());
         subOrder.getStoresToOrderFrom().put(store, order.getStoresToOrderFrom().get(store));
         subOrder.setLocationOfClient(order.getLocationOfClient());
-        //subOrder.calculatAndSetDistance();
-
+        subOrder.calculatAndSetDistance();
         double itemPrice = 0.0;
         for (Sell sell : subOrder.getStoresToOrderFrom().get(store)) {
             Sell sellOfStore = store.getSellById(sell.getItemId());
@@ -122,15 +121,18 @@ public class Order implements Serializable {
 
     public void calculatAndSetDistance() {
         Point clientLocation = getLocationOfClient();
-        double totalShipmentPrice=0.0;
+        double totalShipmentPrice=0.0, storeShipmentPrice=0.0, totalDistance = 0.0;
         for(Store store: getStoresToOrderFrom().keySet()) {
             Point storeLocation = store.getLocation();
             double deliveryDistance = Math.sqrt((clientLocation.x - storeLocation.x) * (clientLocation.x - storeLocation.x)
                     + (clientLocation.y - storeLocation.y) * (clientLocation.y - storeLocation.y));
             store.addToTotalShipmentEarning(deliveryDistance * store.getDeliveryPpk());
-            totalShipmentPrice = totalShipmentPrice + deliveryDistance * store.getDeliveryPpk();
+            storeShipmentPrice = deliveryDistance * store.getDeliveryPpk();
+            totalShipmentPrice = totalShipmentPrice + storeShipmentPrice;
+            totalDistance =totalDistance + deliveryDistance;
         }
-        shipmentPrice = totalShipmentPrice;
+        this.setShipmentPrice(totalShipmentPrice);
+        this.setDeliveryDistance(totalDistance);
 
     }
 

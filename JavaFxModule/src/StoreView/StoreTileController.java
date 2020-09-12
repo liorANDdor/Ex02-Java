@@ -9,18 +9,15 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import tile.tileController;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -66,6 +63,7 @@ public class StoreTileController {
                 ste.set(Double.toString(storeToShow.getTotalShipmentEarning()));
                 id.set(Integer.toString(storeToShow.getId()));
                 ppk.set(Double.toString(storeToShow.getDeliveryPpk()));
+                ste.set(Double.toString(storeToShow.getTotalShipmentEarning()));
                 location.set("X:" +Integer.toString(storeToShow.getLocation().x) +" Y:" +Integer.toString(storeToShow.getLocation().y) );
 
                 if(!itemsFlowPan.getChildren().isEmpty()) {

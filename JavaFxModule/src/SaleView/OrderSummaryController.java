@@ -122,6 +122,7 @@ public class OrderSummaryController {
                 shipmentPrice.set(String.format("%.2f", store.getDeliveryPpk() * deliveryDistance));
             }
         });
+        storeCB.getSelectionModel().selectFirst();
 
     }
 

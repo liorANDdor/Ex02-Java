@@ -164,7 +164,7 @@ public class SystemManager {
         Integer orderNumber = superMarket.getNumberOfOrders() + 1;
         superMarket.increaseOrderNumber();
         order.setOrderNumber(orderNumber);
-        //order.calculatAndSetDistance();
+        order.calculatAndSetDistance();
         superMarket.addOrder(order);
         for (Item itemFromXml : order.getItemsQuantity().keySet()) {
             Item item = superMarket.getItemByID(itemFromXml.getId());
@@ -183,6 +183,7 @@ public class SystemManager {
         order.getOrderCustomer().addTotalItemPrice(order.getItemsPrice());
         order.getOrderCustomer().addTotalShipmentPrice(order.getShipmentPrice());
         order.getOrderCustomer().increaseNumberOfOrders();
+
 
     }
 

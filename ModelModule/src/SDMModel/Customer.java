@@ -25,13 +25,15 @@ public class Customer {
                 case Location:
                     return String.valueOf(customer.getLocation());
                 case AverageShipmentPrice:
-                    return String.valueOf(customer.getTotalShipmentPrice() / customer.getNumberOfOrders()==0 ? 1: 0);
+                    return customer.getAverageShipmentprice(customer);
                 case AverageItemPrice:
-                    return String.valueOf(customer.getTotalItemPrice() / customer.getNumberOfOrders()==0 ? 1: 0);
+                    return customer.getAverageItemPrice(customer);
                 default:
                     return "Unknown";
             }
         }
+
+
     }
 
     private String name;
@@ -52,6 +54,20 @@ public class Customer {
         numberOfOrders++;
     }
 
+    public String getAverageShipmentprice(Customer customer) {
+        if(customer.getNumberOfOrders() == 0)
+            return "0.0";
+        else
+            return String.format("%.2f" ,customer.getTotalShipmentPrice() / customer.getNumberOfOrders());
+    }
+
+
+    public String getAverageItemPrice(Customer customer) {
+        if(customer.getNumberOfOrders() == 0)
+            return "0.0";
+        else
+            return String.format("%.2f" ,customer.getTotalItemPrice() / customer.getNumberOfOrders());
+    }
 
     public double getTotalShipmentPrice() {
         return totalShipmentPrice;
@@ -68,7 +84,6 @@ public class Customer {
     public void addTotalItemPrice(double itemsPrice) {
         this.totalItemPrice = this.totalItemPrice + itemsPrice;
     }
-
 
     private HashMap<Integer, Order> orders = new HashMap<>();
 

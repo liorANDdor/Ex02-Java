@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,6 +42,7 @@ public class SalesController {
     private SystemManager systemManager = SystemManager.getInstance();
 
     public void initData(Order order) {
+
         this.order = order;
         continueBtn.setStyle("-fx-background-color: slategray");
         continueBtn.setOnAction(x -> isContinuePressed.set(true));
@@ -121,6 +123,8 @@ public class SalesController {
         Node orderSummary = fxmlLoader.load();
         OrderSummaryController orderSummaryController = fxmlLoader.getController();
         orderSummaryController.initialize(order, systemManager);
+        Stage stage = (Stage) salesVB.getScene().getWindow();
+        stage.setTitle("Order Summary");
         salesVB.getChildren().add(orderSummary);
 
     }

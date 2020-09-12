@@ -45,7 +45,7 @@ public class OrderController {
     @FXML private Button commitBtn;
     @FXML private Button orderInfoBtn;
     @FXML private AnchorPane mainAnchor;
-    SimpleStringProperty shipmentPrice = new SimpleStringProperty("Shipment Price:");
+    SimpleStringProperty shipmentPrice = new SimpleStringProperty("");
     SystemManager systemManager = SystemManager.getInstance();
     SimpleBooleanProperty isCustomerChosen = new SimpleBooleanProperty(false);
     SimpleBooleanProperty isDateChosen = new SimpleBooleanProperty(false);
@@ -117,7 +117,7 @@ public class OrderController {
                 if(dynamicBtn.isSelected()==false) {
                     itemsTableView.getItems().clear();
                     storeCB.getSelectionModel().clearSelection();
-                    shipmentPrice.set("Shipment Price:");
+                    shipmentPrice.set("");
                     isCustomerChosen.set(true);
                 }
                 else{

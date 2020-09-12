@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -36,13 +37,15 @@ public class SuperApplicationController {
     @FXML private Button mapBtn;
     @FXML private Button addOrderBtn;
     @FXML private FlowPane myPane;
+    @FXML private AnchorPane mainAnchor;
 
 
 
 
 
 
-    @FXML private void initialize(){
+    @FXML private void initialize() throws IOException {
+
         storesBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
         itemBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
         ordersBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
