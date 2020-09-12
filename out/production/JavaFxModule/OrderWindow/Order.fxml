@@ -62,7 +62,7 @@
                         <HBox layoutX="68.0" layoutY="5.0" prefHeight="78.0" prefWidth="385.0">
                            <children>
                               <Button fx:id="orderInfoBtn" disable="true" mnemonicParsing="false" onAction="#showDynamicOrder" prefHeight="78.0" prefWidth="190.0" text="Dynamic Order Info" />
-                              <Button fx:id="commitBtn" mnemonicParsing="false" onAction="#commitOrder" prefHeight="78.0" prefWidth="195.0" text="Finish Order" />
+                              <Button fx:id="commitBtn" mnemonicParsing="false" onAction="#commitOrder" prefHeight="78.0" prefWidth="195.0" text="Continue" />
                            </children>
                         </HBox>
                      </children>
@@ -70,7 +70,7 @@
                </children>
             </GridPane>
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0">
+    <AnchorPane fx:id="mainAnchor"  minHeight="0.0" minWidth="0.0">
          <children>
             <ScrollPane layoutX="-5.0" layoutY="-1.0" maxHeight="1000.0" maxWidth="1000.0" prefHeight="534.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>

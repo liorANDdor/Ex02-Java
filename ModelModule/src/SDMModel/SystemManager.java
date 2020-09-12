@@ -160,6 +160,7 @@ public class SystemManager {
     }
 
     public void commitOrder(Order order) {
+
         Integer orderNumber = superMarket.getNumberOfOrders() + 1;
         superMarket.increaseOrderNumber();
         order.setOrderNumber(orderNumber);
@@ -169,10 +170,15 @@ public class SystemManager {
             Item item = superMarket.getItemByID(itemFromXml.getId());
             item.increaseNumberOfTimesItemWasSold(order.getItemsQuantity().get(item));
         }
+        for(Integer storeId: order.getSalesByStoreId().keySet()) {
+            for (Offer offer : order.getSalesByStoreId().get(storeId)) {
+                Item item = superMarket.getItemByID(offer.getItemId());
+                item.increaseNumberOfTimesItemWasSold(offer.getQuantity());
+            }
+        }
         for (Map.Entry<Store, List<Sell>> entry : order.getStoresToOrderFrom().entrySet()) {
             Store store = superMarket.getStores().get(entry.getKey().getId());
              Order.crateSubOrder(store, order,  superMarket.getItems().values());
-
         }
 
     }

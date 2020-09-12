@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class ItemSetterGetter implements Serializable {
 
+
     public ItemSetterGetter(String price, String name, String ID, String purchaseCategory, Order order, HashMap<Integer, Order> subOrders , Store store,SystemManager sys) {
         this.Price = new SimpleStringProperty(price);
         this.Name = new SimpleStringProperty(name);
@@ -32,7 +33,7 @@ public class ItemSetterGetter implements Serializable {
                 int itemID = Integer.parseInt(ID);
                 sys.addAnItemToOrder(order,subOrders, store, itemID, quantitySpinner.getValue());
                 double totalDobuleQuantity = order.getItemsQuantity().get(sys.getSuperMarket().getItemByID(itemID));
-                totalQuantity.set(String.valueOf(totalDobuleQuantity)); // can be taken from order..
+                totalQuantity.set(String.format("%.2f", totalDobuleQuantity)); // can be taken from order..
                 totalPrice.set(String.format("%.2f",totalDobuleQuantity * Double.parseDouble(price)));
 
                 totalItemPrice.set(String.format(
@@ -47,6 +48,19 @@ public class ItemSetterGetter implements Serializable {
     private SimpleStringProperty totalPrice;
     private SimpleStringProperty totalQuantity;
     private Button addButton;
+    private SimpleStringProperty Store;
+    public String getStore() {
+        return Store.get();
+    }
+
+    public SimpleStringProperty storeProperty() {
+        return Store;
+    }
+
+    public void setStore(String store) {
+        this.Store.set(store);
+    }
+
 
     public static SimpleStringProperty getTotalItemPrice() {
         return totalItemPrice;
@@ -62,7 +76,7 @@ public class ItemSetterGetter implements Serializable {
     }
 
     public void setTotalQuantity(String totalQuantity) {
-        this.totalQuantity.set(totalQuantity);
+        this.totalQuantity.set(String.format("%.2f",totalQuantity));
     }
 
 

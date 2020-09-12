@@ -2,6 +2,7 @@ package OrderWindow;
 
 import DynamicOrderView.DynamicInfoController;
 import SDMModel.*;
+import SaleView.SalesController;
 import StoreView.StoreTileController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -17,9 +18,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
@@ -41,7 +44,7 @@ public class OrderController {
     @FXML private TableView<ItemSetterGetter> itemsTableView;
     @FXML private Button commitBtn;
     @FXML private Button orderInfoBtn;
-
+    @FXML private AnchorPane mainAnchor;
     SimpleStringProperty shipmentPrice = new SimpleStringProperty("Shipment Price:");
     SystemManager systemManager = SystemManager.getInstance();
     SimpleBooleanProperty isCustomerChosen = new SimpleBooleanProperty(false);
@@ -92,6 +95,10 @@ public class OrderController {
         PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
         datePicker.setOnAction(x -> isDateChosen.set(true));
         itemsTableView.getColumns().addAll(IdCol, NameCol, QuantityCol, PriceCol, purchasesCol, totalQuantity,totalPrice);
+        customerCB.setPromptText("Select Customer");
+        storeCB.setPromptText("Select Store");
+        datePicker.setPromptText("Select Date");
+
         int customerIndex = 0;
         for (Customer customer : customers.values()) {
             customerCB.getItems().add(customer.getName());
@@ -144,6 +151,7 @@ public class OrderController {
                 Customer customer = customerBox.get(customerCB.getSelectionModel().getSelectedIndex());
                 order.setOrderCustomer(customer);
                 if (newValue.equals(true)) {
+                    storeCB.setPromptText("-----------");
                     isDynamic.set(true);
                     //itemsTableView.getColumns(3).clear();
                     storeCB.getItems().clear();
@@ -161,6 +169,7 @@ public class OrderController {
                     itemsTableView.setItems(FXCollections.observableList(data));
                 }
                 else {
+                    storeCB.setPromptText("Choose Store");
                     isDynamic.set(false);
                     initStores(sys.getSuperMarket().getStores(), sys);
                     itemsTableView.getItems().clear();
@@ -262,13 +271,8 @@ public class OrderController {
         //myPane.getChildren().add(storeView);
     }
 
-
-
-
-
-
     @FXML
-    void commitOrder(ActionEvent event) {
+    void commitOrder(ActionEvent event) throws IOException {
         if(ItemSetterGetter.getTotalItemPrice().getValue().equals("0")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("New Order");
@@ -277,21 +281,36 @@ public class OrderController {
             alert.showAndWait();
         }
             else {
-
+                order.setOrderCustomer(customerBox.get(customerCB.getSelectionModel().getSelectedIndex()));
             order.setDateOfOrder(Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-            systemManager.commitOrder(order);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("New Order");
-            alert.setHeaderText("Order was committed");
-            alert.setContentText("You will be forwarded to the previous screen");
-            alert.showAndWait();
-            shipmentPrice.set("0");
-            Node source = (Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
+
+            offerSales();
+
+
+
+
         }
     }
 
+    private void offerSales() throws IOException {
+        Stage stg = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL url = getClass().getResource("../SaleView/Sale.fxml");
+        fxmlLoader.setLocation(url);
+        Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
+        SalesController saleController = fxmlLoader.getController();
+        saleController.initData(order);
+        saleController.showSales();
+
+        stg.initModality(Modality.APPLICATION_MODAL);
+        // newWindow.initOwner(primaryStage);
+        Scene scene = new Scene(root, 750, 700);
+
+        stg.setTitle("YOU DESERVE SOME DISCOUNTS!");
+
+        stg.setScene(scene);
+        stg.showAndWait();
+    }
 
 
     @FXML
@@ -304,9 +323,6 @@ public class OrderController {
         DynamicInfoController o = fxmlLoader.getController();
         o.initData(order);
         o.showStores();
-
-
-
 
         stg.initModality(Modality.APPLICATION_MODAL);
         // newWindow.initOwner(primaryStage);

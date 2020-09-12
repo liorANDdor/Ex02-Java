@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<SplitPane dividerPositions="0.14824120603015076" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="231.0" prefWidth="242.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SaleView.SingleSaleController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <Label fx:id="saleName" layoutX="14.0" layoutY="8.0" prefHeight="17.0" prefWidth="134.0" />
+         </children></AnchorPane>
+    <AnchorPane fx:id="saleInfoPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <VBox fx:id="saleVB" layoutY="-4.0" prefHeight="200.0" prefWidth="240.0">
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+               <children>
+                  <Label fx:id="SaleTypeLabel" prefHeight="17.0" prefWidth="104.0" />
+               </children></VBox>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

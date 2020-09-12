@@ -7,6 +7,13 @@ public class Sale {
     protected String name;
     protected IfBuy ifBuy;
     protected NeedToGet needToGet;
+    protected Store storeOfferSale;
+
+
+    public Store getStoreOfferSale() {
+        return storeOfferSale;
+    }
+
 
     public String getName() {
         return name;
@@ -39,5 +46,9 @@ public class Sale {
         newSale.setNeedToGet(NeedToGet.createInstanceBySDM(discount.getThenYouGet()));
         newSale.setIfBuy(IfBuy.createInstanceBySDM(discount.getIfYouBuy()));
         return newSale;
+    }
+
+    public void setStore(Store newStore) {
+        storeOfferSale = newStore;
     }
 }

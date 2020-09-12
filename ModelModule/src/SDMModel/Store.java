@@ -80,6 +80,7 @@ public class Store implements Serializable {
             List<SDMDiscount> discounts = sdmStore.getSDMDiscounts().getSDMDiscount();
             for(SDMDiscount discount : discounts){
                 Sale newSale = Sale.createInstanceBySDM(discount);
+                newSale.setStore(newStore);
                 newStore.getSales().add(newSale);
             }
         }
