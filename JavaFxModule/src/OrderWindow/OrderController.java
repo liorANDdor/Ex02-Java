@@ -283,7 +283,6 @@ public class OrderController {
             else {
                 order.setOrderCustomer(customerBox.get(customerCB.getSelectionModel().getSelectedIndex()));
             order.setDateOfOrder(Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-
             offerSales();
 
 
@@ -300,8 +299,12 @@ public class OrderController {
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         SalesController saleController = fxmlLoader.getController();
         saleController.initData(order);
-        saleController.showSales();
-
+        if(checkIfThereAreSales()) {
+            saleController.showSales();
+        }
+        else {
+            saleController.showFinalOrder();
+        }
         stg.initModality(Modality.APPLICATION_MODAL);
         // newWindow.initOwner(primaryStage);
         Scene scene = new Scene(root, 750, 700);
@@ -310,6 +313,25 @@ public class OrderController {
 
         stg.setScene(scene);
         stg.showAndWait();
+
+        Stage stage = (Stage) itemsFlowPan.getScene().getWindow();
+        stage.close();
+    }
+
+    private boolean checkIfThereAreSales() {
+        for (Store store : order.getStoresToOrderFrom().keySet()) {
+            for (Sale sale : store.getSales()) {
+                IfBuy conditonForSale = sale.getIfBuy();
+                Item itemSale = systemManager.getSuperMarket().getItemByID(conditonForSale.getItemId());
+                if (order.getItemsQuantity().containsKey(itemSale))
+                    for (double i = 0; i < Math.floor(order.getItemsQuantity().get(itemSale) / conditonForSale.getQuantity()); i++) {
+                        return true;
+                    }
+
+            }
+        }
+        return false;
+
     }
 
 

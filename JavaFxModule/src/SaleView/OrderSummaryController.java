@@ -8,10 +8,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +30,7 @@ public class OrderSummaryController {
     @FXML private Button NextBtn;
     @FXML private AnchorPane mainAnchor;
     @FXML private FlowPane itemsFlowPan;
+    @FXML private Label totalPriceForOrder;
     @FXML private TableView<?> itemsTableView;
     private SystemManager systemManager = SystemManager.getInstance();
     TableColumn NameCol;
@@ -38,13 +41,17 @@ public class OrderSummaryController {
     TableColumn totalPrice;
     TableColumn Price;
     TableColumn Discount;
-    SimpleStringProperty shipmentPrice = new SimpleStringProperty("Shipment Price:");
+    SimpleStringProperty shipmentPrice = new SimpleStringProperty("");
+    SimpleStringProperty itemsPrice = new SimpleStringProperty("");
+    SimpleStringProperty totalItemsPrice = new SimpleStringProperty("");
     HashMap<Integer,Store> storesBox = new HashMap<>();
     Order order;
 
     @FXML
     void BackToMainMenu(ActionEvent event) {
-
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -61,8 +68,8 @@ public class OrderSummaryController {
         Price = new TableColumn("Price");
         Discount = new TableColumn("From Discoumt");
         shipmentLabel.textProperty().bind(Bindings.format("Shipment Price: %s", shipmentPrice));
-        totalPriceLabel.textProperty().bind(Bindings.format("Total Item Price: %s", ItemSetterGetter.getTotalItemPrice()));
-
+        totalPriceLabel.textProperty().bind(Bindings.format("Total Items Price for store: %s",itemsPrice ));
+        totalPriceForOrder.textProperty().bind(Bindings.format("Total Items Price overall: %s",totalItemsPrice ));
         NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
         IdCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
         Price.setCellValueFactory(new PropertyValueFactory<>("Price"));
@@ -70,7 +77,7 @@ public class OrderSummaryController {
         totalQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         totalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         Discount.setCellValueFactory(new PropertyValueFactory<>("Discount"));
-
+        totalItemsPrice.set(String.format("%.2f", order.getItemsPrice()));
         itemsTableView.getColumns().addAll(IdCol, NameCol, Price, totalQuantity, totalPrice, Discount);
         initStores(sys.getSuperMarket().getStores(), sys);
     }
@@ -97,16 +104,19 @@ public class OrderSummaryController {
                                     String.valueOf(item.getName()), item.getPurchaseCategory().toString(), String.valueOf(entry.getValue()), String.valueOf(store.getItemPrice(item.getId())),
                                     String.valueOf(entry.getValue()*store.getItemPrice(item.getId())), "No" ));
                 }
-                for (Offer offer:order.getSalesByStoreId().get(store.getId())) {
-                    Item item = systemManager.getSuperMarket().getItemByID(offer.getItemId());
-                    data.add(
-                            new ItemSumamry(String.valueOf(item.getId()), //itemLowestPrice
-                                    String.valueOf(item.getName()), item.getPurchaseCategory().toString(), String.valueOf(offer.getQuantity()), String.valueOf(offer.getForAdditional()),
-                                    String.valueOf(offer.getForAdditional()), "Yes" ));
+                if(order.getSalesByStoreId().get(store.getId()) != null) {
+                    for (Offer offer : order.getSalesByStoreId().get(store.getId())) {
+                        Item item = systemManager.getSuperMarket().getItemByID(offer.getItemId());
+                        data.add(
+                                new ItemSumamry(String.valueOf(item.getId()), //itemLowestPrice
+                                        String.valueOf(item.getName()), item.getPurchaseCategory().toString(), String.valueOf(offer.getQuantity()), String.valueOf(offer.getForAdditional()),
+                                        String.valueOf(offer.getForAdditional()), "Yes"));
+                    }
                 }
                 itemsTableView.setItems(FXCollections.observableList(data));
                 ItemSetterGetter.getTotalItemPrice().set(String.valueOf(order.getItemsPrice()));
                 shipmentPrice.set("0");
+                itemsPrice.set(String.format("%.2f",store.getOrders().get(order.getOrderNumber()).getItemsPrice()));
                 double deliveryDistance = Math.sqrt((order.getOrderCustomer().getLocation().x - store.getLocation().x) * (order.getOrderCustomer().getLocation().x - store.getLocation().x)
                         + (order.getOrderCustomer().getLocation().y - store.getLocation().y) * (order.getOrderCustomer().getLocation().y - store.getLocation().y));
                 shipmentPrice.set(String.format("%.2f", store.getDeliveryPpk() * deliveryDistance));

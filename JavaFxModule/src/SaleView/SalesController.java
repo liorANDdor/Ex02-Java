@@ -48,11 +48,12 @@ public class SalesController {
 
     public void showSales() {
         for (Store store : order.getStoresToOrderFrom().keySet()) {
+            Order suborder = store.getOrders().get(order.getOrderNumber());
             for (Sale sale : store.getSales()) {
                 IfBuy conditonForSale = sale.getIfBuy();
                 Item itemSale = systemManager.getSuperMarket().getItemByID(conditonForSale.getItemId());
-                if (order.getItemsQuantity().containsKey(itemSale))
-                    for (double i = 0; i < Math.floor(order.getItemsQuantity().get(itemSale) / conditonForSale.getQuantity()); i++) {
+                if (suborder.getItemsQuantity().containsKey(itemSale))
+                    for (double i = 0; i < Math.floor(suborder.getItemsQuantity().get(itemSale) / conditonForSale.getQuantity()); i++) {
                         createSaleTile(sale);
                     }
 
@@ -76,7 +77,6 @@ public class SalesController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
@@ -112,7 +112,8 @@ public class SalesController {
         showFinalOrder();
     }
 
-    private void showFinalOrder() throws IOException {
+    public void showFinalOrder() throws IOException {
+
         salesVB.getChildren().clear();
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL url = getClass().getResource("../SalevIEW/OrderSummary.fxml");

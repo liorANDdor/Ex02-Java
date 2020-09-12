@@ -19,7 +19,7 @@ public class ItemSetterGetter implements Serializable {
         this.purchaseCategory = new SimpleStringProperty(purchaseCategory);
         this.totalPrice = new SimpleStringProperty("0");
         this.totalQuantity = new SimpleStringProperty("0");
-        this.addButton = new Button("Add");
+        this.addButton = new Button("Add To Cart");
 
         if (purchaseCategory.equals("Weight")) {
             SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 500, 0, 0.1);

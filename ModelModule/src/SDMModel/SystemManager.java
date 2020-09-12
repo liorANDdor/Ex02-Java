@@ -160,7 +160,7 @@ public class SystemManager {
     }
 
     public void commitOrder(Order order) {
-
+        order.getStoresToOrderFrom().keySet().stream().forEach(store -> store.getOrders().remove(null));
         Integer orderNumber = superMarket.getNumberOfOrders() + 1;
         superMarket.increaseOrderNumber();
         order.setOrderNumber(orderNumber);

@@ -47,23 +47,15 @@ public class Order implements Serializable {
     private double deliveryDistance;
     private Double shipmentPrice = 0.0;
     private Customer orderCustomer;
-    private HashMap<Integer, Double> salesQuantity = new HashMap<>();
-    private HashMap<Integer, Integer> salesPrice = new HashMap<>();
+    private HashMap<Integer, List<Offer>> salesByStoreId = new HashMap<>();
 
     public HashMap<Integer, List<Offer>> getSalesByStoreId() {
         return salesByStoreId;
     }
 
-    private HashMap<Integer, List<Offer>> salesByStoreId = new HashMap<>();
 
 
-    public HashMap<Integer, Double> getSalesQuantity() {
-        return salesQuantity;
-    }
 
-    public HashMap<Integer, Integer> getSalesPrice() {
-        return salesPrice;
-    }
 
 
     public void setOrderCustomer(Customer orderCustomer) {
@@ -94,13 +86,14 @@ public class Order implements Serializable {
         }
         List<Offer> newOfferlist = new ArrayList<>();
         subOrder.getSalesByStoreId().put(store.getId(), newOfferlist);
-        for (Offer offer : order.getSalesByStoreId().get(store.getId())) {
-            Item item = items.stream().filter(itemEl->itemEl.getId()==offer.getItemId()).findAny().get();
-            itemPrice = itemPrice + offer.getForAdditional();
-            store.getSellById(offer.getItemId()).increaseNumberOfTimesItemWasSold(offer.getQuantity());
-            subOrder.getSalesByStoreId().get(store.getId()).add(offer);
+        if(order.getSalesByStoreId().get(store.getId()) != null) {
+            for (Offer offer : order.getSalesByStoreId().get(store.getId())) {
+                Item item = items.stream().filter(itemEl -> itemEl.getId() == offer.getItemId()).findAny().get();
+                itemPrice = itemPrice + offer.getForAdditional();
+                store.getSellById(offer.getItemId()).increaseNumberOfTimesItemWasSold(offer.getQuantity());
+                subOrder.getSalesByStoreId().get(store.getId()).add(offer);
+            }
         }
-
         subOrder.setItemsPrice(itemPrice);
         store.addToTotalEarning(itemPrice + subOrder.getShipmentPrice());
         store.getOrders().put(order.getOrderNumber(), subOrder);
