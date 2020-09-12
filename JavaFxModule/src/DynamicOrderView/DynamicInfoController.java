@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.FlowPane;
 import tile.tileController;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -55,6 +56,14 @@ public class DynamicInfoController {
 
 
             Order specificStoreOrder = store.getOrders().get(order.getOrderNumber());
+            specificStoreOrder.setOrderCustomer(order.getOrderCustomer());
+            Point clientLocation = order.getOrderCustomer().getLocation();
+            double storeShipmentPrice=0.0;
+            Point storeLocation = store.getLocation();
+            double deliveryDistance = Math.sqrt((clientLocation.x - storeLocation.x) * (clientLocation.x - storeLocation.x)
+                        + (clientLocation.y - storeLocation.y) * (clientLocation.y - storeLocation.y));
+            storeShipmentPrice = deliveryDistance * store.getDeliveryPpk();
+            specificStoreOrder.setShipmentPrice(storeShipmentPrice);
             List<Order.InfoOptions> orderAttributes = new ArrayList<>();
             orderAttributes.add(Order.InfoOptions.AmountOfKindsOfItems);
             orderAttributes.add(Order.InfoOptions.ItemsPrice);

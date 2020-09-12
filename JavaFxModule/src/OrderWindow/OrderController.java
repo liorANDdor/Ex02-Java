@@ -45,7 +45,11 @@ public class OrderController {
     @FXML private Button commitBtn;
     @FXML private Button orderInfoBtn;
     @FXML private AnchorPane mainAnchor;
+    @FXML private Label storeLocationLabel;
+    @FXML private Label distanceLabel;
     SimpleStringProperty shipmentPrice = new SimpleStringProperty("");
+    SimpleStringProperty distance = new SimpleStringProperty("");
+    SimpleStringProperty storeLocation = new SimpleStringProperty("");
     SystemManager systemManager = SystemManager.getInstance();
     SimpleBooleanProperty isCustomerChosen = new SimpleBooleanProperty(false);
     SimpleBooleanProperty isDateChosen = new SimpleBooleanProperty(false);
@@ -81,7 +85,9 @@ public class OrderController {
         dynamicBtn.disableProperty().bind(isDateChosen.not());
         commitBtn.disableProperty().bind(isCommitReady.not());
         orderInfoBtn.disableProperty().bind(isDynamic.not());
+        distanceLabel.textProperty().bind(Bindings.format("Distance: %s", distance));
         shipmentLabel.textProperty().bind(Bindings.format("Shipment Price: %s" , shipmentPrice));
+        storeLocationLabel.textProperty().bind(Bindings.format("Location: %s" , storeLocation));
         totalPriceLabel.textProperty().bind(Bindings.format("Total Item Price: %s" , ItemSetterGetter.getTotalItemPrice()));
         purchasesCol.setCellValueFactory(new PropertyValueFactory<>("addButton"));
         QuantityCol.setCellValueFactory(new PropertyValueFactory<>("quantitySpinner"));
@@ -111,13 +117,15 @@ public class OrderController {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 order = new Order();
                 ItemSetterGetter.getTotalItemPrice().set("0");
-                shipmentPrice.set("0");
+                shipmentPrice.set("");
+                distance.set("");
                 Customer customer = customerBox.get(customerCB.getSelectionModel().getSelectedIndex());
                 order.setOrderCustomer(customer);
                 if(dynamicBtn.isSelected()==false) {
                     itemsTableView.getItems().clear();
                     storeCB.getSelectionModel().clearSelection();
                     shipmentPrice.set("");
+                    distance.set("");
                     isCustomerChosen.set(true);
                 }
                 else{
@@ -143,14 +151,19 @@ public class OrderController {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 isCommitReady.set(true);
-
                 ItemSetterGetter.getTotalItemPrice().set("0");
-                shipmentPrice.set("0");
+                shipmentPrice.set("");
+                storeLocation.set("");
+                distance.set("");
                 order = new Order();
+
                 subOrders = new HashMap<>();
                 Customer customer = customerBox.get(customerCB.getSelectionModel().getSelectedIndex());
                 order.setOrderCustomer(customer);
                 if (newValue.equals(true)) {
+                    distanceLabel.setVisible(false);
+                    shipmentLabel.setVisible(false);
+                    storeLocationLabel.setVisible(false);
                     storeCB.setPromptText("-----------");
                     isDynamic.set(true);
                     //itemsTableView.getColumns(3).clear();
@@ -169,6 +182,10 @@ public class OrderController {
                     itemsTableView.setItems(FXCollections.observableList(data));
                 }
                 else {
+
+                    distanceLabel.setVisible(true);
+                    shipmentLabel.setVisible(true);
+                    storeLocationLabel.setVisible(true);
                     storeCB.setPromptText("Choose Store");
                     isDynamic.set(false);
                     initStores(sys.getSuperMarket().getStores(), sys);
@@ -197,13 +214,18 @@ public class OrderController {
                 public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                     isCommitReady.set(true);
                     ItemSetterGetter.getTotalItemPrice().set("0");
-                    shipmentPrice.set("0");
+                    shipmentPrice.set("");
+                    storeLocation.set("");
+                    distance.set("");
                     if (!newValue.equals( -1)) {
                         Store store = storesBox.get(newValue);
+                        storeLocation.set("(" + store.getLocation().x + ", " +store.getLocation().y + ")");
                         Customer customer = customerBox.get(customerCB.getSelectionModel().getSelectedIndex());
                         double deliveryDistance = Math.sqrt((customer.getLocation().x - store.getLocation().x) * (customer.getLocation().x - store.getLocation().x)
                                 + (customer.getLocation().y - store.getLocation().y) * (customer.getLocation().y - store.getLocation().y));
                         shipmentPrice.set(String.format("%.2f", store.getDeliveryPpk() * deliveryDistance));
+                        distance.set(String.format("%.2f", deliveryDistance));
+
                         order = new Order();
                         subOrders = new HashMap<>();
                         order.setOrderCustomer(customer);
@@ -245,31 +267,7 @@ public class OrderController {
 
     }
 
-    @FXML
-    void showDynamicOrder() throws IOException {
-        Stage stg = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../StoreView/DynamicOrder.fxml");
-        fxmlLoader.setLocation(url);
-        Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
-        OrderController o = fxmlLoader.getController();
-        o.initialize(systemManager);
-        stg.initModality(Modality.APPLICATION_MODAL);
-        // newWindow.initOwner(primaryStage);
-        Scene scene = new Scene(root, 900, 700);
 
-        stg.setTitle("Your Order");
-        stg.setScene(scene);
-        stg.show();
-
-
-        Node storeView = fxmlLoader.load();
-        StoreTileController storeViewController = fxmlLoader.getController();
-        storeViewController.initialize(systemManager.getSuperMarket().getStores(), systemManager);
-
-
-        //myPane.getChildren().add(storeView);
-    }
 
     @FXML
     void commitOrder(ActionEvent event) throws IOException {
@@ -344,6 +342,7 @@ public class OrderController {
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         DynamicInfoController o = fxmlLoader.getController();
+        order.setOrderCustomer(customerBox.get(customerCB.getSelectionModel().getSelectedIndex()));
         o.initData(order);
         o.showStores();
 
@@ -354,6 +353,31 @@ public class OrderController {
         stg.setTitle("Your Order Info");
         stg.setScene(scene);
         stg.show();
+    }
+
+    @FXML void showDynamicOrder() throws IOException {
+        Stage stg = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL url = getClass().getResource("../StoreView/DynamicOrder.fxml");
+        fxmlLoader.setLocation(url);
+        Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
+        OrderController o = fxmlLoader.getController();
+        o.initialize(systemManager);
+        stg.initModality(Modality.APPLICATION_MODAL);
+        // newWindow.initOwner(primaryStage);
+        Scene scene = new Scene(root, 900, 700);
+
+        stg.setTitle("Your Order");
+        stg.setScene(scene);
+        stg.show();
+
+
+        Node storeView = fxmlLoader.load();
+        StoreTileController storeViewController = fxmlLoader.getController();
+        storeViewController.initialize(systemManager.getSuperMarket().getStores(), systemManager);
+
+
+        //myPane.getChildren().add(storeView);
     }
 
 

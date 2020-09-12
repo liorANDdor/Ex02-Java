@@ -14,7 +14,7 @@ public class Customer {
 
 
     public enum InfoOptions {
-        Name, CustomerId, Location,AverageShipmentPrice, AverageItemPrice;
+        Name, CustomerId, Location,AverageShipmentPrice, AverageItemPrice, NumberOfOrders;
 
         public String getInfo(Customer customer) {
             switch (this) {
@@ -23,11 +23,13 @@ public class Customer {
                 case Name:
                     return customer.getName();
                 case Location:
-                    return String.valueOf(customer.getLocation());
+                    return customer.showLocation();
                 case AverageShipmentPrice:
                     return customer.getAverageShipmentprice(customer);
                 case AverageItemPrice:
                     return customer.getAverageItemPrice(customer);
+                case NumberOfOrders:
+                    return String.valueOf(customer.getNumberOfOrders());
                 default:
                     return "Unknown";
             }
@@ -98,6 +100,9 @@ public class Customer {
 
     public Point getLocation() {
         return location;
+    }
+    public String showLocation() {
+        return String.format("(%s, %s)", location.x, location.y);
     }
 
     public void setLocation(Point location) {
