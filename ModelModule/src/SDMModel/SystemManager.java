@@ -4,18 +4,50 @@ import XmlLoderView.XmlLoaderController;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class SystemManager {
+    public enum optionsForUpdate {
+        DeleteItem("Delete Item"),
+        ChangePriceOfItem("Change Price Of Item"),
+        AddNewItem("Add New Item");
+
+        private String label;
+
+        optionsForUpdate(String label) {
+            this.label = label;
+        }
+
+        public String toString() {
+            return label;
+        }
+    }
 
      private static SystemManager manager = null;
      private SuperMarket superMarket;
 
      private SimpleBooleanProperty thereIsXmlLoaded = new SimpleBooleanProperty(false);
+
+    public static void changeValueOfItem(Store store, Item item, optionsForUpdate whatToDo, double price) {
+        switch (whatToDo) {
+            case ChangePriceOfItem:
+                Sell sell = store.getItemsToSell().stream().filter(el -> el.getItemId() == item.getId()).findFirst().orElse(null);
+                if (sell != null)
+                    sell.setPrice((int) price);
+                break;
+            case DeleteItem:
+                store.getItemsToSell().removeIf(el -> el.getItemId() == item.getId());
+                break;
+            case AddNewItem:
+                Sell newSell = new Sell();
+                newSell.setPrice((int) price);
+                newSell.setItemId(item.getId());
+                store.getItemsToSell().add(newSell);
+                break;
+        }
+    }
 
 
     public SuperMarket getSuperMarket() {
