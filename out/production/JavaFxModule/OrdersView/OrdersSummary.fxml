@@ -32,29 +32,38 @@
               </rowConstraints>
                <children>
                   <Label fx:id="ID" alignment="CENTER_RIGHT" contentDisplay="RIGHT" GridPane.rowIndex="1" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="storeCB" disable="true" prefHeight="22.0" prefWidth="298.0" GridPane.rowIndex="1" />
+                  <Pane prefHeight="97.0" prefWidth="453.0" GridPane.columnIndex="2" GridPane.rowSpan="3">
                      <children>
-                        <Label fx:id="totalPriceLabel">
+                        <Label fx:id="totalShipmentPriceLabel" layoutX="14.0" layoutY="-3.0" prefHeight="26.0" prefWidth="239.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Label>
+                        <Label fx:id="shipmentLabel" alignment="TOP_LEFT" layoutX="14.0" layoutY="30.0" prefHeight="26.0" prefWidth="262.0">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
                      </children>
+                  </Pane>
+                  <Label fx:id="totalPriceForOrder" prefHeight="17.0" prefWidth="178.0" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Label>
+                  <ComboBox fx:id="ordersCB" prefHeight="22.0" prefWidth="298.0" promptText="Pick An Order" />
+                  <Label fx:id="customerName" prefHeight="17.0" prefWidth="106.0" GridPane.rowIndex="2" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <Label fx:id="distanceLabel" prefHeight="17.0" prefWidth="115.0" />
+                        <Label fx:id="locationLabel" prefHeight="17.0" prefWidth="122.0" />
+                     </children>
                   </HBox>
-                  <ComboBox fx:id="storeCB" disable="true" prefHeight="22.0" prefWidth="298.0" GridPane.rowIndex="1" />
-                  <Label fx:id="shipmentLabel" alignment="TOP_LEFT" prefHeight="26.0" prefWidth="262.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="totalPriceLabel" prefHeight="19.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Pane prefHeight="97.0" prefWidth="453.0" GridPane.columnIndex="2" GridPane.rowSpan="3">
-                     <children>
-                        <HBox layoutX="68.0" layoutY="5.0" prefHeight="78.0" prefWidth="385.0" />
-                     </children>
-                  </Pane>
-                  <Label fx:id="totalPriceForOrder" text="Label" GridPane.columnIndex="1" />
-                  <ComboBox fx:id="ordersCB" prefHeight="22.0" prefWidth="298.0" promptText="Pick An Order" />
-                  <Label fx:id="customerName" prefHeight="17.0" prefWidth="106.0" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children></AnchorPane>

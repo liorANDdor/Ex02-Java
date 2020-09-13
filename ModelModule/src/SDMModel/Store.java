@@ -24,7 +24,7 @@ public class Store implements Serializable {
                 case Id:
                     return String.valueOf(store.getId());
                 case Location:
-                    return String.valueOf(store.getLocation());
+                    return String.valueOf(store.showLocation());
                 case DeliveryPpk:
                     return String.valueOf(store.getDeliveryPpk());
                 case TotalEarning:
@@ -107,6 +107,9 @@ public class Store implements Serializable {
 
     public Point getLocation() {
         return location;
+    }
+    public String showLocation() {
+        return "(" + location.x + ", " + location.y + ")";
     }
 
     public void setLocation(Point location) {

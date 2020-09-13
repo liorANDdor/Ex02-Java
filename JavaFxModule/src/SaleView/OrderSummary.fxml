@@ -52,12 +52,21 @@
                      <children>
                         <HBox layoutX="68.0" layoutY="5.0" prefHeight="78.0" prefWidth="385.0">
                            <children>
-                              <Button fx:id="NextBtn" mnemonicParsing="false" onAction="#BackToMainMenu" prefHeight="78.0" prefWidth="195.0" text="Back To Main Menu" />
+                              <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelOrder" prefHeight="78.0" prefWidth="157.0" text="Cancel Order" />
+                              <Button fx:id="commitBtn" mnemonicParsing="false" onAction="#commitBackToMainMenu" prefHeight="78.0" prefWidth="163.0" text="Finish Order" />
                            </children>
                         </HBox>
                      </children>
                   </Pane>
                   <Label fx:id="totalPriceForOrder" text="Label" GridPane.columnIndex="1" />
+                  <Label fx:id="ppkLabel" prefHeight="17.0" prefWidth="123.0" GridPane.rowIndex="1" />
+                  <Label fx:id="DistanceLabel" prefHeight="17.0" prefWidth="121.0" GridPane.rowIndex="2" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <Label fx:id="distanceLabel" prefHeight="17.0" prefWidth="114.0" />
+                        <Label fx:id="locationLabel" prefHeight="17.0" prefWidth="119.0" />
+                     </children>
+                  </HBox>
                </children>
             </GridPane>
          </children></AnchorPane>

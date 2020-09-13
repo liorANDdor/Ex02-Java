@@ -62,12 +62,14 @@ public class DynamicInfoController {
             Point storeLocation = store.getLocation();
             double deliveryDistance = Math.sqrt((clientLocation.x - storeLocation.x) * (clientLocation.x - storeLocation.x)
                         + (clientLocation.y - storeLocation.y) * (clientLocation.y - storeLocation.y));
+            specificStoreOrder.setDeliveryDistance(deliveryDistance);
             storeShipmentPrice = deliveryDistance * store.getDeliveryPpk();
             specificStoreOrder.setShipmentPrice(storeShipmentPrice);
             List<Order.InfoOptions> orderAttributes = new ArrayList<>();
             orderAttributes.add(Order.InfoOptions.AmountOfKindsOfItems);
             orderAttributes.add(Order.InfoOptions.ItemsPrice);
             orderAttributes.add(Order.InfoOptions.ShipmentPrice);
+            orderAttributes.add(Order.InfoOptions.DeliveryDistance);
             List<Store.InfoOptions> storeAttributes = new ArrayList<>();
             storeAttributes.add(Store.InfoOptions.Id);
             storeAttributes.add(Store.InfoOptions.Name);

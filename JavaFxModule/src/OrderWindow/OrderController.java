@@ -70,6 +70,7 @@ public class OrderController {
     HashMap<Integer,Customer> customerBox= new HashMap<>();
     @FXML
     public void initialize(SystemManager sys) {
+        itemsTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         //commitBtn.setStyle("-fx-background-color: lightsteelblue");
         HashMap<Integer, Customer> customers = sys.getSuperMarket().getCostumers();
          NameCol = new TableColumn("Name");
@@ -301,12 +302,13 @@ public class OrderController {
             saleController.showSales();
         }
         else {
-            systemManager.commitOrder(order);
+
             saleController.showFinalOrder();
+
         }
         stg.initModality(Modality.APPLICATION_MODAL);
         // newWindow.initOwner(primaryStage);
-        Scene scene = new Scene(root, 750, 700);
+        Scene scene = new Scene(root, 900, 700);
 
         stg.setTitle("YOU DESERVE SOME DISCOUNTS!");
 
@@ -343,6 +345,7 @@ public class OrderController {
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         DynamicInfoController o = fxmlLoader.getController();
         order.setOrderCustomer(customerBox.get(customerCB.getSelectionModel().getSelectedIndex()));
+
         o.initData(order);
         o.showStores();
 

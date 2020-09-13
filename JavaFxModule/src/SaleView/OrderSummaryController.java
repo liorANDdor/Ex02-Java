@@ -27,10 +27,16 @@ public class OrderSummaryController {
     @FXML private ComboBox<String> storeCB;
     @FXML private CheckBox orderTypeLabel;
     @FXML private Label shipmentLabel;
-    @FXML private Button NextBtn;
+    @FXML private Button cancelBtn;
+    @FXML private Button commitBtn;
     @FXML private AnchorPane mainAnchor;
     @FXML private FlowPane itemsFlowPan;
     @FXML private Label totalPriceForOrder;
+    @FXML private Label DistanceLabel;
+    @FXML private Label ppkLabel;
+    @FXML private Label locationLabel;
+    @FXML private Label distanceLabel;
+
     @FXML private TableView<?> itemsTableView;
     private SystemManager systemManager = SystemManager.getInstance();
     TableColumn NameCol;
@@ -41,6 +47,9 @@ public class OrderSummaryController {
     TableColumn totalPrice;
     TableColumn Price;
     TableColumn Discount;
+    SimpleStringProperty Distance = new SimpleStringProperty("");
+    SimpleStringProperty location = new SimpleStringProperty("");
+    SimpleStringProperty PPK = new SimpleStringProperty("");
     SimpleStringProperty shipmentPrice = new SimpleStringProperty("");
     SimpleStringProperty itemsPrice = new SimpleStringProperty("");
     SimpleStringProperty totalItemsPrice = new SimpleStringProperty("");
@@ -48,15 +57,25 @@ public class OrderSummaryController {
     Order order;
 
     @FXML
-    void BackToMainMenu(ActionEvent event) {
+    void cancelOrder(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
 
     @FXML
+    void commitBackToMainMenu(ActionEvent event) {
+        systemManager.commitOrder(order);
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+    }
+
+
+    @FXML
     public void initialize(Order order, SystemManager sys) {
         this.order = order;
+        itemsTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         //commitBtn.setStyle("-fx-background-color: lightsteelblue");
         HashMap<Integer, Customer> customers = sys.getSuperMarket().getCostumers();
         NameCol = new TableColumn("Name");
@@ -68,6 +87,9 @@ public class OrderSummaryController {
         Price = new TableColumn("Price");
         Discount = new TableColumn("From Discoumt");
         shipmentLabel.textProperty().bind(Bindings.format("Shipment Price: %s", shipmentPrice));
+        ppkLabel.textProperty().bind(Bindings.format("PPK: %s", PPK));
+        distanceLabel.textProperty().bind(Bindings.format("Distance: %s", Distance));
+        locationLabel.textProperty().bind(Bindings.format("%s", location));
         totalPriceLabel.textProperty().bind(Bindings.format("Total Items Price for store: %s",itemsPrice ));
         totalPriceForOrder.textProperty().bind(Bindings.format("Total Items Price overall: %s",totalItemsPrice ));
         NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
@@ -78,7 +100,7 @@ public class OrderSummaryController {
         totalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         Discount.setCellValueFactory(new PropertyValueFactory<>("Discount"));
         totalItemsPrice.set(String.format("%.2f", order.getItemsPrice()));
-        itemsTableView.getColumns().addAll(IdCol, NameCol, Price, totalQuantity, totalPrice, Discount);
+        itemsTableView.getColumns().addAll(IdCol, NameCol, TypeCol, Price, totalQuantity, totalPrice, Discount);
         initStores(sys.getSuperMarket().getStores(), sys);
     }
 
@@ -115,11 +137,20 @@ public class OrderSummaryController {
                 }
                 itemsTableView.setItems(FXCollections.observableList(data));
                 ItemSetterGetter.getTotalItemPrice().set(String.valueOf(order.getItemsPrice()));
-                shipmentPrice.set("0");
-                itemsPrice.set(String.format("%.2f",store.getOrders().get(order.getOrderNumber()).getItemsPrice()));
+                double salesPrice = 0.0;
+                for(Offer offer : order.getSalesByStoreId().getOrDefault(store.getId(), new ArrayList<Offer>() {
+                })){
+                        salesPrice = salesPrice + offer.getForAdditional();
+                }
+                itemsPrice.set(String.format("%.2f",store.getOrders().get(order.getOrderNumber()).getItemsPrice() + salesPrice ));
                 double deliveryDistance = Math.sqrt((order.getOrderCustomer().getLocation().x - store.getLocation().x) * (order.getOrderCustomer().getLocation().x - store.getLocation().x)
                         + (order.getOrderCustomer().getLocation().y - store.getLocation().y) * (order.getOrderCustomer().getLocation().y - store.getLocation().y));
                 shipmentPrice.set(String.format("%.2f", store.getDeliveryPpk() * deliveryDistance));
+
+                Distance.set(String.format("%.2f", order.getDeliveryDistance()));
+                PPK.set(String.format("%d", store.getDeliveryPpk()));
+                location.set(store.showLocation());
+                Distance.set(String.format("%.2f", deliveryDistance));
             }
         });
         storeCB.getSelectionModel().selectFirst();

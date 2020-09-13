@@ -44,10 +44,10 @@ public class OrdersSummaryController {
     private FlowPane itemsFlowPan;
     @FXML
     private Label totalPriceForOrder;
-    @FXML
-    private Label customerName;
-    @FXML
-    private TableView<?> itemsTableView;
+    @FXML private Label totalShipmentPriceLabel;
+    @FXML private Label locationLabel;
+    @FXML private Label distanceLabel;
+    @FXML private TableView<?> itemsTableView;
     private SystemManager systemManager = SystemManager.getInstance();
     TableColumn NameCol;
     TableColumn IdCol;
@@ -58,7 +58,10 @@ public class OrdersSummaryController {
     TableColumn Price;
     TableColumn Discount;
     SimpleBooleanProperty isOrderSelected = new SimpleBooleanProperty(false);
+    SimpleStringProperty totalShipmentPriceProperty = new SimpleStringProperty("");
     SimpleStringProperty shipmentPrice = new SimpleStringProperty("");
+    SimpleStringProperty location = new SimpleStringProperty("");
+    SimpleStringProperty distance = new SimpleStringProperty("");
     SimpleStringProperty itemsPrice = new SimpleStringProperty("");
     SimpleStringProperty totalItemsPrice = new SimpleStringProperty("");
     HashMap<Integer, Store> storesBox = new HashMap<>();
@@ -72,7 +75,7 @@ public class OrdersSummaryController {
 
     @FXML
     public void initialize(HashMap<Integer, Order> orders, SystemManager sys) {
-
+        itemsTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         HashMap<Integer, Customer> customers = sys.getSuperMarket().getCostumers();
         NameCol = new TableColumn("Name");
         IdCol = new TableColumn("ID");
@@ -83,8 +86,11 @@ public class OrdersSummaryController {
         Price = new TableColumn("Price");
         Discount = new TableColumn("From Discoumt");
         shipmentLabel.textProperty().bind(Bindings.format("Shipment Price: %s", shipmentPrice));
-        totalPriceLabel.textProperty().bind(Bindings.format("Total Items Price for store: %s", itemsPrice));
-        totalPriceForOrder.textProperty().bind(Bindings.format("Total Items Price overall: %s", totalItemsPrice));
+        totalPriceLabel.textProperty().bind(Bindings.format("Store's Total Price: %s", itemsPrice));
+        totalPriceForOrder.textProperty().bind(Bindings.format("Price Overall: %s", totalItemsPrice));
+        locationLabel.textProperty().bind(Bindings.format( "%s", location));
+        totalShipmentPriceLabel.textProperty().bind(Bindings.format("Total Shipment Price: %s", totalShipmentPriceProperty));
+        distanceLabel.textProperty().bind(Bindings.format("Distance: %s", distance));
         NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
         IdCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
         Price.setCellValueFactory(new PropertyValueFactory<>("Price"));
@@ -93,8 +99,8 @@ public class OrdersSummaryController {
         totalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         Discount.setCellValueFactory(new PropertyValueFactory<>("Discount"));
         storeCB.disableProperty().bind(isOrderSelected.not());
-        //totalItemsPrice.set(String.format("%.2f", order.getItemsPrice()));
-        itemsTableView.getColumns().addAll(IdCol, NameCol, Price, totalQuantity, totalPrice, Discount);
+
+        itemsTableView.getColumns().addAll(IdCol, NameCol, purchasesCol ,Price, totalQuantity, totalPrice, Discount);
 
         initOrders(orders);
 
@@ -113,6 +119,8 @@ public class OrdersSummaryController {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 isOrderSelected.set(true);
                 Order order = orderBox.get(ordersCB.getSelectionModel().getSelectedIndex());
+                totalShipmentPriceProperty.set(String.format("%.2f",order.getShipmentPrice()));
+                totalItemsPrice.set(String.format("%.2f", order.getItemsPrice()));
                 if (order.getStoresToOrderFrom().size() == 1)
                     isOrderSelected.set(false);
                 else
@@ -142,12 +150,9 @@ public class OrdersSummaryController {
                     }
 
                     itemsTableView.setItems(FXCollections.observableList(data));
-//                ItemSetterGetter.getTotalItemPrice().set(String.valueOf(order.getItemsPrice()));
-//                shipmentPrice.set("0");
-//                itemsPrice.set(String.format("%.2f",store.getOrders().get(order.getOrderNumber()).getItemsPrice()));
-//                double deliveryDistance = Math.sqrt((order.getOrderCustomer().getLocation().x - store.getLocation().x) * (order.getOrderCustomer().getLocation().x - store.getLocation().x)
-//                        + (order.getOrderCustomer().getLocation().y - store.getLocation().y) * (order.getOrderCustomer().getLocation().y - store.getLocation().y));
-//                shipmentPrice.set(String.format("%.2f", store.getDeliveryPpk() * deliveryDistance));
+                    distance.set(String.format("%.2f", order.getDeliveryDistance()));
+                    location.set(store.showLocation());
+
                 }
             }
 
@@ -170,6 +175,7 @@ public class OrdersSummaryController {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 Order order = orderBox.get(ordersCB.getSelectionModel().getSelectedIndex());
+                double totalShipmentPrice =0.0;
                 Store specficStore;
                 if(storeCB.getSelectionModel().getSelectedIndex() != 0) {
                     specficStore = storesBox.get(storeCB.getSelectionModel().getSelectedIndex());
@@ -197,15 +203,16 @@ public class OrdersSummaryController {
                             }
                         }
                     }
+                    itemsTableView.setItems(FXCollections.observableList(data));
+                    shipmentPrice.set(String.format("%.2f", order.getShipmentPrice()));
+                    itemsPrice.set(String.format("%.2f", order.getItemsPrice()));
+                    location.set(store.showLocation());
+                    distance.set(String.format("%.2f",order.getDeliveryDistance()));
                 }
-                itemsTableView.getItems().clear();
-                itemsTableView.setItems(FXCollections.observableList(data));
-//                ItemSetterGetter.getTotalItemPrice().set(String.valueOf(order.getItemsPrice()));
-//                shipmentPrice.set("0");
-//                itemsPrice.set(String.format("%.2f",store.getOrders().get(order.getOrderNumber()).getItemsPrice()));
-//                double deliveryDistance = Math.sqrt((order.getOrderCustomer().getLocation().x - store.getLocation().x) * (order.getOrderCustomer().getLocation().x - store.getLocation().x)
-//                        + (order.getOrderCustomer().getLocation().y - store.getLocation().y) * (order.getOrderCustomer().getLocation().y - store.getLocation().y));
-//                shipmentPrice.set(String.format("%.2f", store.getDeliveryPpk() * deliveryDistance));
+
+
+
+
             }
         });
 

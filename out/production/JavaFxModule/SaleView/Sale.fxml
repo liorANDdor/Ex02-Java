@@ -11,9 +11,9 @@
    <content>
       <SplitPane>
          <items>
-            <FlowPane fx:id="salesVB" prefHeight="0.0" prefWidth="794.0">
+            <FlowPane fx:id="salesVB" alignment="TOP_CENTER" prefHeight="0.0" prefWidth="794.0">
                <children>
-                  <Button fx:id="continueBtn" mnemonicParsing="false" onMouseClicked="#commitSales" prefHeight="27.0" prefWidth="792.0" text="Continue" />
+                  <Button fx:id="continueBtn" mnemonicParsing="false" onMouseClicked="#commitSales" prefHeight="27.0" prefWidth="145.0" text="Continue" />
                   <Label prefHeight="22.0" prefWidth="795.0" text="You know how important you are to us, here are some discounts just for you:">
                      <font>
                         <Font size="17.0" />

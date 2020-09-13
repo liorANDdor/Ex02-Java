@@ -110,7 +110,7 @@ public class SalesController {
                 }
             }
         }
-        systemManager.commitOrder(order);
+
         showFinalOrder();
     }
 

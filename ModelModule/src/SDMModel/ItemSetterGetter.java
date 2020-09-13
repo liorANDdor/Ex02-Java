@@ -38,6 +38,7 @@ public class ItemSetterGetter implements Serializable {
 
                 totalItemPrice.set(String.format(
                         "%.2f",Double.parseDouble(totalItemPrice.get()) + quantitySpinner.getValue() * store.getItemPrice(Integer.parseInt(ID))));
+                quantitySpinner.getValueFactory().setValue(0.0);
             }
         });
     }

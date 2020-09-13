@@ -168,7 +168,7 @@ public class Order implements Serializable {
     }
 
     public Double getShipmentPrice() {
-        return (double)Math.round((shipmentPrice * 100.0d) / 100.0d);
+        return shipmentPrice;
     }
 
     public void setShipmentPrice(Double price) {
