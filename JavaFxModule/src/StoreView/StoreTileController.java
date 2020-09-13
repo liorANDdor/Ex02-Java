@@ -1,5 +1,6 @@
 package StoreView;
 
+import OrdersView.OrdersSummaryController;
 import SDMModel.Item;
 import SDMModel.Sell;
 import SDMModel.Store;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 import tile.tileController;
 
 import java.io.IOException;
@@ -35,7 +37,8 @@ public class StoreTileController {
     @FXML private Button itemsBtn;
     @FXML private Button ordersBtn;
     @FXML private FlowPane itemsFlowPan;
-
+    HashMap<Integer, Store> storesInChoiceBox = new HashMap<>();
+    private SystemManager systemManager = SystemManager.getInstance();
     private SimpleStringProperty location = new SimpleStringProperty("");
     private SimpleStringProperty ppk = new SimpleStringProperty("");
     private SimpleStringProperty ste = new SimpleStringProperty("");
@@ -44,7 +47,7 @@ public class StoreTileController {
 
 
     @FXML public void initialize(HashMap<Integer, Store> stores, SystemManager sys) {
-        HashMap<Integer, Store> storesInChoiceBox = new HashMap<>();
+
         Integer index = 0;
         for(Store store:stores.values()){
             storeView.getItems().add(store.getName());
@@ -76,6 +79,22 @@ public class StoreTileController {
                 }
             }
         );
+      }
+
+      @FXML void showOrders() throws IOException {
+          itemsFlowPan.getChildren().clear();
+          FXMLLoader fxmlLoader = new FXMLLoader();
+          URL url = getClass().getResource("../OrdersView/OrdersSummary.fxml");
+          fxmlLoader.setLocation(url);
+          Node orderSummary = fxmlLoader.load();
+          OrdersSummaryController ordersSummaryController = fxmlLoader.getController();
+          Store storeToShow = storesInChoiceBox.get(storeView.getSelectionModel().getSelectedIndex());
+          ordersSummaryController.initialize(storeToShow.getOrders(), systemManager);
+          Button btn = new Button("AggregateOrder");
+          btn.setDisable(true);
+          itemsFlowPan.getChildren().add(btn);
+          itemsFlowPan.getChildren().add(orderSummary);
+
       }
 
     private void createSellTile(Sell sell, SystemManager systemManager) {

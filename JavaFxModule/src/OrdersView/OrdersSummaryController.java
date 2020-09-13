@@ -52,7 +52,7 @@ public class OrdersSummaryController {
     TableColumn NameCol;
     TableColumn IdCol;
     TableColumn TypeCol;
-    TableColumn purchasesCol;
+    TableColumn PurchaseCatagory;
     TableColumn totalQuantity;
     TableColumn totalPrice;
     TableColumn Price;
@@ -80,7 +80,7 @@ public class OrdersSummaryController {
         NameCol = new TableColumn("Name");
         IdCol = new TableColumn("ID");
         TypeCol = new TableColumn("Purchase Category");
-        purchasesCol = new TableColumn("Add To Order");
+        PurchaseCatagory = new TableColumn("Catagory");
         totalQuantity = new TableColumn("Your Quantity");
         totalPrice = new TableColumn("Total Price");
         Price = new TableColumn("Price");
@@ -91,16 +91,17 @@ public class OrdersSummaryController {
         locationLabel.textProperty().bind(Bindings.format( "%s", location));
         totalShipmentPriceLabel.textProperty().bind(Bindings.format("Total Shipment Price: %s", totalShipmentPriceProperty));
         distanceLabel.textProperty().bind(Bindings.format("Distance: %s", distance));
+
         NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
         IdCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
         Price.setCellValueFactory(new PropertyValueFactory<>("Price"));
-        TypeCol.setCellValueFactory(new PropertyValueFactory<>("purchaseCategory"));
+        PurchaseCatagory.setCellValueFactory(new PropertyValueFactory<>("purchaseCategory"));
         totalQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         totalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         Discount.setCellValueFactory(new PropertyValueFactory<>("Discount"));
         storeCB.disableProperty().bind(isOrderSelected.not());
 
-        itemsTableView.getColumns().addAll(IdCol, NameCol, purchasesCol ,Price, totalQuantity, totalPrice, Discount);
+        itemsTableView.getColumns().addAll(IdCol, NameCol, PurchaseCatagory,Price, totalQuantity, totalPrice, Discount);
 
         initOrders(orders);
 

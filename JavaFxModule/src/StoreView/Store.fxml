@@ -35,7 +35,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <Button fx:id="itemsBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="236.0" text="Items" />
-                        <Button fx:id="ordersBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="246.0" text="Orders" />
+                        <Button fx:id="ordersBtn" mnemonicParsing="false" onAction="#showOrders" prefHeight="27.0" prefWidth="246.0" text="Orders" />
                      </children>
                   </HBox>
                   <ChoiceBox fx:id="storeView" prefHeight="27.0" prefWidth="295.0" />
@@ -46,9 +46,9 @@
          <children>
             <ScrollPane layoutX="-5.0" layoutY="-1.0">
                <content>
-                  <FlowPane fx:id="itemsFlowPan" prefHeight="392.0" prefWidth="716.0">
+                  <FlowPane fx:id="itemsFlowPan" prefHeight="427.0" prefWidth="767.0">
                      <children>
-                        <ScrollBar orientation="VERTICAL" prefHeight="307.0" prefWidth="17.0" />
+                        <ScrollBar orientation="VERTICAL" prefHeight="398.0" prefWidth="17.0" />
                      </children>
                   </FlowPane>
                </content>
