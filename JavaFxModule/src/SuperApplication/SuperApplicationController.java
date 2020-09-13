@@ -1,6 +1,8 @@
 package SuperApplication;
 import OrderWindow.OrderController;
+import OrdersView.OrdersSummaryController;
 import SDMModel.*;
+import SaleView.OrderSummaryController;
 import StoreView.StoreTileController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -179,14 +181,26 @@ public class SuperApplicationController {
     }
 
     @FXML
-    void showOrdersHandler(ActionEvent event) {
-        HashMap<Integer, Store> stores =  systemManager.getSuperMarket().getStores();
+    void showOrdersHandler(ActionEvent event) throws IOException {
+
         myPane.getChildren().clear();
-        for(Store store: stores.values()){
-            for(Order order:store.getOrders().values()){
-                createOrderTile(order);
-            }
-        }
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL url = getClass().getResource("../OrdersView/OrdersSummary.fxml");
+        fxmlLoader.setLocation(url);
+        Node orderSummary = fxmlLoader.load();
+        OrdersSummaryController ordersSummaryController = fxmlLoader.getController();
+        ordersSummaryController.initialize(systemManager.getSuperMarket().getOrders(), systemManager);
+        Stage stage = (Stage) myPane.getScene().getWindow();
+        myPane.getChildren().add(orderSummary);
+
+//
+//        HashMap<Integer, Store> stores =  systemManager.getSuperMarket().getStores();
+//        myPane.getChildren().clear();
+//        for(Store store: stores.values()){
+//            for(Order order:store.getOrders().values()){
+//                createOrderTile(order);
+//            }
+//        }
     }
 
     private void createOrderTile(Order order) {

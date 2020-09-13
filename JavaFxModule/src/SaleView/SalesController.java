@@ -118,13 +118,13 @@ public class SalesController {
 
         salesVB.getChildren().clear();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../SalevIEW/OrderSummary.fxml");
+        URL url = getClass().getResource("../SaleView/OrderSummary.fxml");
         fxmlLoader.setLocation(url);
         Node orderSummary = fxmlLoader.load();
         OrderSummaryController orderSummaryController = fxmlLoader.getController();
         orderSummaryController.initialize(order, systemManager);
-        Stage stage = (Stage) salesVB.getScene().getWindow();
-        stage.setTitle("Order Summary");
+//        Stage stage = (Stage) salesVB.getScene().getWindow();
+//        stage.setTitle("Order Summary");
         salesVB.getChildren().add(orderSummary);
 
     }

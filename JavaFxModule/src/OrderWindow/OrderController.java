@@ -107,7 +107,7 @@ public class OrderController {
 
         int customerIndex = 0;
         for (Customer customer : customers.values()) {
-            customerCB.getItems().add(customer.getName());
+            customerCB.getItems().add(customer.getName() + ", " + customer.getId());
             customerBox.put(customerIndex, customer);
             customerIndex++;
         }
