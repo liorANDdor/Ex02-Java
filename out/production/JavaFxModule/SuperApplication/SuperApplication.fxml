@@ -20,7 +20,7 @@
                   <Button fx:id="mapBtn" disable="true" mnemonicParsing="false" onAction="#showMapHandler" prefHeight="53.0" prefWidth="123.0" text="Show map" />
                   <Button disable="true" mnemonicParsing="false" onAction="#addSaleHandler" prefHeight="53.0" prefWidth="123.0" text="Add sale" />
                   <Button fx:id="addOrderBtn" disable="true" mnemonicParsing="false" onAction="#createOrder" prefHeight="53.0" prefWidth="123.0" text="Create order" />
-                  <Button fx:id="addOrderBtn2" disable="true" mnemonicParsing="false" onAction="#createOrder" prefHeight="53.0" prefWidth="123.0" text="Modify Item" />
+                  <Button fx:id="modifyItemBtn" disable="true" mnemonicParsing="false" onAction="#modifyItemHandler" prefHeight="53.0" prefWidth="123.0" text="Modify Item" />
                </children>
             </VBox>
             <ScrollPane layoutX="145.0" layoutY="53.0" prefHeight="513.0" prefWidth="758.0">

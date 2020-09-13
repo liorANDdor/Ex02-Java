@@ -36,6 +36,7 @@ public class SuperApplicationController {
     @FXML private Button mapBtn;
     @FXML private Button addOrderBtn;
     @FXML private FlowPane myPane;
+    @FXML private Button modifyItemBtn;
 
 
 
@@ -49,6 +50,7 @@ public class SuperApplicationController {
         customersBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
         mapBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
         addOrderBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        modifyItemBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
 
     }
 
@@ -232,6 +234,20 @@ public class SuperApplicationController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void modifyItemHandler(ActionEvent event) throws IOException {
+        Stage stg = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL url = getClass().getResource("../UpdateStoreItemsView/UpdateStoreItems.fxml");
+        fxmlLoader.setLocation(url);
+        Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
+        Scene scene = new Scene(root, 250, 300);
+        stg.initModality(Modality.APPLICATION_MODAL);
+        stg.setTitle("Modify item");
+        stg.setScene(scene);
+        stg.show();
     }
 
 }
