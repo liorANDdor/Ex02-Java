@@ -57,6 +57,11 @@ public class Store implements Serializable {
         this.sales = sales;
     }
 
+    @Override
+    public String toString(){
+        return this.getName();
+    }
+
 
     public Double getTotalEarning() {
 

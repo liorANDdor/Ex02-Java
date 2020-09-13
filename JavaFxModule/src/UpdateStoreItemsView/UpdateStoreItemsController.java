@@ -17,7 +17,7 @@ public class UpdateStoreItemsController {
     private SystemManager systemManager = SystemManager.getInstance();
 
     @FXML
-    private ComboBox<String> storeCB;
+    private ComboBox<Store> storeCB;
 
     @FXML
     private ComboBox<String> optionCB;
@@ -40,10 +40,7 @@ public class UpdateStoreItemsController {
         storeCB.getItems().addAll(systemManager
                 .getSuperMarket()
                 .getStores()
-                .values()
-                .stream()
-                .map(el->el.getName())
-                .collect(Collectors.toList()));
+                .values());
     }
 
     @FXML
