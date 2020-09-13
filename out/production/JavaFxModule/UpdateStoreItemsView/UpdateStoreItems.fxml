@@ -5,13 +5,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="315.0" prefWidth="233.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UpdateStoreItemsView.UpdateStoreItemsController">
    <children>
       <ComboBox fx:id="storeCB" layoutX="41.0" layoutY="47.0" prefWidth="150.0" promptText="Choose store" />
-      <ComboBox fx:id="optionCB" layoutX="41.0" layoutY="81.0" prefWidth="150.0" promptText="Choose option" />
-      <Button fx:id="commitBtn" layoutX="48.0" layoutY="233.0" mnemonicParsing="false" onAction="#commitChangesHandler" prefHeight="25.0" prefWidth="150.0" text="Commit" />
-      <ComboBox fx:id="ItemsCB" layoutX="41.0" layoutY="117.0" prefWidth="150.0" promptText="Choose item" />
+      <ComboBox fx:id="optionCB" disable="true" layoutX="41.0" layoutY="81.0" prefWidth="150.0" promptText="Choose option" />
+      <Button fx:id="commitBtn" disable="true" layoutX="48.0" layoutY="233.0" mnemonicParsing="false" onAction="#commitChangesHandler" prefHeight="25.0" prefWidth="150.0" text="Commit" />
+      <ComboBox fx:id="ItemsCB" disable="true" layoutX="41.0" layoutY="117.0" prefWidth="150.0" promptText="Choose item" />
       <TextField fx:id="priceText" layoutX="42.0" layoutY="170.0" visible="false" />
    </children>
 </Pane>

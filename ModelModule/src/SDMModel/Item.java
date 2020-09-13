@@ -113,6 +113,13 @@ public class Item implements Serializable {
     @Override
     public boolean equals(Object o)
     {
-        return o.hashCode()==this.hashCode() ;
+        if(o!=null)
+             return o.hashCode()==this.hashCode() ;
+        else
+            return false;
+    }
+    @Override
+    public String toString(){
+        return this.getName();
     }
 }

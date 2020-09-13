@@ -180,7 +180,10 @@ public class Store implements Serializable {
     @Override
     public boolean equals(Object o)
     {
-        return o.hashCode()==this.hashCode() ;
+        if(o==null)
+            return false;
+        else
+            return o.hashCode()==this.hashCode() ;
     }
 
     public double getTotalShipmentEarning() {
