@@ -14,7 +14,7 @@ public class Customer {
 
 
     public enum InfoOptions {
-        Name, CustomerId, Location,AverageShipmentPrice, AverageItemPrice;
+        Name, CustomerId, Location,AverageShipmentPrice, AverageItemPrice, NumberOfOrders;
 
         public String getInfo(Customer customer) {
             switch (this) {
@@ -23,15 +23,19 @@ public class Customer {
                 case Name:
                     return customer.getName();
                 case Location:
-                    return String.valueOf(customer.getLocation());
+                    return customer.showLocation();
                 case AverageShipmentPrice:
-                    return String.valueOf(customer.getTotalShipmentPrice() / customer.getNumberOfOrders()==0 ? 1: 0);
+                    return customer.getAverageShipmentprice(customer);
                 case AverageItemPrice:
-                    return String.valueOf(customer.getTotalItemPrice() / customer.getNumberOfOrders()==0 ? 1: 0);
+                    return customer.getAverageItemPrice(customer);
+                case NumberOfOrders:
+                    return String.valueOf(customer.getNumberOfOrders());
                 default:
                     return "Unknown";
             }
         }
+
+
     }
 
     private String name;
@@ -52,6 +56,20 @@ public class Customer {
         numberOfOrders++;
     }
 
+    public String getAverageShipmentprice(Customer customer) {
+        if(customer.getNumberOfOrders() == 0)
+            return "0.0";
+        else
+            return String.format("%.2f" ,customer.getTotalShipmentPrice() / customer.getNumberOfOrders());
+    }
+
+
+    public String getAverageItemPrice(Customer customer) {
+        if(customer.getNumberOfOrders() == 0)
+            return "0.0";
+        else
+            return String.format("%.2f" ,customer.getTotalItemPrice() / customer.getNumberOfOrders());
+    }
 
     public double getTotalShipmentPrice() {
         return totalShipmentPrice;
@@ -69,7 +87,6 @@ public class Customer {
         this.totalItemPrice = this.totalItemPrice + itemsPrice;
     }
 
-
     private HashMap<Integer, Order> orders = new HashMap<>();
 
 
@@ -83,6 +100,9 @@ public class Customer {
 
     public Point getLocation() {
         return location;
+    }
+    public String showLocation() {
+        return String.format("(%s, %s)", location.x, location.y);
     }
 
     public void setLocation(Point location) {

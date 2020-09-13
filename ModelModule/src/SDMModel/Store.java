@@ -176,7 +176,7 @@ public class Store implements Serializable {
     }
 
     public double getTotalShipmentEarning() {
-        return this.totalShipmentEarning;
+        return (double)Math.round( this.totalShipmentEarning * 100.0d) / 100.0d;
     }
     public void addToTotalShipmentEarning(double newShipmentPrice) {
         totalShipmentEarning = totalEarning + newShipmentPrice;

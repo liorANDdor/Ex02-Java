@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -38,12 +39,15 @@ public class SuperApplicationController {
     @FXML private FlowPane myPane;
     @FXML private Button modifyItemBtn;
 
+    @FXML private AnchorPane mainAnchor;
 
 
 
 
 
-    @FXML private void initialize(){
+
+    @FXML private void initialize() throws IOException {
+
         storesBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
         itemBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
         ordersBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
@@ -117,6 +121,7 @@ public class SuperApplicationController {
             list.add(Customer.InfoOptions.Name);
             list.add(Customer.InfoOptions.CustomerId);
             list.add(Customer.InfoOptions.Location);
+            list.add(Customer.InfoOptions.NumberOfOrders);
             list.add(Customer.InfoOptions.AverageItemPrice);
             list.add(Customer.InfoOptions.AverageShipmentPrice);
             tileController tileController = fxmlLoader.getController();
