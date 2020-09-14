@@ -114,6 +114,7 @@ public class AddStoreController {
                         e.printStackTrace();
                     }
                     addItemToStoreController.setStore(store);
+                    addItemToStoreController.setParent(this);
                     Scene scene = new Scene(root, 250, 300);
                     stg.initModality(Modality.APPLICATION_MODAL);
                     stg.setTitle("Add item");
