@@ -72,6 +72,38 @@ public class SingleSaleController {
 
     }
 
+    public void showSale(Sale sale) {
+        NeedToGet needToGet = sale.getNeedToGet();
+        this.sale = sale;
+        saleName.setText(sale.getName());
+        if (needToGet.getOperator().equals("ONE-OF")) {
+            SaleTypeLabel.setText("Choose one:");
+            for (Offer offer : needToGet.getOffers()) {
+                String itemName = systemManager.getSuperMarket().getItemByID(offer.getItemId()).getName();
+                Label label = new Label(String.valueOf(offer.getQuantity()) + " " + itemName + " for " + String.valueOf(offer.getForAdditional()) + " ₪ ");
+                label.setPadding(new Insets(10));
+                saleVB.getChildren().add(label);
 
+            }
+        }
+        else {
+            SaleTypeLabel.setText("Take all or nothing:");
+            String allItemNames = "";
+            Double itemTotalPrice = 0.0;
+            for (Offer offer : needToGet.getOffers()) {
+                String itemName = systemManager.getSuperMarket().getItemByID(offer.getItemId()).getName();
+                allItemNames = allItemNames + " " + offer.getQuantity() + " "  + itemName + " " + offer.getForAdditional() + " ₪ " ;
+                itemTotalPrice = itemTotalPrice +offer.getForAdditional();
+                allItemNames = allItemNames + "\n";
+            }
+            allItemNames = allItemNames + "Total of " + itemTotalPrice + " ₪";
+            Label label = new Label(allItemNames);
+
+            label.setPadding(new Insets(10));
+            saleVB.getChildren().add(label);
+
+        }
+
+    }
 }
 

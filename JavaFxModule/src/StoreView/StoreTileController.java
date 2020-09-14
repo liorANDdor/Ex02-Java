@@ -1,10 +1,8 @@
 package StoreView;
 
 import OrdersView.OrdersSummaryController;
-import SDMModel.Item;
-import SDMModel.Sell;
-import SDMModel.Store;
-import SDMModel.SystemManager;
+import SDMModel.*;
+import SaleView.SingleSaleController;
 import com.sun.tools.javac.comp.Check;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -108,6 +106,33 @@ public class StoreTileController {
         }
     }
 
+    @FXML void showSales() throws IOException {
+        if(storeView.getSelectionModel().getSelectedIndex()!=-1) {
+            itemsFlowPan.getChildren().clear();
+            Store storeToShow = storesInChoiceBox.get(storeView.getSelectionModel().getSelectedIndex());
+            List<Sale> sales = storeToShow.getSales();
+            for (Sale sale : sales) {
+                createSaleTile(sale);
+
+            }
+        }
+    }
+    private void createSaleTile(Sale sale) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            URL url = getClass().getResource("../SaleView/SingleSale.fxml");
+            fxmlLoader.setLocation(url);
+            Node singleSaleTile = fxmlLoader.load();
+            SingleSaleController saleInfoController = fxmlLoader.getController();
+
+
+            saleInfoController.showSale(sale);
+            itemsFlowPan.getChildren().add(singleSaleTile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private void createSellTile(Sell sell, SystemManager systemManager) {

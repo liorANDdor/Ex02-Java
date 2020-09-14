@@ -34,8 +34,9 @@
                   <Label fx:id="ID" alignment="CENTER_RIGHT" contentDisplay="RIGHT" GridPane.rowIndex="1" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Button fx:id="itemsBtn" mnemonicParsing="false" onAction="#showItems" prefHeight="27.0" prefWidth="236.0" text="Items" />
-                        <Button fx:id="ordersBtn" mnemonicParsing="false" onAction="#showOrders" prefHeight="27.0" prefWidth="246.0" text="Orders" />
+                        <Button fx:id="itemsBtn" mnemonicParsing="false" onAction="#showItems" prefHeight="27.0" prefWidth="139.0" text="Items" />
+                        <Button fx:id="ordersBtn" mnemonicParsing="false" onAction="#showOrders" prefHeight="27.0" prefWidth="129.0" text="Orders" />
+                        <Button fx:id="sales" mnemonicParsing="false" onAction="#showSales" prefHeight="28.0" prefWidth="136.0" text="Sales" />
                      </children>
                   </HBox>
                   <ChoiceBox fx:id="storeView" prefHeight="27.0" prefWidth="295.0" />
