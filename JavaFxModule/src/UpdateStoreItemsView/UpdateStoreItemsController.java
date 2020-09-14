@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class UpdateStoreItemsController {
@@ -62,11 +63,14 @@ public class UpdateStoreItemsController {
                     priceText.visibleProperty().setValue(true);
                     break;
                 case DeleteItem:
-                    ItemsCB.getItems().addAll(systemManager.getSuperMarket().getItems().values().stream()
-                            .filter(item -> storeCB.getSelectionModel().getSelectedItem().getItemsToSell()
-                                    .stream()
-                                    .anyMatch(el -> el.getItemId() == item.getId()))
-                            .collect(Collectors.toList()));
+                    List<Item> lst = systemManager.getItemsThatCanBeDeleted(storeCB.getSelectionModel().getSelectedItem());
+                    if(lst != null)
+                        ItemsCB.getItems().addAll(lst);
+                    else{
+                        ItemsCB.setPromptText("No items to delete");
+                        commitBtn.disableProperty().setValue(false);
+                        ItemsCB.setDisable(true);
+                    }
 
                     break;
                 case ChangePriceOfItem:
