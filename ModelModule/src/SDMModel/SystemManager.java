@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class SystemManager {
+
+
+
+
     public enum optionsForUpdate {
         DeleteItem("Delete Item"),
         ChangePriceOfItem("Change Price Of Item"),
@@ -144,6 +148,25 @@ public class SystemManager {
         return order;
     }
 
+    public boolean checkIfStoreOk(Store newStore, String whatWrongMessage) {
+        boolean isContentAsNeeded = true;
+        HashMap<Integer, Store> stores = superMarket.getStores();
+        HashMap<Integer, Customer> customers = superMarket.getCostumers();
+        for (Store store: stores.values()) {
+            if (store.getId() == newStore.getId()) {
+                isContentAsNeeded = false;
+                whatWrongMessage += String.format("There is two stores with the same ID : %d \n", newStore.getId());
+            }
+        }
+        for (Store store: stores.values()) {
+            if (store.getLocation() == newStore.getLocation()) {
+                isContentAsNeeded = false;
+                whatWrongMessage += String.format("There is two stores with the Location ");
+            }
+        }
+        return isContentAsNeeded;
+
+    }
     public boolean isValidStoreId(int storeID) {
         return superMarket
                 .getStores()
@@ -292,6 +315,13 @@ public class SystemManager {
         return storeLowestItemPrice;
     }
 
-
+    public String addStore(int storeId, String storeName, Point storeLocation, int ppk) {
+        for (Store store: getSuperMarket().getStores().values())
+            if (store.getId() == storeId) {
+                return String.format("There is two stores with the same ID : %d \n", store.getId());
+            }
+        this.superMarket.getStores().put(storeId,new Store(storeName, storeId, ppk,storeLocation ));
+        return String.format("The store %s was added successfully \n", storeName);
+    }
 
 }

@@ -4,6 +4,7 @@ import SDMGenerated.SDMDiscount;
 
 public class Sale {
 
+
     protected String name;
     protected IfBuy ifBuy;
     protected NeedToGet needToGet;

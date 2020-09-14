@@ -7,6 +7,15 @@ import java.io.Serializable;
 
 public class Sell implements Serializable {
 
+    public Sell( int id, double price){
+        this.price = price;
+        this.itemId = id;
+        numberOfTimesItemWasSold = 0;
+
+    }
+    public Sell( ){
+
+    }
     public enum InfoOptions {
         Price, ID, TimesWasSold;
 
