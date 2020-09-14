@@ -34,7 +34,7 @@
                   <Label fx:id="ID" alignment="CENTER_RIGHT" contentDisplay="RIGHT" GridPane.rowIndex="1" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Button fx:id="itemsBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="236.0" text="Items" />
+                        <Button fx:id="itemsBtn" mnemonicParsing="false" onAction="#showItems" prefHeight="27.0" prefWidth="236.0" text="Items" />
                         <Button fx:id="ordersBtn" mnemonicParsing="false" onAction="#showOrders" prefHeight="27.0" prefWidth="246.0" text="Orders" />
                      </children>
                   </HBox>

@@ -5,6 +5,7 @@ import SDMModel.Item;
 import SDMModel.Sell;
 import SDMModel.Store;
 import SDMModel.SystemManager;
+import com.sun.tools.javac.comp.Check;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -62,6 +64,7 @@ public class StoreTileController {
         storeView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                itemsFlowPan.getChildren().clear();
                 Store storeToShow = storesInChoiceBox.get(newValue);
                 ste.set(Double.toString(storeToShow.getTotalShipmentEarning()));
                 id.set(Integer.toString(storeToShow.getId()));
@@ -81,21 +84,31 @@ public class StoreTileController {
         );
       }
 
-      @FXML void showOrders() throws IOException {
-          itemsFlowPan.getChildren().clear();
-          FXMLLoader fxmlLoader = new FXMLLoader();
-          URL url = getClass().getResource("../OrdersView/OrdersSummary.fxml");
-          fxmlLoader.setLocation(url);
-          Node orderSummary = fxmlLoader.load();
-          OrdersSummaryController ordersSummaryController = fxmlLoader.getController();
-          Store storeToShow = storesInChoiceBox.get(storeView.getSelectionModel().getSelectedIndex());
-          ordersSummaryController.initialize(storeToShow.getOrders(), systemManager);
-          Button btn = new Button("AggregateOrder");
-          btn.setDisable(true);
-          itemsFlowPan.getChildren().add(btn);
-          itemsFlowPan.getChildren().add(orderSummary);
+    @FXML void showOrders() throws IOException {
+        itemsFlowPan.getChildren().clear();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL url = getClass().getResource("../OrdersView/OrdersSummary.fxml");
+        fxmlLoader.setLocation(url);
+        Node orderSummary = fxmlLoader.load();
+        OrdersSummaryController ordersSummaryController = fxmlLoader.getController();
+        Store storeToShow = storesInChoiceBox.get(storeView.getSelectionModel().getSelectedIndex());
+        ordersSummaryController.initialize(storeToShow.getOrders(), systemManager);
+        Button btn = new Button("AggregateOrder");
+        ordersSummaryController.aggregateOrder(btn);
+        itemsFlowPan.getChildren().add(btn);
+        itemsFlowPan.getChildren().add(orderSummary);
 
-      }
+    }
+    @FXML void showItems() throws IOException {
+        itemsFlowPan.getChildren().clear();
+        Store storeToShow = storesInChoiceBox.get(storeView.getSelectionModel().getSelectedIndex());
+        List<Sell> sells = storeToShow.getItemsToSell();
+        for(Sell sell: sells){
+            createSellTile(sell,systemManager);
+        }
+    }
+
+
 
     private void createSellTile(Sell sell, SystemManager systemManager) {
         Item itemToSell = systemManager.getSuperMarket().getItemByID(sell.getItemId());

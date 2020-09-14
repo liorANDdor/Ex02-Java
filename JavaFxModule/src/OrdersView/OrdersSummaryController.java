@@ -175,6 +175,7 @@ public class OrdersSummaryController {
         storeCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+
                 Order order = orderBox.get(ordersCB.getSelectionModel().getSelectedIndex());
                 double totalShipmentPrice =0.0;
                 Store specficStore;
@@ -219,6 +220,44 @@ public class OrdersSummaryController {
 
     }
 
+    public void aggregateOrder(Button btn) {
+        btn.setOnAction(x ->{
+            if((ordersCB.getSelectionModel().getSelectedIndex()) == -1)
+                return;
+            Order order = orderBox.get(ordersCB.getSelectionModel().getSelectedIndex());
+            order = systemManager.getSuperMarket().getOrders().get(order.getOrderNumber());
+            double totalShipmentPrice =0.0;
+            List data = new ArrayList<>();
+
+            for (Store store : order.getStoresToOrderFrom().keySet()) {
+                for (Map.Entry<Item,Double> entry: store.getOrders().get(order.getOrderNumber()).getItemsQuantity().entrySet()) {
+
+                    Item item = entry.getKey();
+                    data.add(
+                            new ItemSumamry(String.valueOf(item.getId()), //itemLowestPrice
+                                    String.valueOf(item.getName()), item.getPurchaseCategory().toString(), String.valueOf(entry.getValue()), String.valueOf(store.getItemPrice(item.getId())),
+                                    String.valueOf(entry.getValue() * store.getItemPrice(item.getId())), "No"));
+
+
+                    if (order.getSalesByStoreId().get(store.getId()) != null) {
+                        for (Offer offer : order.getSalesByStoreId().get(store.getId())) {
+                            item = systemManager.getSuperMarket().getItemByID(offer.getItemId());
+                            data.add(
+                                    new ItemSumamry(String.valueOf(item.getId()), //itemLowestPrice
+                                            String.valueOf(item.getName()), item.getPurchaseCategory().toString(), String.valueOf(offer.getQuantity()), String.valueOf(offer.getForAdditional()),
+                                            String.valueOf(offer.getForAdditional()), "Yes"));
+                        }
+                    }
+                }
+                itemsTableView.setItems(FXCollections.observableList(data));
+                shipmentPrice.set(String.format("%.2f", order.getShipmentPrice()));
+                itemsPrice.set(String.format("%.2f", order.getItemsPrice()));
+                location.set(store.showLocation());
+                distance.set(String.format("%.2f",order.getDeliveryDistance()));
+            }
+
+        });
+    }
 
 
     public static class ItemSumamry {
