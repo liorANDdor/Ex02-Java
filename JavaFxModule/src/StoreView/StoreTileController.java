@@ -93,9 +93,9 @@ public class StoreTileController {
         OrdersSummaryController ordersSummaryController = fxmlLoader.getController();
         Store storeToShow = storesInChoiceBox.get(storeView.getSelectionModel().getSelectedIndex());
         ordersSummaryController.initialize(storeToShow.getOrders(), systemManager);
-        Button btn = new Button("AggregateOrder");
-        ordersSummaryController.aggregateOrder(btn);
-        itemsFlowPan.getChildren().add(btn);
+        CheckBox aggregatedOrder = new CheckBox("AggregatedOrder");
+        ordersSummaryController.aggregateOrder(aggregatedOrder);
+        itemsFlowPan.getChildren().add(aggregatedOrder);
         itemsFlowPan.getChildren().add(orderSummary);
 
     }
