@@ -55,6 +55,7 @@ public class UpdateStoreItemsController {
             if(newValue!=null)
             switch (newValue){
                 case AddNewItem:
+                    ItemsCB.setPromptText("Choose item");
                     ItemsCB.getItems().addAll(systemManager.getSuperMarket().getItems().values().stream()
                             .filter(item -> storeCB.getSelectionModel().getSelectedItem().getItemsToSell()
                                     .stream()
@@ -64,7 +65,7 @@ public class UpdateStoreItemsController {
                     break;
                 case DeleteItem:
                     List<Item> lst = systemManager.getItemsThatCanBeDeleted(storeCB.getSelectionModel().getSelectedItem());
-                    if(lst != null)
+                    if(lst != null && lst.size() !=0)
                         ItemsCB.getItems().addAll(lst);
                     else{
                         ItemsCB.setPromptText("No items to delete");
@@ -74,6 +75,7 @@ public class UpdateStoreItemsController {
 
                     break;
                 case ChangePriceOfItem:
+                    ItemsCB.setPromptText("Choose item");
                     ItemsCB.getItems().addAll(systemManager.getSuperMarket().getItems().values().stream()
                             .filter(item -> storeCB.getSelectionModel().getSelectedItem().getItemsToSell()
                                     .stream()
