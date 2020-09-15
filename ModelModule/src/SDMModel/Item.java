@@ -8,6 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Item implements Serializable {
+    public Item(String ItemName, int ItemID,PurchaseCategory catagory ){
+        this.id = ItemID;
+        this.name = ItemName;
+        this.purchaseCategory = catagory;
+        totalNumberOfTimePurchased = 0;
+        storesWhoSellTheItem = new ArrayList<>();
+
+    }
+    public Item(){}
     public enum InfoOptions {
         Name, ItemId, Category, NumberOfStoresSellTheItem, ItemAveragePrice, NumberOfTimesItemWasSold;
 
