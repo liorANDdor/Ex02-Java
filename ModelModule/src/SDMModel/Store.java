@@ -14,6 +14,19 @@ import java.util.List;
 
 public class Store implements Serializable {
 
+    public Store( String name,  int id, int deliveryPpk, Point location) {
+        this.totalEarning = 0.0;
+        this.totalShipmentEarning = 0.0;;
+        this.orders = new HashMap<>();
+        this.name = name;
+        this.deliveryPpk = deliveryPpk;
+        this.location = location;
+        this.itemsToSell = new ArrayList<>();
+        this.sales = new ArrayList<>();
+        this.id = id;
+    }
+    public Store(){}
+
     public enum InfoOptions {
         Name, Id, Location, DeliveryPpk, TotalEarning, TotalShipmentEarning;
 
