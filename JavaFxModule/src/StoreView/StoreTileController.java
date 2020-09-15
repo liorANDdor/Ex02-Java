@@ -3,7 +3,6 @@ package StoreView;
 import OrdersView.OrdersSummaryController;
 import SDMModel.*;
 import SaleView.SingleSaleController;
-import com.sun.tools.javac.comp.Check;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,7 +16,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-import javafx.stage.Stage;
 import tile.tileController;
 
 import java.io.IOException;

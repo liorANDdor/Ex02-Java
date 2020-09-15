@@ -7,10 +7,34 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class SystemManager {
+    public List<Item> getItemsThatCanBeDeleted(Store store) {
+        List<Item> lst = this.getSuperMarket().getItems().values().stream()
+                .filter(item -> store.getItemsToSell()
+                        .stream()
+                        .anyMatch(el -> el.getItemId() == item.getId()))
+                .collect(Collectors.toList());
 
-
+        if (lst.size() <= 1)
+            return null;
+        List<Store> listOfOtherStores = this.superMarket
+                .getStores()
+                .values()
+                .stream()
+                .filter(store1 -> store.getId() != store1.getId())
+                .collect(Collectors.toList());
+        List<Item> lstOfReleventITems = lst
+                .stream()
+                .filter(item -> listOfOtherStores
+                        .stream()
+                        .anyMatch(store1 -> store1.getItemsToSell()
+                                .stream()
+                                .anyMatch(sell -> sell.getItemId() == item.getId())))
+                .collect(Collectors.toList());
+        return lstOfReleventITems;
+    }
 
 
     public enum optionsForUpdate {
