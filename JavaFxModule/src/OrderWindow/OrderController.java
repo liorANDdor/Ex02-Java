@@ -5,11 +5,14 @@ import SDMModel.*;
 import SaleView.SalesController;
 import StoreView.StoreTileController;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,9 +33,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class OrderController {
-
+    @FXML private Label ProgressPrecent;
+    @FXML private Label MessageLabel;
+    @FXML private ProgressBar ProgressBar;
     @FXML private Label ID;
     @FXML private Label shipmentLabel;
     @FXML private Label totalPriceLabel;
@@ -142,7 +148,8 @@ public class OrderController {
                                 new ItemSetterGetter(Double.toString(sys.getItemLowestPrice(item.getId()).getItemPrice(item.getId())), //itemLowestPrice
                                         item.getName(), Integer.toString(item.getId()), item.getPurchaseCategory().toString(), order,subOrders, storeLowestItemPrice, sys));
                     }
-                    itemsTableView.setItems(FXCollections.observableList(data));
+
+
                 }
             }
         });
@@ -173,14 +180,21 @@ public class OrderController {
 
                     itemsTableView.getColumns().clear();
                     itemsTableView.getColumns().addAll(IdCol, NameCol, QuantityCol, purchasesCol, totalQuantity,totalPrice);
-                    List data = new ArrayList<>();
-                    for (Item item : sys.getSuperMarket().getItems().values()) {
-                        Store storeLowestItemPrice = sys.getItemLowestPrice(item.getId());
-                        data.add(
-                                new ItemSetterGetter(Double.toString(sys.getItemLowestPrice(item.getId()).getItemPrice(item.getId())), //itemLowestPrice
-                                        item.getName(), Integer.toString(item.getId()), item.getPurchaseCategory().toString(), order, subOrders, storeLowestItemPrice, sys));
-                    }
-                    itemsTableView.setItems(FXCollections.observableList(data));
+
+
+                    Consumer<ItemSetterGetter> superMarketConsumer2 = newItem -> {
+                        List cloned = new ArrayList(itemsTableView.getItems());
+                        ObservableList<ItemSetterGetter> dataList = FXCollections.observableList(cloned);
+                        dataList.add(newItem);
+                        itemsTableView.getItems().clear();
+                        itemsTableView.setItems(dataList);
+                    };
+
+                    dynamicOrderTask task = new dynamicOrderTask(order, subOrders, superMarketConsumer2);
+                    bindUIToTask(task);
+                    new Thread(task).start();
+
+
                 }
                 else {
 
@@ -196,6 +210,19 @@ public class OrderController {
                 }
             }
         });
+    }
+
+    public void bindUIToTask(Task<Boolean> task) {
+        MessageLabel.textProperty().bindBidirectional((Property<String>) task.messageProperty());
+        ProgressBar.progressProperty().bind(task.progressProperty());
+        ProgressPrecent.textProperty().bind(
+                Bindings.concat(
+                        Bindings.format(
+                                "%.0f",
+                                Bindings.multiply(
+                                        task.progressProperty(),
+                                        100)),
+                        " %"));
     }
 
     private void initStores(HashMap<Integer, Store> stores, SystemManager sys ) {
@@ -260,7 +287,7 @@ public class OrderController {
                                         new ItemSetterGetter(Double.toString(sys.getItemLowestPrice(item.getId()).getItemPrice(item.getId())), //itemLowestPrice
                                                 item.getName(), Integer.toString(item.getId()), item.getPurchaseCategory().toString(), order, subOrders, storeLowestItemPrice, sys));
                             }
-                            itemsTableView.setItems(FXCollections.observableList(data));
+
                         }
                     }
                 }
@@ -357,6 +384,7 @@ public class OrderController {
         stg.setScene(scene);
         stg.show();
     }
+
 
     @FXML void showDynamicOrder() throws IOException {
         Stage stg = new Stage();
