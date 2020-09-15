@@ -85,4 +85,12 @@ public class SuperMarket {
     public void setCostumers(HashMap<Integer, Customer> costumers) {
         this.costumers = costumers;
     }
+
+    public void addStore(Store store) {
+        stores.put(store.getId(), store);
+        for(Sell sell:store.getItemsToSell()){
+            Item item = getItemByID(sell.getItemId());
+            item.getStoresWhoSellTheItem().add(store);
+        }
+    }
 }

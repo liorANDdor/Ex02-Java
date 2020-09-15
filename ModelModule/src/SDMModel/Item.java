@@ -8,6 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Item implements Serializable {
+    public Item(String ItemName, int ItemID,PurchaseCategory catagory ){
+        this.id = ItemID;
+        this.name = ItemName;
+        this.purchaseCategory = catagory;
+        totalNumberOfTimePurchased = 0;
+        storesWhoSellTheItem = new ArrayList<>();
+
+    }
+    public Item(){}
     public enum InfoOptions {
         Name, ItemId, Category, NumberOfStoresSellTheItem, ItemAveragePrice, NumberOfTimesItemWasSold;
 
@@ -42,7 +51,7 @@ public class Item implements Serializable {
     }
 
     public double totalNumberOfTimePurchased = 0;
-    public List<Store> storesWhoSellTheItem = new ArrayList<>(); //should it be static?
+    public List<Store> storesWhoSellTheItem = new ArrayList<>();
     private String name;
     private PurchaseCategory purchaseCategory; //can be enum
     private int id;
@@ -61,9 +70,9 @@ public class Item implements Serializable {
         double sumPriceOfItems = 0;
         int numberOfStoresSellTheItem =  storesWhoSellTheItem.size();
         for (Store store : storesWhoSellTheItem){
-            sumPriceOfItems = store.getItemPrice(id);
+            sumPriceOfItems = sumPriceOfItems + store.getItemPrice(id);
         }
-        return (double)Math.round(sumPriceOfItems/numberOfStoresSellTheItem * 1000d) / 1000d;
+        return (double)Math.round(sumPriceOfItems/numberOfStoresSellTheItem * 100d) / 100d;
     }
 
     public String getName() {

@@ -36,7 +36,8 @@ public class AddItemToStoreController {
             alert.setContentText("Please make sure at least one item was added");
             alert.showAndWait();
         } else {
-            systemManager.getSuperMarket().getStores().put(store.getId(), store);
+            systemManager.getSuperMarket().addStore( store);
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("New Store Created!");
             alert.setContentText("New Store Was Added");

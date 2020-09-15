@@ -288,5 +288,16 @@ public class SuperApplicationController {
         stg.show();
     }
     @FXML
-    void addItemStoreHandler(){}
+    void addItemStoreHandler() throws IOException {
+        Stage stg = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL url = getClass().getResource("../AddItem/AddItemToSupermarket.fxml");
+        fxmlLoader.setLocation(url);
+        Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
+        Scene scene = new Scene(root, 500, 500);
+        stg.initModality(Modality.APPLICATION_MODAL);
+        stg.setTitle("Add Item");
+        stg.setScene(scene);
+        stg.show();
+    }
 }

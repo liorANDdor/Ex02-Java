@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="286.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddItem.AddItemToSupermarketController">
+   <children>
+      <Button fx:id="addToStoreBtn" disable="true" layoutX="74.0" layoutY="248.0" mnemonicParsing="false" onAction="#addItemToStore" prefHeight="27.0" prefWidth="106.0" text="Add To Store" />
+      <Button fx:id="finishBtn" disable="true" layoutX="77.0" layoutY="320.0" mnemonicParsing="false" onAction="#commitChangesHandler" prefHeight="27.0" prefWidth="133.0" text="Finish Adding Item" />
+      <TextField fx:id="priceTxt" disable="true" layoutX="162.0" layoutY="207.0" prefHeight="27.0" prefWidth="95.0" text="Price" />
+      <TextField fx:id="nameTxt" layoutX="42.0" layoutY="85.0" prefHeight="27.0" prefWidth="150.0" text="Name" />
+      <TextField fx:id="IdTxt" layoutX="42.0" layoutY="58.0" prefHeight="27.0" prefWidth="150.0" text="ID" />
+      <Label layoutX="44.0" layoutY="22.0" text="Add New Item">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="nextBtn" disable="true" layoutX="74.0" layoutY="154.0" mnemonicParsing="false" onAction="#addItem" prefHeight="27.0" prefWidth="106.0" text="Next" />
+      <RadioButton fx:id="weightRb" disable="true" layoutX="42.0" layoutY="120.0" mnemonicParsing="false" text="Weight" />
+      <RadioButton fx:id="quantityRB" disable="true" layoutX="127.0" layoutY="120.0" mnemonicParsing="false" text="Quantity" />
+      <ComboBox fx:id="storeCB" disable="true" layoutX="25.0" layoutY="207.0" onAction="#storeChosen" prefHeight="27.0" prefWidth="133.0" />
+   </children>
+</Pane>
