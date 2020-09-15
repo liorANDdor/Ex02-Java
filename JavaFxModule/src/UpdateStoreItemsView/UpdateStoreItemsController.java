@@ -106,7 +106,7 @@ public class UpdateStoreItemsController {
                 price = Double.parseDouble(priceText.getText());
                 correctPrice = true;
             } catch (Exception e) {
-                priceText.setText("MUst be a number");
+                priceText.setText("Must be a number");
                 correctPrice = false;
             }
         if (correctPrice) {

@@ -46,6 +46,7 @@ public class AddItemToSupermarketController {
             Item.PurchaseCategory category = selectedRadioButton.getText() == "Weight" ? Item.PurchaseCategory.WEIGHT : Item.PurchaseCategory.QUANTITY;
             Item item = new Item(nameTxt.getText(), Integer.parseInt(IdTxt.getText()), category);
             //check if Item valid
+
             itemToAdd = item;
             IdTxt.setDisable(true);
             nameTxt.setDisable(true);
@@ -55,21 +56,7 @@ public class AddItemToSupermarketController {
         }
 
     }
-    @FXML void finishAddingItem(){
-        if(itemToAdd.getStoresWhoSellTheItem().size()!=0)
-        {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("New Item");
-            alert.setContentText("Item Was Added!");
-            alert.showAndWait();
-        }
-        else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("New Item");
-            alert.setContentText("At least one store must sell the item");
-            alert.showAndWait();
-        }
-    }
+
     @FXML void addItemToStore() {
         Store store = storesBox.get(storeCB.getSelectionModel().getSelectedIndex());
         for (Sell sell : store.getItemsToSell()) {
@@ -86,6 +73,10 @@ public class AddItemToSupermarketController {
 
         store.getItemsToSell().add(new Sell(itemToAdd.getId(), Double.parseDouble(priceTxt.getText())));
         itemToAdd.getStoresWhoSellTheItem().add(store);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("New Item");
+        alert.setContentText("Item Was Added");
+        alert.showAndWait();
 
     }
 
@@ -111,7 +102,8 @@ public class AddItemToSupermarketController {
                 if(newValue.equals("")){
                     addToStoreBtn.setDisable(true);
                     finishBtn.setDisable(true);
-                }            }
+                    nextBtn.setDisable(true);
+                }}
         });
 
         nameTxt.textProperty().addListener(new ChangeListener<String>() {
@@ -125,6 +117,7 @@ public class AddItemToSupermarketController {
                 }
                 else{
                     weightRb.setDisable(false);
+                    nextBtn.setDisable(true);
                     quantityRB.setDisable(false);
                 }
 
@@ -160,7 +153,19 @@ public class AddItemToSupermarketController {
 
     @FXML
     void commitChangesHandler(ActionEvent event) {
-
+        if(itemToAdd.getStoresWhoSellTheItem().size()!=0)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("New Item");
+            alert.setContentText("Item Was Added!");
+            alert.showAndWait();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("New Item");
+            alert.setContentText("At least one store must sell the item");
+            alert.showAndWait();
+        }
     }
 
 }
