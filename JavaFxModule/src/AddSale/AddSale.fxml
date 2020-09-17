@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="269.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddSale.AddSaleController">
+   <children>
+      <ComboBox fx:id="storeCB" disable="true" layoutX="17.0" layoutY="42.0" prefHeight="27.0" prefWidth="206.0" promptText="Choose store" />
+      <ComboBox fx:id="optionCB" disable="true" layoutX="20.0" layoutY="112.0" prefHeight="27.0" prefWidth="206.0" promptText="Choose option" />
+      <Button fx:id="commitBtn" disable="true" layoutX="55.0" layoutY="302.0" mnemonicParsing="false" onAction="#commitChangesHandler" prefHeight="25.0" prefWidth="150.0" text="Finish" visible="false" />
+      <ComboBox fx:id="ItemsCB" disable="true" layoutX="14.0" layoutY="76.0" prefHeight="27.0" prefWidth="150.0" promptText="Choose item" />
+      <ComboBox fx:id="whatYouGetCB" disable="true" layoutX="69.0" layoutY="200.0" prefHeight="27.0" prefWidth="131.0" promptText="Choose item" visible="false" />
+      <TextField fx:id="forAdditionTv" layoutX="55.0" layoutY="233.0" prefHeight="27.0" prefWidth="67.0" text="Price" visible="false" />
+      <Button fx:id="addOptionBtn" disable="true" layoutX="55.0" layoutY="267.0" mnemonicParsing="false" onAction="#addWhatYouGet" prefHeight="25.0" prefWidth="150.0" text="Add To Sale" visible="false" />
+      <Button fx:id="NextBtn" disable="true" layoutX="86.0" layoutY="186.0" mnemonicParsing="false" onAction="#goToItemsDecision" prefHeight="27.0" prefWidth="83.0" text="Next" />
+      <Spinner fx:id="quantitySpinner" disable="true" layoutX="169.0" layoutY="76.0" prefHeight="27.0" prefWidth="83.0" />
+      <Spinner fx:id="quantityTF" layoutX="134.0" layoutY="233.0" prefHeight="27.0" prefWidth="83.0" visible="false" />
+      <TextField fx:id="discountNameTf" layoutX="23.0" layoutY="14.0" prefHeight="27.0" prefWidth="192.0" text="Discount Name" />
+   </children>
+</Pane>

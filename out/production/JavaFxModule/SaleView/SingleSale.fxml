@@ -19,7 +19,7 @@
                   <Insets top="15.0" />
                </padding>
                <children>
-                  <Label fx:id="SaleTypeLabel" prefHeight="17.0" prefWidth="104.0" />
+                  <Label fx:id="SaleTypeLabel" prefHeight="23.0" prefWidth="193.0" />
                </children></VBox>
          </children></AnchorPane>
   </items>

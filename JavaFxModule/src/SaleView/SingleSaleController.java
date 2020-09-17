@@ -76,8 +76,10 @@ public class SingleSaleController {
         NeedToGet needToGet = sale.getNeedToGet();
         this.sale = sale;
         saleName.setText(sale.getName());
+        Item item = systemManager.getSuperMarket().getItemByID(sale.getIfBuy().getItemId());
         if (needToGet.getOperator().equals("ONE-OF")) {
-            SaleTypeLabel.setText("Choose one:");
+            SaleTypeLabel.setText("If you buy " + sale.getIfBuy().getQuantity() + " " + item.getName() + "\n\n" +
+                    "Then you Choose one:");
             for (Offer offer : needToGet.getOffers()) {
                 String itemName = systemManager.getSuperMarket().getItemByID(offer.getItemId()).getName();
                 Label label = new Label(String.valueOf(offer.getQuantity()) + " " + itemName + " for " + String.valueOf(offer.getForAdditional()) + " ₪ ");

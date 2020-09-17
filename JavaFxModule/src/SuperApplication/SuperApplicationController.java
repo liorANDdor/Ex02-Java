@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
@@ -40,10 +41,9 @@ public class SuperApplicationController {
     @FXML private Button addOrderBtn;
     @FXML private Button newItemBtn;
     @FXML private Button newStoreBtn;
-
+    @FXML private Button newSaleBtn;
     @FXML private FlowPane myPane;
     @FXML private Button modifyItemBtn;
-
     @FXML private AnchorPane mainAnchor;
 
 
@@ -60,13 +60,9 @@ public class SuperApplicationController {
         mapBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
         addOrderBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
         modifyItemBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
+        newSaleBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
         newItemBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
         newStoreBtn.disableProperty().bind(systemManager.isXmlLoaded().not());
-
-    }
-
-    @FXML
-    void addSaleHandler(ActionEvent event) {
 
     }
 
@@ -299,5 +295,19 @@ public class SuperApplicationController {
         stg.setTitle("Add Item");
         stg.setScene(scene);
         stg.show();
+    }
+
+    @FXML void addSaleHandler() throws IOException {
+            Stage stg = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            URL url = getClass().getResource("../AddSale/AddSale.fxml");
+            fxmlLoader.setLocation(url);
+            Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
+            Scene scene = new Scene(root, 300, 350);
+            stg.initModality(Modality.APPLICATION_MODAL);
+            stg.setTitle("Add Sale");
+            stg.setScene(scene);
+            stg.show();
+
     }
 }

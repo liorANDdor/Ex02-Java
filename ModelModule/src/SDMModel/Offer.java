@@ -4,6 +4,12 @@ package SDMModel;
 import SDMGenerated.SDMOffer;
 
 public class Offer {
+    public Offer(){}
+    public Offer(int itemId, double quantity, int forAdditional){
+        this.itemId = itemId;
+        this.quantity = quantity;
+        this.forAdditional = forAdditional;
+    }
 
     private double quantity;
     private int itemId;

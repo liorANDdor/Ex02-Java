@@ -4,7 +4,16 @@ import SDMGenerated.SDMDiscount;
 
 public class Sale {
 
+    public Sale(){}
+    public Sale(String discountName, Store store, String operator, Item item, double quantity){
+        this.ifBuy = new IfBuy();
+        this.name = discountName;
+        this.needToGet = new NeedToGet(operator);
+        this.storeOfferSale = store;
+        this.ifBuy.setItemId(item.getId());
+        this.ifBuy.setQuantity(quantity);
 
+    }
     protected String name;
     protected IfBuy ifBuy;
     protected NeedToGet needToGet;

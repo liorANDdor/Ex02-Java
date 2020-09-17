@@ -53,7 +53,23 @@ public class SystemManager {
         }
     }
 
-     private static SystemManager manager = null;
+    public enum optionsForSale {
+        OneOf("ONE-OF"),
+        AllOrNothing("ALL-OR-NOTHING");
+
+
+        private String label;
+
+        optionsForSale(String label) {
+            this.label = label;
+        }
+
+        public String toString() {
+            return label;
+        }
+    }
+
+    private static SystemManager manager = null;
      private SuperMarket superMarket;
 
      private SimpleBooleanProperty thereIsXmlLoaded = new SimpleBooleanProperty(false);
@@ -75,6 +91,10 @@ public class SystemManager {
                 store.getItemsToSell().add(newSell);
                 break;
         }
+    }
+
+    public static void addSale(Sale sale) {
+        sale.getStoreOfferSale().getSales().add(sale);
     }
 
 

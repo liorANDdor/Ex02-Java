@@ -35,7 +35,7 @@ public class UpdateStoreItemsController {
 
     @FXML
     private void initialize() {
-        optionCB.getItems().addAll(SystemManager.optionsForUpdate.values()) ;
+        optionCB.getItems().addAll(SystemManager.optionsForUpdate.values());
         systemManager.getSuperMarket().getStores();
         storeCB.getItems().addAll(systemManager
                 .getSuperMarket()

@@ -7,12 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NeedToGet {
+    public NeedToGet(String operator){
+        this.operator = operator;
+        this.sdmOffer = new ArrayList<Offer>();
+    }
+    public NeedToGet(){
+
+    }
+
     public List<Offer> getOffers() {
         return sdmOffer;
     }
 
     public void setSdmOffer(List<Offer> sdmOffer) {
         this.sdmOffer = sdmOffer;
+    }
+
+    public List<Offer> getSdmOffer() {
+        return sdmOffer;
     }
 
     private List<Offer> sdmOffer = new ArrayList<>();

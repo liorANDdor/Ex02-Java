@@ -18,11 +18,12 @@
                   <Button fx:id="ordersBtn" disable="true" mnemonicParsing="false" onAction="#showOrdersHandler" prefHeight="53.0" prefWidth="123.0" text="Show orders" />
                   <Button fx:id="customersBtn" disable="true" mnemonicParsing="false" onAction="#showCustomersHandler" prefHeight="53.0" prefWidth="123.0" text="Show customers" />
                   <Button fx:id="mapBtn" disable="true" mnemonicParsing="false" onAction="#showMapHandler" prefHeight="53.0" prefWidth="123.0" text="Show map" />
-                  <Button disable="true" mnemonicParsing="false" onAction="#addSaleHandler" prefHeight="53.0" prefWidth="123.0" text="Add sale" />
+                  <Button disable="true" mnemonicParsing="false" onAction="#addSaleHandler" prefHeight="53.0" prefWidth="123.0" text="View Map" />
                   <Button fx:id="addOrderBtn" disable="true" mnemonicParsing="false" onAction="#createOrder" prefHeight="53.0" prefWidth="123.0" text="Create order" />
                   <Button fx:id="modifyItemBtn" disable="true" mnemonicParsing="false" onAction="#modifyItemHandler" prefHeight="53.0" prefWidth="123.0" text="Modify Item" />
                   <Button fx:id="newStoreBtn" disable="true" mnemonicParsing="false" onAction="#addStoreHandler" prefHeight="15.0" prefWidth="120.0" text="New Store" />
                   <Button fx:id="newItemBtn" disable="true" mnemonicParsing="false" onAction="#addItemStoreHandler" prefHeight="20.0" prefWidth="120.0" text="New Item" />
+                  <Button fx:id="newSaleBtn" disable="true" mnemonicParsing="false" onAction="#addSaleHandler" prefHeight="20.0" prefWidth="120.0" text="New Sale" />
                </children>
             </VBox>
             <ScrollPane layoutX="145.0" layoutY="53.0" prefHeight="531.0" prefWidth="788.0">
