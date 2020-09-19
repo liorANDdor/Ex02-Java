@@ -32,6 +32,8 @@ public class MapCreator {
         GridPane root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         int rows = systemManager.getMaxRows() + 1;
         int cols = systemManager.getMaxCols() + 1;
+        System.out.println(rows);
+        System.out.println(cols);
         HashMap<Integer, Customer> costumers = systemManager.getSuperMarket().getCostumers();
         HashMap<Integer, Store> stores = systemManager.getSuperMarket().getStores();
         for (int i = 1; i <= rows; i++) {

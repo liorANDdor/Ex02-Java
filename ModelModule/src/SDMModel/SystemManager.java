@@ -37,15 +37,40 @@ public class SystemManager {
     }
 
     public int getMaxRows() {
-        int maxRow = 0;
-       maxRow = superMarket.getStores().values().stream().mapToInt(store-> (int) store.getLocation().getX()).max().orElseThrow(NoSuchElementException::new);
-       return maxRow +1;
+
+       int maxRowStores = superMarket.getStores()
+               .values()
+               .stream()
+               .mapToInt(store-> (int) store.getLocation().getX())
+               .max()
+               .orElseThrow(NoSuchElementException::new);
+       int maxRowCustomers = superMarket
+               .getCostumers()
+               .values()
+               .stream()
+               .mapToInt(store-> (int) store.getLocation().getX())
+               .max()
+               .orElseThrow(NoSuchElementException::new);
+       return Math.max(maxRowCustomers,maxRowStores) ;
     }
 
     public int getMaxCols() {
-        int maxCol = 0;
-        maxCol = superMarket.getStores().values().stream().mapToInt(store-> (int) store.getLocation().getY()).max().orElseThrow(NoSuchElementException::new);
-        return maxCol +1;
+        int maxColStores = superMarket
+                .getStores()
+                .values()
+                .stream()
+                .mapToInt(store -> (int) store.getLocation().getY())
+                .max()
+                .orElseThrow(NoSuchElementException::new);
+
+        int maxColsCustomers = superMarket
+                .getCostumers()
+                .values()
+                .stream()
+                .mapToInt(store -> (int) store.getLocation().getY())
+                .max()
+                .orElseThrow(NoSuchElementException::new);
+        return Math.max(maxColsCustomers, maxColStores);
     }
 
 
