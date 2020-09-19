@@ -3,21 +3,23 @@ package MapView;
 import SDMModel.Customer;
 import SDMModel.Store;
 import SDMModel.SystemManager;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import tile.tileController;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MapCreator {
     SystemManager systemManager = SystemManager.getInstance();
@@ -28,18 +30,18 @@ public class MapCreator {
         URL url = getClass().getResource("../MapView/MapView.fxml");
         fxmlLoader.setLocation(url);
         GridPane root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
-        int rows = systemManager.getMaxRows();
-        int cols = systemManager.getMaxCols();
+        int rows = systemManager.getMaxRows() + 1;
+        int cols = systemManager.getMaxCols() + 1;
         HashMap<Integer, Customer> costumers = systemManager.getSuperMarket().getCostumers();
         HashMap<Integer, Store> stores = systemManager.getSuperMarket().getStores();
-        for (int i = 0; i <= rows; i++) {
+        for (int i = 1; i <= rows; i++) {
             RowConstraints r = new RowConstraints();
             r.setMinHeight(10);
             r.setPrefHeight(10);
             r.setVgrow(Priority.SOMETIMES);
             root.getRowConstraints().add(r);
         }
-        for (int i = 0; i <= cols; i++) {
+        for (int i = 1; i <= cols; i++) {
             ColumnConstraints r = new ColumnConstraints();
             r.setMinWidth(10);
             r.setPrefWidth(10);
@@ -51,6 +53,14 @@ public class MapCreator {
             Button btn = new Button();
             Point p = store.getLocation();
             btn.setText(store.getName());
+            Stage stage = null;
+            try {
+                stage = getStageOfStore(store);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage finalStage = stage;
+            btn.setOnAction((e)-> finalStage.show());
             root.add(btn, (int) p.getY(), (int) p.getX());
         });
 
@@ -58,11 +68,68 @@ public class MapCreator {
             Button btn = new Button();
             Point p = customer.getLocation();
             btn.setText(customer.getName());
+            Stage stage = null;
+            try {
+                stage = getStageOfCustomer(customer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage finalStage = stage;
+            btn.setOnAction((e)-> finalStage.show());
             root.add(btn, (int) p.getY(), (int) p.getX());
         });
-        Scene scene = new Scene(new ScrollPane( root));
+        Scene scene = new Scene(root);
         stg.initModality(Modality.APPLICATION_MODAL);
         stg.setTitle("Map");
+        stg.setScene(scene);
+        return stg;
+    }
+
+    private Stage getStageOfCustomer(Customer customer) throws IOException {
+        List<Customer.InfoOptions>lst = new ArrayList<>();
+        lst.add(Customer.InfoOptions.CustomerId);
+        lst.add(Customer.InfoOptions.Name);
+        lst.add(Customer.InfoOptions.NumberOfOrders);
+        Stage stg = new Stage();
+        AnchorPane pane = new AnchorPane();
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL url = getClass().getResource("../tile/tile.fxml");
+        fxmlLoader.setLocation(url);
+        Node singleWordTile = fxmlLoader.load();
+        tileController tileController = fxmlLoader.getController();
+        pane.getChildren().clear();
+        tileController.initialize(systemManager.getCustomerInfo(customer,lst));
+        pane.getChildren().add(singleWordTile);
+        Scene scene = new Scene(pane);
+        stg.initModality(Modality.APPLICATION_MODAL);
+        stg.setTitle("Customer");
+        stg.setScene(scene);
+        return stg;
+
+    }
+
+    private Stage getStageOfStore(Store store) throws IOException {
+
+        List<Store.InfoOptions>lst = new ArrayList<>();
+        lst.add(Store.InfoOptions.Id);
+        lst.add(Store.InfoOptions.Name);
+        lst.add(Store.InfoOptions.DeliveryPpk);
+        lst.add(Store.InfoOptions.TotalEarning);
+        Stage stg = new Stage();
+        AnchorPane pane = new AnchorPane();
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL url = getClass().getResource("../tile/tile.fxml");
+        fxmlLoader.setLocation(url);
+        Node singleWordTile = fxmlLoader.load();
+        tileController tileController = fxmlLoader.getController();
+        pane.getChildren().clear();
+        tileController.initialize(systemManager.getStoreInfo(store,lst));
+        pane.getChildren().add(singleWordTile);
+        Scene scene = new Scene(pane);
+        stg.initModality(Modality.APPLICATION_MODAL);
+        stg.setTitle("Store");
         stg.setScene(scene);
         return stg;
     }
