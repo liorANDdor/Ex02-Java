@@ -5,10 +5,12 @@ import SDMModel.Store;
 import SDMModel.SystemManager;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,6 +32,7 @@ public class MapCreator {
         URL url = getClass().getResource("../MapView/MapView.fxml");
         fxmlLoader.setLocation(url);
         GridPane root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
+        root.setPadding(new Insets(17,17,17,5));
         int rows = systemManager.getMaxRows() + 1;
         int cols = systemManager.getMaxCols() + 1;
         System.out.println(rows);
@@ -53,6 +56,10 @@ public class MapCreator {
 
         stores.values().stream().forEach(store -> {
             Button btn = new Button();
+            BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("../MapView/store.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            Background background = new Background(backgroundImage);
+
+            btn.setBackground(background);
             Point p = store.getLocation();
             btn.setText(store.getName());
             Stage stage = null;
@@ -68,6 +75,9 @@ public class MapCreator {
 
         costumers.values().stream().forEach(customer -> {
             Button btn = new Button();
+            BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("../MapView/user.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            Background background = new Background(backgroundImage);
+            btn.setBackground(background);
             Point p = customer.getLocation();
             btn.setText(customer.getName());
             Stage stage = null;
