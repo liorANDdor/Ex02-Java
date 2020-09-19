@@ -36,6 +36,18 @@ public class SystemManager {
         return lstOfReleventITems;
     }
 
+    public int getMaxRows() {
+        int maxRow = 0;
+       maxRow = superMarket.getStores().values().stream().mapToInt(store-> (int) store.getLocation().getX()).max().orElseThrow(NoSuchElementException::new);
+       return maxRow +1;
+    }
+
+    public int getMaxCols() {
+        int maxCol = 0;
+        maxCol = superMarket.getStores().values().stream().mapToInt(store-> (int) store.getLocation().getY()).max().orElseThrow(NoSuchElementException::new);
+        return maxCol +1;
+    }
+
 
     public enum optionsForUpdate {
         DeleteItem("Delete Item"),

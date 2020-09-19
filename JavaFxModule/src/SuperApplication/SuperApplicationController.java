@@ -1,4 +1,5 @@
 package SuperApplication;
+import MapView.MapCreator;
 import OrderWindow.OrderController;
 import OrdersView.OrdersSummaryController;
 import SDMModel.*;
@@ -12,13 +13,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tile.tileController;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -180,8 +182,9 @@ public class SuperApplicationController {
 
 
     @FXML
-    void showMapHandler(ActionEvent event) {
-
+    void showMapHandler(ActionEvent event) throws IOException {
+        Stage stg = new MapCreator().getMap();
+        stg.show();
     }
 
     @FXML
