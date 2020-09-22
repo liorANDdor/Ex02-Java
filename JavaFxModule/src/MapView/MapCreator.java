@@ -35,8 +35,6 @@ public class MapCreator {
         root.setPadding(new Insets(17,17,17,5));
         int rows = systemManager.getMaxRows() + 1;
         int cols = systemManager.getMaxCols() + 1;
-        System.out.println(rows);
-        System.out.println(cols);
         HashMap<Integer, Customer> costumers = systemManager.getSuperMarket().getCostumers();
         HashMap<Integer, Store> stores = systemManager.getSuperMarket().getStores();
         for (int i = 1; i <= rows; i++) {
@@ -104,7 +102,6 @@ public class MapCreator {
         lst.add(Customer.InfoOptions.NumberOfOrders);
         Stage stg = new Stage();
         AnchorPane pane = new AnchorPane();
-
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL url = getClass().getResource("../tile/tile.fxml");
         fxmlLoader.setLocation(url);
@@ -130,7 +127,6 @@ public class MapCreator {
         lst.add(Store.InfoOptions.TotalEarning);
         Stage stg = new Stage();
         AnchorPane pane = new AnchorPane();
-
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL url = getClass().getResource("../tile/tile.fxml");
         fxmlLoader.setLocation(url);
