@@ -116,14 +116,14 @@ public class SystemManager {
             case ChangePriceOfItem:
                 Sell sell = store.getItemsToSell().stream().filter(el -> el.getItemId() == item.getId()).findFirst().orElse(null);
                 if (sell != null)
-                    sell.setPrice((int) price);
+                    sell.setPrice(price);
                 break;
             case DeleteItem:
                 store.getItemsToSell().removeIf(el -> el.getItemId() == item.getId());
                 break;
             case AddNewItem:
                 Sell newSell = new Sell();
-                newSell.setPrice((int) price);
+                newSell.setPrice(price);
                 newSell.setItemId(item.getId());
                 store.getItemsToSell().add(newSell);
                 break;
@@ -163,7 +163,6 @@ public class SystemManager {
                 if(manager == null)
                     manager = new SystemManager();
             }
-
 
         return manager;
     }

@@ -49,7 +49,7 @@ public class Sell implements Serializable {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

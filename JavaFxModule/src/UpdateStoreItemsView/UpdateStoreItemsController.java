@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -114,6 +115,7 @@ public class UpdateStoreItemsController {
                     , ItemsCB.getSelectionModel().getSelectedItem()
                     , optionCB.getSelectionModel().getSelectedItem()
                     , price);
+            ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         }
     }
 

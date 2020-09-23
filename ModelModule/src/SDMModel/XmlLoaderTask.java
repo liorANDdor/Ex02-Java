@@ -32,24 +32,29 @@ public class XmlLoaderTask  extends Task<Boolean> {
         SuperDuperMarketDescriptor superMarketSDM = xmlUtilities.loadFile(path);
         xmlUtilities.checkIfTheXmlThatJustLoadedOk(superMarketSDM);
         if (xmlUtilities.getIsXmlOk()) {
-            updateMessage("Super market instace is at creation...");
-            Thread.sleep(350);
+            updateMessage("Super market instance is at creation...");
+            Thread.sleep(200);
             SuperMarket superMarket = SuperMarket.creatInstance(superMarketSDM);
-            updateProgress(0.7, 1);
+            updateProgress(0.5, 1);
             superMarketDelegates.accept(superMarket);
+            updateProgress(0.6, 1);
+            Thread.sleep(150);
+            updateProgress(0.7, 1);
+            Thread.sleep(150);
             updateProgress(0.8, 1);
-            Thread.sleep(500);
+            updateMessage("Wait...");
+            Thread.sleep(150);
             updateProgress(0.9, 1);
-            Thread.sleep(500);
+            Thread.sleep(150);
             updateProgress(1, 1);
-            Thread.sleep(500);
+            Thread.sleep(150);
             updateMessage("Loaded Successfuly");
 
             isxmlLoaded.accept(true);
             return true;
         } else {
             Thread.sleep(150);
-            updateProgress(0.85, 1);
+            updateProgress(0.75, 1);
             updateMessage("Not loaded successfuly \n " + xmlUtilities.getWhatWrongMessage());
             return false;
         }

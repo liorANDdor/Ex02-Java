@@ -25,9 +25,9 @@
                   <Button fx:id="newSaleBtn" disable="true" mnemonicParsing="false" onAction="#addSaleHandler" prefHeight="55.0" prefWidth="120.0" text="New Sale" />
                </children>
             </VBox>
-            <ScrollPane layoutX="145.0" layoutY="53.0" prefHeight="531.0" prefWidth="788.0">
+            <ScrollPane layoutX="145.0" layoutY="53.0" prefHeight="499.0" prefWidth="734.0">
                <content>
-                  <FlowPane fx:id="myPane" alignment="TOP_CENTER" prefWrapLength="600.0" />
+                  <FlowPane fx:id="myPane" alignment="TOP_CENTER" prefHeight="0.0" prefWidth="509.0" prefWrapLength="600.0" />
                </content>
             </ScrollPane>
          </children>

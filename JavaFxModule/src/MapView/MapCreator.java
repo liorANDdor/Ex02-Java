@@ -33,8 +33,8 @@ public class MapCreator {
         fxmlLoader.setLocation(url);
         GridPane root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         root.setPadding(new Insets(17,17,17,5));
-        int rows = systemManager.getMaxRows() + 1;
-        int cols = systemManager.getMaxCols() + 1;
+        int rows = systemManager.getMaxRows() + 2;
+        int cols = systemManager.getMaxCols() + 2;
         HashMap<Integer, Customer> costumers = systemManager.getSuperMarket().getCostumers();
         HashMap<Integer, Store> stores = systemManager.getSuperMarket().getStores();
         for (int i = 1; i <= rows; i++) {
@@ -59,7 +59,6 @@ public class MapCreator {
 
             btn.setBackground(background);
             Point p = store.getLocation();
-            btn.setText(store.getName());
             Stage stage = null;
             try {
                 stage = getStageOfStore(store);
@@ -77,7 +76,6 @@ public class MapCreator {
             Background background = new Background(backgroundImage);
             btn.setBackground(background);
             Point p = customer.getLocation();
-            btn.setText(customer.getName());
             Stage stage = null;
             try {
                 stage = getStageOfCustomer(customer);
@@ -88,6 +86,7 @@ public class MapCreator {
             btn.setOnAction((e)-> finalStage.show());
             root.add(btn, (int) p.getY(), (int) p.getX());
         });
+
         Scene scene = new Scene(root);
         stg.initModality(Modality.APPLICATION_MODAL);
         stg.setTitle("Map");

@@ -119,8 +119,8 @@ public class AddStoreController {
                     stg.initModality(Modality.APPLICATION_MODAL);
                     stg.setTitle("Add item");
                     stg.setScene(scene);
-                    stg.show();
-
+                    stg.showAndWait();
+                    ((Stage)(((Button)x.getSource()).getScene().getWindow())).close();
 
 
 
