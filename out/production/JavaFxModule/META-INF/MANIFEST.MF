@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: SuperApplication.SuperApplication
+Class-Path: ../ModelModule_jar/ModelModule.jar
+

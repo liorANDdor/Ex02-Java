@@ -1,8 +1,9 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="ModelModule:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/lib</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/ModelModule_jar</output-path>
     <root id="archive" name="ModelModule.jar">
       <element id="module-output" name="ModelModule" />
+      <element id="module-output" name="JavaFxModule" />
     </root>
   </artifact>
 </component>
