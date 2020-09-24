@@ -123,7 +123,7 @@ public class MapCreator {
         lst.add(Store.InfoOptions.Id);
         lst.add(Store.InfoOptions.Name);
         lst.add(Store.InfoOptions.DeliveryPpk);
-        lst.add(Store.InfoOptions.TotalEarning);
+        lst.add(Store.InfoOptions.NumberOfOrders);
         Stage stg = new Stage();
         AnchorPane pane = new AnchorPane();
         FXMLLoader fxmlLoader = new FXMLLoader();

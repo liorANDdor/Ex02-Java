@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -95,6 +96,15 @@ public class AddSaleController {
     }
 
     @FXML void addWhatYouGet(){
+        if(forAdditionTv.getText().equals("") || forAdditionTv.getText().equals("Price") ||
+        quantityTF.getValue().equals(0.0))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add Sale");
+            alert.setContentText("make sure price and quantity set");
+            alert.showAndWait();
+            return;
+        }
         commitBtn.setDisable(false);
         commitBtn.setVisible(true);
         sale.getNeedToGet().getOffers().add(new Offer(whatYouGetCB.getSelectionModel().getSelectedItem().getId(), Double.parseDouble(quantityTF.getValue().toString()),
@@ -102,10 +112,17 @@ public class AddSaleController {
 
     }
     @FXML void goToItemsDecision(){
-        if(quantitySpinner.getValue().equals(0.0) || discountNameTf.getText().equals("")){
+        if(quantitySpinner.getValue().equals(0.0)){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Sale");
             alert.setContentText("Quantity cannot be zero");
+            alert.showAndWait();
+            return;
+        }
+        else if( discountNameTf.getText().equals("")){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add Sale");
+            alert.setContentText("Insert discount name");
             alert.showAndWait();
             return;
         }
@@ -144,6 +161,7 @@ public class AddSaleController {
             alert.setTitle("New Sale");
             alert.setContentText("Sale Was Added!");
             alert.showAndWait();
+            ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);

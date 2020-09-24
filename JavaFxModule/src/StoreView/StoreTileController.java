@@ -92,8 +92,9 @@ public class StoreTileController {
         CheckBox aggregatedOrder = new CheckBox("AggregatedOrder");
         ordersSummaryController.aggregateOrder(aggregatedOrder);
         itemsFlowPan.getChildren().add(aggregatedOrder);
-        itemsFlowPan.getChildren().add(orderSummary);
 
+        itemsFlowPan.getChildren().add(orderSummary);
+        ordersSummaryController.bindAggregate(aggregatedOrder);
     }
     @FXML void showItems() throws IOException {
         itemsFlowPan.getChildren().clear();

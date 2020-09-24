@@ -28,7 +28,7 @@ public class Store implements Serializable {
     public Store(){}
 
     public enum InfoOptions {
-        Name, Id, Location, DeliveryPpk, TotalEarning, TotalShipmentEarning;
+        Name, Id, Location, DeliveryPpk, TotalEarning, TotalShipmentEarning, NumberOfOrders;
 
         public String getInfo(Store store) {
             switch (this) {
@@ -44,6 +44,8 @@ public class Store implements Serializable {
                     return String.valueOf(store.getTotalEarning());
                 case TotalShipmentEarning:
                     return String.valueOf(store.getTotalShipmentEarning());
+                case NumberOfOrders:
+                    return String.valueOf(store.getOrders().size());
                 default:
                     return "Unknown";
             }

@@ -132,7 +132,7 @@ public class OrdersSummaryController {
         for (Store store :stores) {
             storeCB.getItems().add(store.getName());
             storeCB.setPromptText("Store bought from");
-            storesBox.put(storeIndex,store);
+            storesBox.put(storeIndex, store);
             storeIndex++;
             storeCB.setPromptText("Choose Store For Order Info");
         }
@@ -270,6 +270,17 @@ public class OrdersSummaryController {
             }
         }
     }
+
+    public void bindAggregate(CheckBox aggregatedOrder) {
+        ordersCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                showOrders();
+                aggregatedOrder.setSelected(false);
+            }
+        });
+    }
+
 
     public static class ItemSumamry {
         private final SimpleStringProperty ID;

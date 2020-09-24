@@ -240,20 +240,20 @@ public class SystemManager {
         return order;
     }
 
-    public boolean checkIfStoreOk(Store newStore, String whatWrongMessage) {
+    public boolean checkIfStoreOk(Store newStore, StringBuilder whatWrongMessage) {
         boolean isContentAsNeeded = true;
         HashMap<Integer, Store> stores = superMarket.getStores();
         HashMap<Integer, Customer> customers = superMarket.getCostumers();
         for (Store store : stores.values()) {
             if (store.getId() == newStore.getId()) {
                 isContentAsNeeded = false;
-                whatWrongMessage += String.format("There is two stores with the same ID : %d \n", newStore.getId());
+                whatWrongMessage.append(String.format("There are two stores with the same ID : %d \n", newStore.getId()));
             }
         }
         for (Store store : stores.values()) {
             if (store.getLocation() == newStore.getLocation()) {
                 isContentAsNeeded = false;
-                whatWrongMessage += String.format("There is two stores with the Location ");
+                whatWrongMessage.append(String.format("There are two stores with the Location "));
             }
         }
         return isContentAsNeeded;

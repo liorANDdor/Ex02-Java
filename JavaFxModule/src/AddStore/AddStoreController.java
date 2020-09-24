@@ -82,10 +82,24 @@ public class AddStoreController {
         nextItemBtn.setOnAction(x->{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("New Store");
-            if(xTxt.getText().equals("X") || yTxt.getText().equals("Y") || storePpkTxt.getText().equals("PPK") ||
-                    xTxt.getText().equals("") || yTxt.getText().equals("") || storePpkTxt.getText().equals("") ||
-            nextItemBtn.getText().equals("") || storeIDTxt.getText().equals("") ){
-              return;
+            if(storeNameTxt.getText().equals("") || storeIDTxt.getText().equals("") ||
+                    storeNameTxt.getText().equals("Enter Store Name") || storeIDTxt.getText().equals("Enter Store ID") ){
+                alert.setContentText("Store must have ID and name");
+                alert.showAndWait();;
+
+                return;
+            }
+            else if(xTxt.getText().equals("X") || yTxt.getText().equals("Y") || xTxt.getText().equals("") || yTxt.getText().equals("") ){
+                alert.setContentText("Make sure store location is set (digits)");
+                alert.showAndWait();;
+
+                return;
+            }
+            else if( storePpkTxt.getText().equals("PPK") || storePpkTxt.getText().equals("") ){
+                alert.setContentText("Please make sure to set PPK");
+                alert.showAndWait();;
+
+                return;
             }
             else if(Integer.parseInt( xTxt.getText())<1 || Integer.parseInt(yTxt.getText())<1  | Integer.parseInt(xTxt.getText())>50  | Integer.parseInt(xTxt.getText())>50 ) {
                 alert.setContentText("Store location must be between 1 to 50");
@@ -95,10 +109,10 @@ public class AddStoreController {
 
                 Store store = new Store(storeNameTxt.getText(), Integer.parseInt(storeIDTxt.getText()), Integer.parseInt(storePpkTxt.getText()), new Point(Integer.parseInt(xTxt.getText()),
                         Integer.parseInt(yTxt.getText())));
-                String errorMessage = "";
+                StringBuilder  errorMessage = new StringBuilder();
                 boolean isStoreOk = systemManager.checkIfStoreOk(store, errorMessage);
                 if (!isStoreOk) {
-                    alert.setContentText(errorMessage);
+                    alert.setContentText(errorMessage.toString());
                     alert.showAndWait();
                 } else {
                     AddItemToStoreController addItemToStoreController = null;

@@ -9,6 +9,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.util.HashMap;
 
@@ -34,7 +35,14 @@ public class AddItemToSupermarketController {
     private Item itemToAdd;
     @FXML
     void addItem(ActionEvent event) {
-        if(systemManager.getSuperMarket().getItems().containsKey(Integer.parseInt(IdTxt.getText())))
+        if(nameTxt.getText().equals("") || nameTxt.getText().equals("Name")
+        || IdTxt.getText().equals("") || IdTxt.getText().equals("ID")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("New Item");
+            alert.setContentText("Make sure to set ID and name");
+            alert.showAndWait();
+        }
+        else if(systemManager.getSuperMarket().getItems().containsKey(Integer.parseInt(IdTxt.getText())))
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("New Item");
@@ -53,6 +61,7 @@ public class AddItemToSupermarketController {
             weightRb.setDisable(true);
             quantityRB.setDisable(true);
             storeCB.setDisable(false);
+
         }
 
     }
@@ -68,6 +77,15 @@ public class AddItemToSupermarketController {
                 return;
             }
         }
+        if(Double.parseDouble(priceTxt.getText()) == 0.0)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("New Item");
+            alert.setContentText("Item price cannot be 0");
+            alert.showAndWait();
+            return;
+        }
+
         if (!systemManager.getSuperMarket().getItems().containsKey(itemToAdd.getId()))
             systemManager.getSuperMarket().getItems().put(itemToAdd.getId(), itemToAdd);
 
@@ -75,8 +93,9 @@ public class AddItemToSupermarketController {
         itemToAdd.getStoresWhoSellTheItem().add(store);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("New Item");
-        alert.setContentText("Item Was Added");
+        alert.setContentText("Item was added to store, choose more stores or press finish");
         alert.showAndWait();
+        finishBtn.setDisable(false);
 
     }
 
@@ -102,7 +121,7 @@ public class AddItemToSupermarketController {
                 if(newValue.equals("")){
                     addToStoreBtn.setDisable(true);
                     finishBtn.setDisable(true);
-                    nextBtn.setDisable(true);
+                    //nextBtn.setDisable(true);
                 }}
         });
 
@@ -117,7 +136,7 @@ public class AddItemToSupermarketController {
                 }
                 else{
                     weightRb.setDisable(false);
-                    nextBtn.setDisable(true);
+                    //nextBtn.setDisable(true);
                     quantityRB.setDisable(false);
                 }
 
@@ -130,12 +149,11 @@ public class AddItemToSupermarketController {
                 if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
                     priceTxt.setText(oldValue);
                 }
-                addToStoreBtn.setDisable(false);
-                finishBtn.setDisable(false);
                 if(newValue.equals("")){
                     addToStoreBtn.setDisable(true);
                     finishBtn.setDisable(true);
                 }
+                addToStoreBtn.setDisable(false);
             }
         });
 
@@ -155,10 +173,7 @@ public class AddItemToSupermarketController {
     void commitChangesHandler(ActionEvent event) {
         if(itemToAdd.getStoresWhoSellTheItem().size()!=0)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("New Item");
-            alert.setContentText("Item Was Added!");
-            alert.showAndWait();
+            ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
