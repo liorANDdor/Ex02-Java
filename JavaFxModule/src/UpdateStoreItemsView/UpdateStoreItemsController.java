@@ -1,10 +1,12 @@
 package UpdateStoreItemsView;
 
 import SDMModel.Item;
+import SDMModel.Sale;
 import SDMModel.Store;
 import SDMModel.SystemManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -66,7 +68,7 @@ public class UpdateStoreItemsController {
                     break;
                 case DeleteItem:
                     List<Item> lst = systemManager.getItemsThatCanBeDeleted(storeCB.getSelectionModel().getSelectedItem());
-                    if(lst != null && lst.size() !=0)
+                    if(lst != null && lst.size() !=1)
                         ItemsCB.getItems().addAll(lst);
                     else{
                         ItemsCB.setPromptText("No items to delete");
@@ -105,17 +107,32 @@ public class UpdateStoreItemsController {
         if (!optionCB.getSelectionModel().getSelectedItem().equals(SystemManager.optionsForUpdate.DeleteItem))
             try {
                 price = Double.parseDouble(priceText.getText());
-                correctPrice = true;
+                if(price == 0)
+                {
+                    priceText.setText("Price cannot be 0");
+                    correctPrice = false;
+                }
+                else
+                    correctPrice = true;
             } catch (Exception e) {
                 priceText.setText("Must be a number");
                 correctPrice = false;
             }
         if (correctPrice) {
-            SystemManager.changeValueOfItem(storeCB.getSelectionModel().getSelectedItem()
+            List<Sale> saleDeleted = SystemManager.changeValueOfItem(storeCB.getSelectionModel().getSelectedItem()
                     , ItemsCB.getSelectionModel().getSelectedItem()
                     , optionCB.getSelectionModel().getSelectedItem()
                     , price);
-            ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+            if(saleDeleted.size()!=0){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                String SalesRemovedInfo = "Sales which were removed:\n";
+                for(Sale sale: saleDeleted) {
+                    SalesRemovedInfo +=sale.getName() + "\n" ;
+                }
+                alert.setContentText(SalesRemovedInfo);
+                alert.showAndWait();
+            }
+            //((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         }
     }
 

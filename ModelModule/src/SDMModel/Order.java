@@ -117,7 +117,8 @@ public class Order implements Serializable {
     }
 
     public void setItemsPrice(double itemPrice) {
-        this.itemsPrice = itemPrice;
+        this.itemsPrice = (double)Math.round( itemPrice * 100.0d) / 100.0d;
+
     }
 
     public void calculatAndSetDistance() {
@@ -168,7 +169,7 @@ public class Order implements Serializable {
     }
 
     public Double getShipmentPrice() {
-        return shipmentPrice;
+        return (double)Math.round( shipmentPrice * 100.0d) / 100.0d;
     }
 
     public void setShipmentPrice(Double price) {

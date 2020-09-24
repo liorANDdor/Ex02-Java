@@ -111,7 +111,8 @@ public class SystemManager {
         return Math.max(maxColsCustomers, maxColStores);
     }
 
-    public static void changeValueOfItem(Store store, Item item, optionsForUpdate whatToDo, double price) {
+    public static  List<Sale> changeValueOfItem(Store store, Item item, optionsForUpdate whatToDo, double price) {
+        List<Sale> saleDeleted = new ArrayList();
         switch (whatToDo) {
             case ChangePriceOfItem:
                 Sell sell = store.getItemsToSell().stream().filter(el -> el.getItemId() == item.getId()).findFirst().orElse(null);
@@ -119,6 +120,11 @@ public class SystemManager {
                     sell.setPrice(price);
                 break;
             case DeleteItem:
+                 saleDeleted = store.getSales().stream().filter(sale -> sale.getIfBuy().getItemId() == item.getId())
+                        .collect(Collectors.toList());
+                if(saleDeleted != null) {
+                    store.getSales().removeAll(saleDeleted);
+                }
                 store.getItemsToSell().removeIf(el -> el.getItemId() == item.getId());
                 break;
             case AddNewItem:
@@ -128,6 +134,7 @@ public class SystemManager {
                 store.getItemsToSell().add(newSell);
                 break;
         }
+        return saleDeleted;
     }
 
     public static void addSale(Sale sale) {

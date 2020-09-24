@@ -73,7 +73,7 @@ public class AddItemToSupermarketController {
 
         store.getItemsToSell().add(new Sell(itemToAdd.getId(), Double.parseDouble(priceTxt.getText())));
         itemToAdd.getStoresWhoSellTheItem().add(store);
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("New Item");
         alert.setContentText("Item Was Added");
         alert.showAndWait();
