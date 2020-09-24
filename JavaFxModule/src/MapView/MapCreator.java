@@ -29,7 +29,7 @@ public class MapCreator {
     public Stage getMap() throws IOException {
         Stage stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../MapView/MapView.fxml");
+        URL url = getClass().getResource("/MapView/MapView.fxml");
         fxmlLoader.setLocation(url);
         GridPane root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         root.setPadding(new Insets(17,17,17,5));
@@ -54,7 +54,7 @@ public class MapCreator {
 
         stores.values().stream().forEach(store -> {
             Button btn = new Button();
-            BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("../MapView/store.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("/MapView/store.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             Background background = new Background(backgroundImage);
 
             btn.setBackground(background);
@@ -72,7 +72,7 @@ public class MapCreator {
 
         costumers.values().stream().forEach(customer -> {
             Button btn = new Button();
-            BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("../MapView/user.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("/MapView/user.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             Background background = new Background(backgroundImage);
             btn.setBackground(background);
             Point p = customer.getLocation();
@@ -102,7 +102,7 @@ public class MapCreator {
         Stage stg = new Stage();
         AnchorPane pane = new AnchorPane();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../tile/tile.fxml");
+        URL url = getClass().getResource("/tile/tile.fxml");
         fxmlLoader.setLocation(url);
         Node singleWordTile = fxmlLoader.load();
         tileController tileController = fxmlLoader.getController();
@@ -127,7 +127,7 @@ public class MapCreator {
         Stage stg = new Stage();
         AnchorPane pane = new AnchorPane();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../tile/tile.fxml");
+        URL url = getClass().getResource("/tile/tile.fxml");
         fxmlLoader.setLocation(url);
         Node singleWordTile = fxmlLoader.load();
         tileController tileController = fxmlLoader.getController();

@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 public class SuperApplication extends Application {
-    private static final String PATH = "./SuperApplication.fxml";
+    private static final String PATH = "/SuperApplication/SuperApplication.fxml";
 
     public static void main(String[]args){
         launch(args);

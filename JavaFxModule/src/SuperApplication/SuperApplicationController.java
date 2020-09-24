@@ -69,7 +69,7 @@ public class SuperApplicationController {
     void createOrder(ActionEvent event) throws IOException {
         Stage stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../OrderWindow/Order.fxml");
+        URL url = getClass().getResource("/OrderWindow/Order.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         OrderController o = fxmlLoader.getController();
@@ -88,7 +88,7 @@ public class SuperApplicationController {
 
         Stage stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../XmlLoderView/XmlLoader.fxml");
+        URL url = getClass().getResource("/XmlLoderView/XmlLoader.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         Scene scene = new Scene(root, 400, 200);
@@ -111,7 +111,7 @@ public class SuperApplicationController {
     private void createCustomerTile(Customer customer) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../tile/tile.fxml");
+            URL url = getClass().getResource("/tile/tile.fxml");
             fxmlLoader.setLocation(url);
             Node singleCustomerTile = fxmlLoader.load();
             List<Customer.InfoOptions> list = new ArrayList<Customer.InfoOptions>();
@@ -144,7 +144,7 @@ public class SuperApplicationController {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../tile/tile.fxml");
+            URL url = getClass().getResource("/tile/tile.fxml");
             fxmlLoader.setLocation(url);
             Node singleWordTile = fxmlLoader.load();
             List<Item.InfoOptions> list = new ArrayList<Item.InfoOptions>();
@@ -182,7 +182,7 @@ public class SuperApplicationController {
 
         myPane.getChildren().clear();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../OrdersView/OrdersSummary.fxml");
+        URL url = getClass().getResource("/OrdersView/OrdersSummary.fxml");
         fxmlLoader.setLocation(url);
         Node orderSummary = fxmlLoader.load();
         OrdersSummaryController ordersSummaryController = fxmlLoader.getController();
@@ -196,7 +196,7 @@ public class SuperApplicationController {
         myPane.getChildren().clear();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../StoreView/Store.fxml");
+            URL url = getClass().getResource("/StoreView/Store.fxml");
             fxmlLoader.setLocation(url);
             Node storeView = fxmlLoader.load();
             StoreTileController storeViewController = fxmlLoader.getController();
@@ -212,7 +212,7 @@ public class SuperApplicationController {
     void modifyItemHandler(ActionEvent event) throws IOException {
         Stage stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../UpdateStoreItemsView/UpdateStoreItems.fxml");
+        URL url = getClass().getResource("/UpdateStoreItemsView/UpdateStoreItems.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         Scene scene = new Scene(root, 250, 300);
@@ -226,7 +226,7 @@ public class SuperApplicationController {
     void addStoreHandler() throws IOException {
         Stage stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../AddStore/AddStore.fxml");
+        URL url = getClass().getResource("/AddStore/AddStore.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         Scene scene = new Scene(root, 500, 500);
@@ -239,7 +239,7 @@ public class SuperApplicationController {
     void addItemStoreHandler() throws IOException {
         Stage stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../AddItem/AddItemToSupermarket.fxml");
+        URL url = getClass().getResource("/AddItem/AddItemToSupermarket.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         Scene scene = new Scene(root, 500, 500);
@@ -252,7 +252,7 @@ public class SuperApplicationController {
     @FXML void addSaleHandler() throws IOException {
             Stage stg = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../AddSale/AddSale.fxml");
+            URL url = getClass().getResource("/AddSale/AddSale.fxml");
             fxmlLoader.setLocation(url);
             Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
             Scene scene = new Scene(root, 300, 350);

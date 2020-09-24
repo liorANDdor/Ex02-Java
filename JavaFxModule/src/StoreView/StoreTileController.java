@@ -83,7 +83,7 @@ public class StoreTileController {
     @FXML void showOrders() throws IOException {
         itemsFlowPan.getChildren().clear();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../OrdersView/OrdersSummary.fxml");
+        URL url = getClass().getResource("/OrdersView/OrdersSummary.fxml");
         fxmlLoader.setLocation(url);
         Node orderSummary = fxmlLoader.load();
         OrdersSummaryController ordersSummaryController = fxmlLoader.getController();
@@ -118,7 +118,7 @@ public class StoreTileController {
     private void createSaleTile(Sale sale) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../SaleView/SingleSale.fxml");
+            URL url = getClass().getResource("/SaleView/SingleSale.fxml");
             fxmlLoader.setLocation(url);
             Node singleSaleTile = fxmlLoader.load();
             SingleSaleController saleInfoController = fxmlLoader.getController();
@@ -147,7 +147,7 @@ public class StoreTileController {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../tile/tile.fxml");
+            URL url = getClass().getResource("/tile/tile.fxml");
             fxmlLoader.setLocation(url);
             Node singleWordTile = fxmlLoader.load();
             tileController tileController = fxmlLoader.getController();

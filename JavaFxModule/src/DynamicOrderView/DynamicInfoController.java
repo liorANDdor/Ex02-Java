@@ -49,7 +49,7 @@ public class DynamicInfoController {
     private void showOrderInfoByStore(Store store) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../tile/tile.fxml");
+            URL url = getClass().getResource("/tile/tile.fxml");
             fxmlLoader.setLocation(url);
             Node storeView = fxmlLoader.load();
             tileController tileController = fxmlLoader.getController();

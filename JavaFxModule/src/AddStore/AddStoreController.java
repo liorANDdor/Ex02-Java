@@ -104,7 +104,7 @@ public class AddStoreController {
                     AddItemToStoreController addItemToStoreController = null;
                     Stage stg = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader();
-                    URL url = getClass().getResource("../AddStore/AddItemToStore.fxml");
+                    URL url = getClass().getResource("/AddStore/AddItemToStore.fxml");
                     fxmlLoader.setLocation(url);
                     Parent root = null;
                     try {

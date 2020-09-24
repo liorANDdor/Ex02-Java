@@ -320,7 +320,7 @@ public class OrderController {
     private void offerSales() throws IOException {
         Stage stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../SaleView/Sale.fxml");
+        URL url = getClass().getResource("/SaleView/Sale.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         SalesController saleController = fxmlLoader.getController();
@@ -367,7 +367,7 @@ public class OrderController {
     void showDynamicOrder(ActionEvent event) throws IOException {
         Stage stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../DynamicOrderView/DynamicOrder.fxml");
+        URL url = getClass().getResource("/DynamicOrderView/DynamicOrder.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         DynamicInfoController o = fxmlLoader.getController();
@@ -389,7 +389,7 @@ public class OrderController {
     @FXML void showDynamicOrder() throws IOException {
         Stage stg = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../StoreView/DynamicOrder.fxml");
+        URL url = getClass().getResource("/StoreView/DynamicOrder.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(fxmlLoader.getLocation().openStream());
         OrderController o = fxmlLoader.getController();

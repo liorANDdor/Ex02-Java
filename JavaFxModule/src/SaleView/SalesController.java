@@ -66,7 +66,7 @@ public class SalesController {
     private void createSaleTile(Sale sale) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            URL url = getClass().getResource("../SaleView/SingleSale.fxml");
+            URL url = getClass().getResource("/SaleView/SingleSale.fxml");
             fxmlLoader.setLocation(url);
             Node singleSaleTile = fxmlLoader.load();
             SingleSaleController saleInfoController = fxmlLoader.getController();
@@ -118,7 +118,7 @@ public class SalesController {
 
         salesVB.getChildren().clear();
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("../SaleView/OrderSummary.fxml");
+        URL url = getClass().getResource("/SaleView/OrderSummary.fxml");
         fxmlLoader.setLocation(url);
         Node orderSummary = fxmlLoader.load();
         OrderSummaryController orderSummaryController = fxmlLoader.getController();
