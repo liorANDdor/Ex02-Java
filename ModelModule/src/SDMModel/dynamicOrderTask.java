@@ -13,18 +13,20 @@ import java.util.function.Consumer;
 public class dynamicOrderTask extends Task<Boolean> {
 
     private Consumer<ItemSetterGetter> orderDelegates;
-    private Consumer<Boolean> isxmlLoaded;
+    private Consumer<Boolean> dynamicBtnConsumer;
     private SystemManager sys ;
     private Order order;
     private HashMap<Integer, Order> subOrders = new HashMap<>();
 
 
 
-    public dynamicOrderTask(Order order, HashMap<Integer, Order> subOrders , Consumer<ItemSetterGetter> orderDelegates)  {
+    public dynamicOrderTask(Order order, HashMap<Integer, Order> subOrders , Consumer<ItemSetterGetter> orderDelegates,
+                            Consumer<Boolean> dynamicBtnConsumer)  {
         this.order = order;
         this.sys = SystemManager.getInstance();
         this.subOrders = subOrders;
         this.orderDelegates = orderDelegates;
+        this.dynamicBtnConsumer = dynamicBtnConsumer;
 
     }
 
@@ -70,6 +72,7 @@ public class dynamicOrderTask extends Task<Boolean> {
             //orderDelegates.accept(FXCollections.observableList(data));
             Thread.sleep(500);
             updateMessage("Done");
+             dynamicBtnConsumer.accept(true);
             return true;
     }
 }

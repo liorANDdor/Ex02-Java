@@ -132,7 +132,7 @@ public class UpdateStoreItemsController {
                 alert.setContentText(SalesRemovedInfo);
                 alert.showAndWait();
             }
-            //((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+            ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         }
     }
 

@@ -49,7 +49,6 @@ public class XmlLoaderTask  extends Task<Boolean> {
             updateProgress(1, 1);
             Thread.sleep(150);
             updateMessage("Loaded Successfuly");
-
             isxmlLoaded.accept(true);
             return true;
         } else {

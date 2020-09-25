@@ -169,6 +169,7 @@ public class OrderController {
                 Customer customer = customerBox.get(customerCB.getSelectionModel().getSelectedIndex());
                 order.setOrderCustomer(customer);
                 if (newValue.equals(true)) {
+                    isDateChosen.set(false);
                     distanceLabel.setVisible(false);
                     shipmentLabel.setVisible(false);
                     storeLocationLabel.setVisible(false);
@@ -181,7 +182,7 @@ public class OrderController {
                     itemsTableView.getColumns().clear();
                     itemsTableView.getColumns().addAll(IdCol, NameCol, QuantityCol, purchasesCol, totalQuantity,totalPrice);
 
-
+                    Consumer<Boolean> dynamicBtnConsumer = isTaskDone->{isDateChosen.set(isTaskDone);;};
                     Consumer<ItemSetterGetter> superMarketConsumer2 = newItem -> {
                         List cloned = new ArrayList(itemsTableView.getItems());
                         ObservableList<ItemSetterGetter> dataList = FXCollections.observableList(cloned);
@@ -189,8 +190,7 @@ public class OrderController {
                         itemsTableView.getItems().clear();
                         itemsTableView.setItems(dataList);
                     };
-
-                    dynamicOrderTask task = new dynamicOrderTask(order, subOrders, superMarketConsumer2);
+                    dynamicOrderTask task = new dynamicOrderTask(order, subOrders, superMarketConsumer2, dynamicBtnConsumer);
                     bindUIToTask(task);
                     new Thread(task).start();
 
@@ -223,6 +223,7 @@ public class OrderController {
                                         task.progressProperty(),
                                         100)),
                         " %"));
+
     }
 
     private void initStores(HashMap<Integer, Store> stores, SystemManager sys ) {
