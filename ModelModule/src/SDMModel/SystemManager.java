@@ -112,7 +112,9 @@ public class SystemManager {
     }
 
     public static  List<Sale> changeValueOfItem(Store store, Item item, optionsForUpdate whatToDo, double price) {
-        List<Sale> saleDeleted = new ArrayList();
+        List<Sale> saleDeletedWhatYouBuy = new ArrayList();
+        List<Sale> saleDeletedWhatYouGet = new ArrayList();
+        List<Sale> finalListOfSaleDeleted = new ArrayList();
         switch (whatToDo) {
             case ChangePriceOfItem:
                 Sell sell = store.getItemsToSell().stream().filter(el -> el.getItemId() == item.getId()).findFirst().orElse(null);
@@ -120,10 +122,20 @@ public class SystemManager {
                     sell.setPrice(price);
                 break;
             case DeleteItem:
-                 saleDeleted = store.getSales().stream().filter(sale -> sale.getIfBuy().getItemId() == item.getId())
+                saleDeletedWhatYouBuy = store.getSales().stream().filter(sale -> sale.getIfBuy().getItemId() == item.getId())
                         .collect(Collectors.toList());
-                if(saleDeleted != null) {
-                    store.getSales().removeAll(saleDeleted);
+
+                saleDeletedWhatYouGet = store.getSales().stream().filter(sale -> sale.getNeedToGet().getOffers().stream().anyMatch(x -> x.getItemId() == item.getId())).collect(Collectors.toList());
+
+
+                if(saleDeletedWhatYouBuy != null) {
+                    store.getSales().removeAll(saleDeletedWhatYouBuy);
+                    finalListOfSaleDeleted.addAll(saleDeletedWhatYouBuy);
+                }
+                if(saleDeletedWhatYouGet != null) {
+                    store.getSales().removeAll(saleDeletedWhatYouGet);
+
+                    finalListOfSaleDeleted.addAll(saleDeletedWhatYouGet);
                 }
                 store.getItemsToSell().removeIf(el -> el.getItemId() == item.getId());
                 break;
@@ -134,7 +146,7 @@ public class SystemManager {
                 store.getItemsToSell().add(newSell);
                 break;
         }
-        return saleDeleted;
+        return finalListOfSaleDeleted;
     }
 
     public static void addSale(Sale sale) {
